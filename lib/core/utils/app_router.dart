@@ -14,7 +14,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/welcome',
-      builder: (context, state) => WelcomeScreen(),
+      builder: (context, state) => const WelcomeScreen(),
     ),
      GoRoute(
       path: '/register',
