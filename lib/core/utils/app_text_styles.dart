@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/colors.dart';  // Import your colors file if needed
+import '../utils/colors.dart'; // Import your colors file if needed
 
 class AppTextStyles {
-
   static TextStyle headline = TextStyle(
     fontFamily: GoogleFonts.inter().fontFamily,
     fontSize: 28.sp,
-    fontWeight: FontWeight.bold,
-    color: Colors.black,
+    fontWeight: FontWeight.w700,
+    color: darkColor,
   );
 
   static TextStyle subHeadline = TextStyle(
@@ -22,7 +21,7 @@ class AppTextStyles {
   static TextStyle bodyText = TextStyle(
     fontFamily: GoogleFonts.inter().fontFamily,
     fontSize: 14.sp,
-    color: darkGrayColor, 
+    color: darkColor,
   );
 
   static TextStyle caption = TextStyle(

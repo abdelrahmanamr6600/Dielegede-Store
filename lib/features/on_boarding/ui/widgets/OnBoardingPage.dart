@@ -35,7 +35,7 @@ class OnboardingPage extends StatelessWidget {
               fontFamily: GoogleFonts.inter().fontFamily,
               fontSize: 18.sp,
               fontWeight: FontWeight.w700,
-              color: Colors.black,
+              color: darkColor,
             ),
           ),
           SizedBox(height: 12.h),
@@ -46,7 +46,8 @@ class OnboardingPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,
-                color: darkGrayColor,
+                color: darkColor,
+                fontWeight: FontWeight.w300 ,
                 fontFamily: GoogleFonts.inter().fontFamily,
               ),
             ),

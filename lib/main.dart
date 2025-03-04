@@ -1,3 +1,4 @@
+import 'package:dielegende_store/core/utils/app_router.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +24,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 690),
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: mainColor),
-            useMaterial3: true,
-          ),
-          home: const OnBoardingScreen()),
+      child: MaterialApp.router(
+        locale: const Locale('ar' , 'EG'),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(useMaterial3: true),
+        routerConfig: appRouter,
+      ),
     );
   }
 }

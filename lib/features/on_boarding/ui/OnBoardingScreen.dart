@@ -1,3 +1,4 @@
+import 'package:dielegende_store/core/utils/app_router.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
@@ -6,6 +7,7 @@ import 'package:dielegende_store/features/on_boarding/data/OnBoardingModel.dart'
 import 'package:dielegende_store/features/on_boarding/ui/widgets/OnBoardingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -64,13 +66,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 4.h),
                 decoration: BoxDecoration(
-                  border: Border.all(color: darkGrayColor),
+                  border: Border.all(color: darkColor),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
                   "Skip",
                   style: TextStyle(
-                    color: darkGrayColor,
+                    color: darkColor,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                   ),
@@ -133,7 +135,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         curve: Curves.ease,
       );
     } else {
-      Navigator.pushReplacementNamed(context, "/login");
+      context.go("/welcome");
     }
   }
 
@@ -148,6 +150,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   void onSkip() {
-    Navigator.pushReplacementNamed(context, "/login");
+    context.go("/welcome");
   }
 }
