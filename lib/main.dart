@@ -1,6 +1,5 @@
 import 'package:dielegende_store/core/utils/app_router.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
-import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

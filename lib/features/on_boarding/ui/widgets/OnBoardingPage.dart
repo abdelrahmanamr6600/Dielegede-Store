@@ -45,9 +45,9 @@ class OnboardingPage extends StatelessWidget {
               description,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 13.sp,
                 color: darkColor,
-                fontWeight: FontWeight.w300 ,
+                fontWeight: FontWeight.w300,
                 fontFamily: GoogleFonts.inter().fontFamily,
               ),
             ),
@@ -68,7 +68,7 @@ class OnboardingPage extends StatelessWidget {
       width: currentPage == index ? 24.w : 24.w,
       margin: EdgeInsets.symmetric(horizontal: 8.w),
       decoration: BoxDecoration(
-        color: currentPage == index ? mainColor : greyColor,
+        color: currentPage == index ? mainColor : Color(0xFFD9D9D9),
         borderRadius: BorderRadius.circular(4.r),
       ),
     );

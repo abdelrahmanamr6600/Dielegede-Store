@@ -21,22 +21,23 @@ class WelcomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 20.h),
                 Image.asset(
                   AssetsData.imageWelcome,
-                  height: 200.h,
+                  height: 180.h,
                 ),
                 SizedBox(height: 20.h),
                 Image.asset(
                   AssetsData.logo,
-                  height: 100.h,
+                  height: 80.h,
                 ),
                 SizedBox(height: 10.h),
                 Text('Welcome',
-                    style: AppTextStyles.headline.copyWith(fontSize: 24.sp)),
+                    style: AppTextStyles.headline.copyWith(fontSize: 20.sp)),
                 SizedBox(height: 30.h),
                 SizedBox(
                   width: double.infinity,
-                  height: 50.h,
+                  height: 45.h,
                   child: ElevatedButton(
                     onPressed: () {
                       context.go('/login');
@@ -60,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 SizedBox(
                   width: double.infinity,
-                  height: 50.h,
+                  height: 45.h,
                   child: OutlinedButton(
                     onPressed: () {
                       context.go('/register');

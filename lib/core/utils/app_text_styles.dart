@@ -15,7 +15,7 @@ class AppTextStyles {
     fontFamily: GoogleFonts.inter().fontFamily,
     fontSize: 12.sp,
     fontWeight: FontWeight.w600,
-    color: Colors.black,
+    color: greyColor,
   );
 
   static TextStyle bodyText = TextStyle(
