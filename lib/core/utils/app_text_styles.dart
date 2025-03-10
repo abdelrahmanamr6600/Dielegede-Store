@@ -33,7 +33,7 @@ class AppTextStyles {
   static TextStyle buttonText = TextStyle(
     fontFamily: GoogleFonts.inter().fontFamily,
     fontSize: 14.sp,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     color: Colors.white,
   );
 

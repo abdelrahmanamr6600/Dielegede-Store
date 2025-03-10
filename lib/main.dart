@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -22,9 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 690),
+      designSize: const Size(375, 800),
       child: MaterialApp.router(
-        locale: const Locale('ar' , 'EG'),
+        locale: const Locale(
+          'en',
+        ),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true),
         routerConfig: appRouter,

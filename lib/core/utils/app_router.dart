@@ -1,6 +1,7 @@
 
 import 'package:dielegende_store/features/login/presentation/ui/login_screen/LoginScreen.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
+import 'package:dielegende_store/features/register/presentation/ui/otp_screen/OtpScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/register_screen/RegisterScreen.dart';
 import 'package:dielegende_store/features/welcome/ui/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,13 @@ final GoRouter appRouter = GoRouter(
       path: '/login',
       builder: (context, state) =>  const LoginScreen(),
     ),
+
+     GoRoute(
+      path: '/otp',
+      builder: (context, state) =>   OtpScreen(),
+    ),
+
+
 
   ],
 );

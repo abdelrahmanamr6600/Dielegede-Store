@@ -1,3 +1,5 @@
+import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
+import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomFormTextField.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
@@ -34,11 +36,13 @@ class RegisterScreen extends StatelessWidget {
             listener: (BuildContext context, state) {},
             builder: (BuildContext context, state) {
               return Scaffold(
+                appBar: const CustomAppBar(),
                 backgroundColor: Colors.white,
                 body: SingleChildScrollView(
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 30.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8.0.w,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -154,21 +158,12 @@ class RegisterScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 30.h),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50.h,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: darkColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: Text("Register",
-                                style: AppTextStyles.buttonText),
-                          ),
-                        ),
+                        CustomButton(
+                            onPressed: () {
+                              context.go('/otp');
+                            },
+                            text: "Register",
+                            color: darkColor),
                         SizedBox(height: 20.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

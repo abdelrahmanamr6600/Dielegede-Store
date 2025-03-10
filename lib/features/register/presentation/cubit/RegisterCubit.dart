@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitialState());
 
+
   IconData? suffix = Icons.visibility_outlined;
   bool isPassword = true;
 
