@@ -1,4 +1,6 @@
-
+import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ForgetPasswordScreen.dart';
+import 'package:dielegende_store/features/forget_password/presentation/ui/screens/OtpVerificationEmailScreen.dart';
+import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ResetPasswordScreen.dart';
 import 'package:dielegende_store/features/login/presentation/ui/login_screen/LoginScreen.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/otp_screen/OtpScreen.dart';
@@ -10,30 +12,37 @@ import 'package:go_router/go_router.dart';
 final GoRouter appRouter = GoRouter(
   initialLocation: '/onboarding',
   routes: [
-     GoRoute(
+    GoRoute(
       path: '/onboarding',
-      builder: (context, state) =>  const OnBoardingScreen(),
+      builder: (context, state) => const OnBoardingScreen(),
     ),
     GoRoute(
       path: '/welcome',
       builder: (context, state) => const WelcomeScreen(),
     ),
-     GoRoute(
+    GoRoute(
       path: '/register',
-      builder: (context, state) =>  RegisterScreen(),
+      builder: (context, state) => RegisterScreen(),
     ),
-   
-     GoRoute(
+    GoRoute(
       path: '/login',
-      builder: (context, state) =>  const LoginScreen(),
+      builder: (context, state) => const LoginScreen(),
     ),
-
-     GoRoute(
+    GoRoute(
       path: '/otp',
-      builder: (context, state) =>   OtpScreen(),
+      builder: (context, state) => OtpScreen(),
     ),
-
-
-
+    GoRoute(
+      path: '/forgetPassword',
+      builder: (context, state) => ForgetPasswordScreen(),
+    ),
+    GoRoute(
+      path: '/otpVerification',
+      builder: (context, state) => OtpVerificationEmailScreen(),
+    ),
+    GoRoute(
+      path: '/resetPassword',
+      builder: (context, state) => ResetPasswordScreen(),
+    ),
   ],
 );

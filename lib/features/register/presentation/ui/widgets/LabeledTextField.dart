@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 
 class LabeledTextField extends StatelessWidget {
   final String text;
+  final TextStyle? style;
   const LabeledTextField({
     required this.text,
-    super.key,
+    super.key,  this.style,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: AppTextStyles.subHeadline
+        style: style ?? AppTextStyles.subHeadline
             .copyWith(color: greyColor, fontWeight: FontWeight.w500));
   }
 }

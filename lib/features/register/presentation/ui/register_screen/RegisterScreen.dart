@@ -160,7 +160,7 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 30.h),
                         CustomButton(
                             onPressed: () {
-                              context.go('/otp');
+                              context.push('/otp');
                             },
                             text: "Register",
                             color: darkColor),

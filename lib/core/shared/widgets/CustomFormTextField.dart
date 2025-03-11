@@ -1,6 +1,7 @@
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -10,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.controller,
     this.suffixFun,
     this.suffix,
+    this.suffixSvg, // New field for SVG suffix
     this.isPassword = false,
     this.labelText,
     this.hintText,
@@ -28,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final Function? suffixFun;
   final IconData? suffix;
+  final String? suffixSvg; // SVG file path
   final String? labelText;
   final Function? onSubmit;
   final Function? onChange;
@@ -64,7 +67,6 @@ class CustomTextFormField extends StatelessWidget {
           fontSize: 14.sp,
           fontWeight: FontWeight.w500,
         ),
-        // labelText: labelText,
         labelStyle: TextStyle(
           color: Colors.black,
           fontSize: 14.sp,
@@ -88,8 +90,7 @@ class CustomTextFormField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.red, width: 1.5.w),
           borderRadius: BorderRadius.circular(15.r),
         ),
-        // prefixIcon: icon,
-        suffixIcon: suffix != null
+        suffixIcon: suffixSvg != null
             ? IconButton(
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
@@ -97,9 +98,24 @@ class CustomTextFormField extends StatelessWidget {
                 onPressed: () {
                   suffixFun?.call();
                 },
-                icon: Icon(suffix, color: iconColor),
+                icon: SvgPicture.asset(
+                  suffixSvg!,
+                  width: 20.w,
+                  height: 20.h,
+                  colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+                ),
               )
-            : null,
+            : suffix != null
+                ? IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    onPressed: () {
+                      suffixFun?.call();
+                    },
+                    icon: Icon(suffix, color: iconColor),
+                  )
+                : null,
       ),
       validator: validation,
     );

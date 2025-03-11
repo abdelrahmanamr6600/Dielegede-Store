@@ -22,22 +22,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           }
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          padding: EdgeInsets.symmetric(horizontal: 5.0.w),
           child: Container(
             width: 40.w,
             height: 40.h,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15.r),
-              border: Border.all(color: const Color(0XFFE8ECF4), width: 1.5),
+              border: Border.all(color: const Color(0XFFE8ECF4), width: 1),
             ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 4.0.w, vertical: 14.h),
               child: SvgPicture.asset(
                 'assets/images/arrow.svg',
-                width: 8.w,
-                height: 8.h,
+                width: 5.w,
+                height: 5.h,
               ),
             ),
           ),

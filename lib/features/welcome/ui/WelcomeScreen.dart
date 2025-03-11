@@ -13,11 +13,10 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 80.h),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -42,7 +41,7 @@ class WelcomeScreen extends StatelessWidget {
                   height: 45.h,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/login');
+                      context.push('/login');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: darkColor,
@@ -66,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                   height: 45.h,
                   child: OutlinedButton(
                     onPressed: () {
-                      context.go('/register');
+                      context.push('/register');
                     },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: darkColor),
