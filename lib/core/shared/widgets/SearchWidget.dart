@@ -17,7 +17,7 @@ class SearchWidget extends StatelessWidget {
       child: Container(
         height: 40.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFF0F2F1),
+          color: Color(0xFFF0F2F1).withOpacity(0.5),
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: TextField(

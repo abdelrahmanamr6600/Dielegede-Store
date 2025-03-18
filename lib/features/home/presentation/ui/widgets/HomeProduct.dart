@@ -1,9 +1,9 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
+import 'package:dielegende_store/core/shared/widgets/ProductItem.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
-import 'package:dielegende_store/features/home/presentation/ui/widgets/ProductItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

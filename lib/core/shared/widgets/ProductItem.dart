@@ -1,10 +1,10 @@
+import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/core/utils/assets.dart';
+import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
-import 'package:dielegende_store/core/utils/assets.dart';
-import 'package:dielegende_store/core/utils/colors.dart';
 
 class ProductItem extends StatelessWidget {
   final Map<String, dynamic> product;

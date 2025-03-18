@@ -1,7 +1,7 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
+import 'package:dielegende_store/core/shared/widgets/ProductGridView.dart';
 import 'package:dielegende_store/core/shared/widgets/SearchWidget.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
-import 'package:dielegende_store/features/home/presentation/ui/widgets/ProductItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -95,26 +95,7 @@ class SearchScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: products.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.w,
-                  mainAxisSpacing: 10.h,
-                  childAspectRatio: 0.85,
-                ),
-                itemBuilder: (context, index) {
-                  return ProductItem(
-                    product: products[index],
-                    showButton: false,
-                  );
-                },
-              ),
-            ),
+            ProductGridView(products: products),
           ],
         ),
       ),
