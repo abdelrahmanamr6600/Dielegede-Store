@@ -100,7 +100,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       ),
                     ),
                     child: Text("Back",
-                        style: AppTextStyles.buttonText.copyWith(
+                        style: AppTextStyles.mainText.copyWith(
                             color: mainColor, fontWeight: FontWeight.w400)),
                   )
                 else
@@ -117,7 +117,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       currentPage == onboardingData.length - 1
                           ? "Get Started"
                           : "Next",
-                      style: AppTextStyles.buttonText),
+                      style: AppTextStyles.mainText.copyWith(
+                        fontWeight: FontWeight.w600,
+                        
+                      )),
                 )
               ],
             ),

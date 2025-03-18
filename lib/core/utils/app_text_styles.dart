@@ -4,42 +4,28 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart'; // Import your colors file if needed
 
 class AppTextStyles {
-  static TextStyle headline = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 28.sp,
-    fontWeight: FontWeight.w700,
-    color: darkColor,
-  );
+  static TextStyle mainText = 
+     TextStyle(
+      fontSize: 14.sp,
+      fontWeight:  FontWeight.w500,
+      fontFamily: GoogleFonts.inter().fontFamily,
+      color: Colors.white,
+    );
 
-  static TextStyle subHeadline = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 12.sp,
-    fontWeight: FontWeight.w600,
-    color: greyColor,
-  );
+  static TextStyle smallText =  TextStyle(
+      fontSize: 12.sp,
+      fontWeight:FontWeight.w400,
+      fontFamily: GoogleFonts.inter().fontFamily,
+      color: Colors.white,
+    );
+  
 
-  static TextStyle bodyText = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 14.sp,
-    color: darkColor,
-  );
-
-  static TextStyle caption = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 12.sp,
-    color: Colors.grey,
-  );
-
-  static TextStyle buttonText = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w600,
-    color: Colors.white,
-  );
-
-  static TextStyle inputFieldText = TextStyle(
-    fontFamily: GoogleFonts.inter().fontFamily,
-    fontSize: 12.sp,
-    color: Colors.black,
-  );
+  static TextStyle largeText = TextStyle(
+      fontSize: 16.sp,
+      fontWeight:   FontWeight.w700,
+      fontFamily: GoogleFonts.inter().fontFamily,
+      color: Colors.white,
+    );
+  
 }
+

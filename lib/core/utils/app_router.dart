@@ -1,7 +1,9 @@
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ForgetPasswordScreen.dart';
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/OtpVerificationEmailScreen.dart';
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ResetPasswordScreen.dart';
+import 'package:dielegende_store/features/home/presentation/ui/home_screen/HomeScreen.dart';
 import 'package:dielegende_store/features/login/presentation/ui/login_screen/LoginScreen.dart';
+import 'package:dielegende_store/features/navigation/presentation/ui/navigation_screen/NavigationScreen.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/otp_screen/OtpScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/register_screen/RegisterScreen.dart';
@@ -44,5 +46,12 @@ final GoRouter appRouter = GoRouter(
       path: '/resetPassword',
       builder: (context, state) => ResetPasswordScreen(),
     ),
+    GoRoute(
+      path: '/homeScreen',
+      builder: (context, state) => HomeScreen(),
+    ),
+    GoRoute(
+        path: '/navigationScreen',
+        builder: (context, state) => NavigationScreen()),
   ],
 );

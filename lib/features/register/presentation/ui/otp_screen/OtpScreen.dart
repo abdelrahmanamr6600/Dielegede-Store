@@ -50,7 +50,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Text.rich(
                     TextSpan(
-                        text: 'We’ve sent an SMS with an activation code to your phone',
+                        text:
+                            'We’ve sent an SMS with an activation code to your phone',
                         style: TextStyle(
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w400,
@@ -135,7 +136,8 @@ class _OtpScreenState extends State<OtpScreen> {
                       setState(() {
                         isError = true;
                       });
-                    } else {}
+                    } else {
+                    }
                   },
                   text: "Verify",
                   color: darkColor)

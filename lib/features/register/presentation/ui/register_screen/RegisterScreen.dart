@@ -36,7 +36,7 @@ class RegisterScreen extends StatelessWidget {
             listener: (BuildContext context, state) {},
             builder: (BuildContext context, state) {
               return Scaffold(
-                appBar: const CustomAppBar(),
+                appBar: CustomAppBar(),
                 backgroundColor: Colors.white,
                 body: SingleChildScrollView(
                   child: Padding(
@@ -49,10 +49,10 @@ class RegisterScreen extends StatelessWidget {
                         Image.asset('assets/images/logo.png'),
                         SizedBox(height: 20.h),
                         Text("Hello!",
-                            style: AppTextStyles.headline.copyWith(
-                                fontWeight: FontWeight.w700, fontSize: 24.sp)),
+                            style: AppTextStyles.largeText
+                                .copyWith(fontSize: 24.sp, color: darkColor)),
                         Text("Register to get started",
-                            style: AppTextStyles.subHeadline.copyWith(
+                            style: AppTextStyles.smallText.copyWith(
                                 color: greyColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 18.sp)),

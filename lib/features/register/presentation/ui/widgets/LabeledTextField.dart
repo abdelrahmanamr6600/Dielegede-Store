@@ -13,7 +13,7 @@ class LabeledTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        style: style ?? AppTextStyles.subHeadline
-            .copyWith(color: greyColor, fontWeight: FontWeight.w500));
+        style: style ?? AppTextStyles.smallText
+            .copyWith(color: greyColor, fontWeight: FontWeight.w600));
   }
 }

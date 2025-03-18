@@ -1,4 +1,6 @@
 import 'package:dielegende_store/core/utils/app_router.dart';
+import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,13 +8,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
-
+  const CustomAppBar({super.key, this.title});
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
+      title: Text(
+        title ?? '',
+        style: AppTextStyles.largeText.copyWith(
+            color: const Color(0xFF393F42), fontWeight: FontWeight.w600),
+      ),
+      centerTitle: true,
       leading: GestureDetector(
         onTap: () {
           if (context.canPop()) {
@@ -22,23 +30,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           }
         },
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.0.w),
-          child: Container(
-            width: 40.w,
-            height: 40.h,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15.r),
-              border: Border.all(color: const Color(0XFFE8ECF4), width: 1),
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0.w, vertical: 14.h),
-              child: SvgPicture.asset(
-                'assets/images/arrow.svg',
-                width: 5.w,
-                height: 5.h,
-              ),
-            ),
+          padding: EdgeInsets.symmetric(horizontal: 10.0.w, vertical: 15.h),
+          child: SvgPicture.asset(
+            AssetsData.arrowLeft,
+            width: 5.w,
+            height: 5.h,
           ),
         ),
       ),
@@ -46,5 +42,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(80.h);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

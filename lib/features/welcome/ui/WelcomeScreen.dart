@@ -34,7 +34,8 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 Text('Welcome',
-                    style: AppTextStyles.headline.copyWith(fontSize: 20.sp)),
+                    style: AppTextStyles.mainText.copyWith(fontSize: 20.sp , 
+                    color: darkColor , fontWeight: FontWeight.w700)),
                 SizedBox(height: 30.h),
                 SizedBox(
                   width: double.infinity,
@@ -74,7 +75,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text('Register',
-                        style: AppTextStyles.buttonText.copyWith(
+                        style: AppTextStyles.mainText.copyWith(
                             color: const Color(0xFF0D242D),
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600)),
