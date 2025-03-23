@@ -26,4 +26,6 @@ class AssetsData {
 
   static const filter = 'assets/icons/filter.svg';
   static const arrowLeft = 'assets/icons/arrowleft.svg';
+  static const timer = 'assets/icons/timer.svg';
+
 }

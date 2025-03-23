@@ -81,6 +81,7 @@ class WishListScreen extends StatelessWidget {
         title: 'Wish List',
       ),
       body: SingleChildScrollView(
+        
         child: Column(
           children: [const SearchWidget(), ProductGridView(products: products)],
         ),
