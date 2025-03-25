@@ -8,6 +8,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final double? height;
   final double? width;
+  final double? redius;
 
   const CustomButton(
       {super.key,
@@ -15,7 +16,8 @@ class CustomButton extends StatelessWidget {
       required this.text,
       required this.color,
       this.height,
-      this.width});
+      this.width,
+      this.redius});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,7 +28,7 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0.r),
+            borderRadius: BorderRadius.circular(redius ?? 10.0.r),
           ),
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
         ),
