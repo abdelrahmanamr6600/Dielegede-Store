@@ -24,7 +24,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
   ];
 
   String selectedImage = "assets/images/kids.png";
-
+  
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

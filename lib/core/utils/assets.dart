@@ -16,6 +16,8 @@ class AssetsData {
   static const profile = 'assets/icons/profile.svg';
   static const notification = 'assets/icons/notification.svg';
   static const rate = 'assets/icons/rate.svg';
+  static const rateOutLined = 'assets/icons/rate_outlined.svg';
+
   static const inactiveHeart = 'assets/icons/inactiveHeart.svg';
 
   static const homeActivated = 'assets/icons/homeActivated.svg';
@@ -26,6 +28,8 @@ class AssetsData {
 
   static const filter = 'assets/icons/filter.svg';
   static const arrowLeft = 'assets/icons/arrowleft.svg';
+    static const arrowRight = 'assets/icons/arrow_right.svg';
+
   static const timer = 'assets/icons/timer.svg';
 
 }

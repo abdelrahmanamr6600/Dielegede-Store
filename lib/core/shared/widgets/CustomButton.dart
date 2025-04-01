@@ -5,10 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
+
   final String text;
   final double? height;
   final double? width;
   final double? redius;
+  final Color? textColor;
+  final Color? borderColor;
 
   const CustomButton(
       {super.key,
@@ -17,7 +20,9 @@ class CustomButton extends StatelessWidget {
       required this.color,
       this.height,
       this.width,
-      this.redius});
+      this.redius,
+      this.textColor,
+      this.borderColor});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -29,12 +34,15 @@ class CustomButton extends StatelessWidget {
           backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(redius ?? 10.0.r),
+            side: BorderSide(
+                color: borderColor ?? Colors.transparent,
+                width: 1), // Border color
           ),
           padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
         ),
         child: Text(text,
-            style:
-                AppTextStyles.mainText.copyWith(fontWeight: FontWeight.w600)),
+            style: AppTextStyles.mainText.copyWith(
+                fontWeight: FontWeight.w600, color: textColor ?? Colors.white)),
       ),
     );
   }
