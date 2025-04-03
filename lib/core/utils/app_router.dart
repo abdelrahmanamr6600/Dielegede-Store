@@ -1,4 +1,5 @@
 import 'package:dielegende_store/features/filter/presentation/ui/filter_screen/FilterScreen.dart';
+import 'package:dielegende_store/features/filter/presentation/ui/brand_screen/BrandScreen.dart';
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ForgetPasswordScreen.dart';
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/OtpVerificationEmailScreen.dart';
 import 'package:dielegende_store/features/forget_password/presentation/ui/screens/ResetPasswordScreen.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/filtersScreen',
+  initialLocation: '/brandScreen',
   routes: [
     GoRoute(
       path: '/onboarding',
@@ -50,15 +51,19 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/homeScreen',
-      builder: (context, state) => HomeScreen(),
+      builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
         path: '/navigationScreen',
         builder: (context, state) => NavigationScreen()),
     GoRoute(
         path: '/productDetailsScreen',
-        builder: (context, state) => ProductDetailsScreen()),
+        builder: (context, state) => const ProductDetailsScreen()),
     GoRoute(
-        path: '/filtersScreen', builder: (context, state) => FilterScreen()),
+        path: '/filtersScreen',
+        builder: (context, state) => const FilterScreen()),
+    GoRoute(
+        path: '/brandScreen',
+        builder: (context, state) => BrandSelectionScreen()),
   ],
 );

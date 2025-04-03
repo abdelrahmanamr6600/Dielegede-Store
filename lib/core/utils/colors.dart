@@ -8,4 +8,4 @@ const iconColor = Color(0xFFACB5BB);
 const errorColor = Color(0xFFF54135);
 const darkGreyColor = Color(0xFF373F4D);
 const borderColor = Color(0xFFCFCDCD);
-
+const blackColor = Color(0xFF222222);

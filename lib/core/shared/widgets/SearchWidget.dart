@@ -6,8 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchWidget extends StatelessWidget {
+ final Color? color;
   const SearchWidget({
     super.key,
+     this.color,
   });
 
   @override
@@ -17,7 +19,7 @@ class SearchWidget extends StatelessWidget {
       child: Container(
         height: 40.h,
         decoration: BoxDecoration(
-          color: Color(0xFFF0F2F1).withOpacity(0.5),
+          color: color ?? Color(0xFFF0F2F1).withOpacity(0.5),
           borderRadius: BorderRadius.circular(8.r),
         ),
         child: TextField(
