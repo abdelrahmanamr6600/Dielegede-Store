@@ -4,28 +4,21 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/colors.dart'; // Import your colors file if needed
 
 class AppTextStyles {
-  static TextStyle mainText = 
-     TextStyle(
-      fontSize: 14.sp,
-      fontWeight:  FontWeight.w500,
-      fontFamily: GoogleFonts.inter().fontFamily,
-      color: Colors.white,
-    );
+  static TextStyle mainText = GoogleFonts.inter(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
 
-  static TextStyle smallText =  TextStyle(
-      fontSize: 12.sp,
-      fontWeight:FontWeight.w400,
-      fontFamily: GoogleFonts.inter().fontFamily,
-      color: Colors.white,
-    );
-  
+  static TextStyle smallText = GoogleFonts.inter(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w400,
+    color: Colors.white,
+  );
 
-  static TextStyle largeText = TextStyle(
-      fontSize: 16.sp,
-      fontWeight:   FontWeight.w700,
-      fontFamily: GoogleFonts.inter().fontFamily,
-      color: Colors.white,
-    );
-  
+  static TextStyle largeText = GoogleFonts.inter(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w700,
+    color: Colors.white,
+  );
 }
-

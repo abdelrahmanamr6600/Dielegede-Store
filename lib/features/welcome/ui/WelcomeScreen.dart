@@ -92,7 +92,9 @@ class WelcomeScreen extends StatelessWidget {
                   style: ButtonStyle(
                     overlayColor: WidgetStateProperty.all(Colors.transparent),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push('/navigationScreen');
+                  },
                   child: Text(
                     'Continue as a guest',
                     style: TextStyle(

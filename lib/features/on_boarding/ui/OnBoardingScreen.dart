@@ -77,7 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         curve: Curves.ease,
       );
     } else {
-      context.go("/welcome");
+      context.push("/welcome");
     }
   }
 
@@ -92,6 +92,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   }
 
   void onSkip() {
-    context.go("/welcome");
+    context.push("/welcome");
   }
 }

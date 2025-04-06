@@ -98,7 +98,7 @@ class OtpVerificationEmailScreen extends StatelessWidget {
               ),
               CustomButton(
                   onPressed: () {
-                    context.go('/resetPassword');
+                    context.push('/resetPassword');
                   },
                   text: "Verify",
                   color: darkColor)

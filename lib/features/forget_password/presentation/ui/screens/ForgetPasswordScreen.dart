@@ -72,7 +72,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               ),
               CustomButton(
                   onPressed: () {
-                    context.go('/otpVerification');
+                    context.push('/otpVerification');
                   },
                   text: "Send Code",
                   color: darkColor)
