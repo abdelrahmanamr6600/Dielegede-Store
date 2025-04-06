@@ -32,7 +32,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => const LoginScreen(),
+      builder: (context, state) => LoginScreen(),
     ),
     GoRoute(
       path: '/otp',
