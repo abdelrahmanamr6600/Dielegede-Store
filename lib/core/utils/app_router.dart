@@ -36,7 +36,7 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: '/otp',
-      builder: (context, state) => OtpScreen(),
+      builder: (context, state) => const OtpScreen(),
     ),
     GoRoute(
       path: '/forgetPassword',

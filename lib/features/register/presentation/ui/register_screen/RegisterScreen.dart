@@ -179,7 +179,7 @@ class RegisterScreen extends StatelessWidget {
                                   overlayColor: WidgetStateProperty.all(
                                       Colors.transparent)),
                               onPressed: () {
-                                context.push('/login');
+                                context.push('/navigationScreen');
                               },
                               child: Text(
                                 "Login Now",

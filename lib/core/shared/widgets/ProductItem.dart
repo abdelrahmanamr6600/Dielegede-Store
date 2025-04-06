@@ -47,7 +47,7 @@ class ProductItem extends StatelessWidget {
                           child: Image.asset(
                             product["image"],
                             width: double.infinity,
-                            height: 130.h,
+                            height: MediaQuery.of(context).size.height * 0.25,
                             fit: BoxFit.cover,
                           ),
                         ),

@@ -28,27 +28,27 @@ class BrandSelectionWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Brand",
-                style: AppTextStyles.largeText
-                    .copyWith(color: darkColor, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "adidas Originals, Jack & Jones, s.Oliver",
-                style: AppTextStyles.smallText
-                    .copyWith(color: greyColor, fontSize: 11.sp),
-              ),
-            ],
-          ),
-          const Spacer(),
           GestureDetector(
             onTap: onTap,
-            child: SvgPicture.asset(AssetsData.arrowRight),
-          )
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Brand",
+                  style: AppTextStyles.largeText
+                      .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "adidas Originals, Jack & Jones, s.Oliver",
+                  style: AppTextStyles.smallText
+                      .copyWith(color: greyColor, fontSize: 11.sp),
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          SvgPicture.asset(AssetsData.arrowRight)
         ],
       ),
     );

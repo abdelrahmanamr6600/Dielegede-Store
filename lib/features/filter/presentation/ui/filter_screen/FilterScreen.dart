@@ -13,6 +13,7 @@ import 'package:dielegende_store/features/filter/presentation/ui/widgets/SizeSel
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -104,7 +105,9 @@ class _FilterScreenState extends State<FilterScreen> {
               BrandSelectionWidget(
                 title: "Brand",
                 brands: "adidas Originals, Jack & Jones, s.Oliver",
-                onTap: () {},
+                onTap: () {
+                  context.push('/brandScreen');
+                },
               ),
               SizedBox(height: 20.h),
               ActionButtonsWidget(
