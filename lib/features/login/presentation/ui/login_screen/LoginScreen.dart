@@ -141,7 +141,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 CustomButton(
                                     onPressed: () {
-                                      context.push('/homescreen');
+                                      context.push('/navigationScreen');
                                     },
                                     text: "Login",
                                     color: darkColor),
