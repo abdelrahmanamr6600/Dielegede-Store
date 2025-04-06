@@ -1,4 +1,5 @@
 import 'package:dielegende_store/features/bag/presentation/ui/bag_screen/BagScreen.dart';
+import 'package:dielegende_store/features/category/presentation/ui/category_screen/CategoryScreen.dart';
 import 'package:dielegende_store/features/home/presentation/ui/home_screen/HomeScreen.dart';
 import 'package:dielegende_store/features/navigation/presentation/cubit/BottomNavigationCubit.dart';
 import 'package:dielegende_store/features/navigation/presentation/ui/widgets/BottomNavBar.dart';
@@ -12,11 +13,11 @@ class NavigationScreen extends StatelessWidget {
   NavigationScreen({super.key});
 
   final List<Widget> pages = [
-    HomeScreen(),
+    const HomeScreen(),
     const SearchScreen(),
-    BagScreen(),
+    const BagScreen(),
     WishListScreen(),
-    const ProfileScreen()
+    const ProfileScreen(),
   ];
 
   @override

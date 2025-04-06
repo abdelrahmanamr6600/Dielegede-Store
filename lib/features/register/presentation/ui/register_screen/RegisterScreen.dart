@@ -36,7 +36,7 @@ class RegisterScreen extends StatelessWidget {
             listener: (BuildContext context, state) {},
             builder: (BuildContext context, state) {
               return Scaffold(
-                appBar: CustomAppBar(),
+                appBar: const CustomAppBar(),
                 backgroundColor: Colors.white,
                 body: SingleChildScrollView(
                   child: Padding(
@@ -175,8 +175,11 @@ class RegisterScreen extends StatelessWidget {
                                   color: const Color(0xFF1E232C)),
                             ),
                             TextButton(
+                              style: ButtonStyle(
+                                  overlayColor: WidgetStateProperty.all(
+                                      Colors.transparent)),
                               onPressed: () {
-                                context.go('/login');
+                                context.push('/login');
                               },
                               child: Text(
                                 "Login Now",

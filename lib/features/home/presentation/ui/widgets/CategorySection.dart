@@ -2,6 +2,7 @@ import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class CategorySection extends StatelessWidget {
   final List<Map<String, dynamic>> categories = [
@@ -76,43 +77,48 @@ class CategorySection extends StatelessWidget {
                     ),
                   );
                 }),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0.w),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 46.w,
-                        height: 46.h,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFEDFAFF),
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(8.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 5,
-                              spreadRadius: 2,
+                GestureDetector(
+                  onTap: () {
+                    context.push('/categoryScreen');
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0.w),
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 46.w,
+                          height: 46.h,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEDFAFF),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(8.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 5,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(
+                              fit: BoxFit.contain,
+                              'assets/icons/category.svg',
+                              width: 20.w,
+                              height: 20.h,
                             ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(
-                            fit: BoxFit.contain,
-                            'assets/icons/category.svg',
-                            width: 20.w,
-                            height: 20.h,
                           ),
                         ),
-                      ),
-                      SizedBox(height: 5.h),
-                      Text(
-                        "All",
-                        style: AppTextStyles.smallText.copyWith(
-                          color: const Color(0xFF939393),
+                        SizedBox(height: 5.h),
+                        Text(
+                          "All",
+                          style: AppTextStyles.smallText.copyWith(
+                            color: const Color(0xFF939393),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

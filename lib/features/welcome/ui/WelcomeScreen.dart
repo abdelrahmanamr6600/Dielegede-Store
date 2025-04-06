@@ -34,8 +34,10 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10.h),
                 Text('Welcome',
-                    style: AppTextStyles.mainText.copyWith(fontSize: 20.sp , 
-                    color: darkColor , fontWeight: FontWeight.w700)),
+                    style: AppTextStyles.mainText.copyWith(
+                        fontSize: 20.sp,
+                        color: darkColor,
+                        fontWeight: FontWeight.w700)),
                 SizedBox(height: 30.h),
                 SizedBox(
                   width: double.infinity,
@@ -69,10 +71,12 @@ class WelcomeScreen extends StatelessWidget {
                       context.push('/register');
                     },
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: darkColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
+                        side: const BorderSide(color: darkColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.r),
+                        )).copyWith(
+                      overlayColor:
+                          WidgetStateProperty.all(mainColor.withOpacity(0.2)),
                     ),
                     child: Text('Register',
                         style: AppTextStyles.mainText.copyWith(
@@ -85,9 +89,10 @@ class WelcomeScreen extends StatelessWidget {
                   height: 40.h,
                 ),
                 TextButton(
-                  onPressed: () {
-                    // Handle guest navigation if needed
-                  },
+                  style: ButtonStyle(
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  ),
+                  onPressed: () {},
                   child: Text(
                     'Continue as a guest',
                     style: TextStyle(

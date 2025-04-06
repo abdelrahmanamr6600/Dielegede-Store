@@ -1,4 +1,5 @@
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,15 +31,19 @@ class CustomButton extends StatelessWidget {
       height: height ?? 50.h,
       child: ElevatedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(redius ?? 10.0.r),
-            side: BorderSide(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(color),
+          overlayColor:
+              WidgetStateProperty.all(mainColor),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(redius ?? 10.0.r),
+              side: BorderSide(
                 color: borderColor ?? Colors.transparent,
-                width: 1), // Border color
+                width: 1,
+              ),
+            ),
           ),
-          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
         ),
         child: Text(text,
             style: AppTextStyles.mainText.copyWith(

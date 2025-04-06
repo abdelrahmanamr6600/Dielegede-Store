@@ -7,12 +7,13 @@ import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeProduct extends StatelessWidget {
   const HomeProduct({super.key});
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     final List<Map<String, dynamic>> products = [
       {
         "image": "assets/images/hoody.png",
@@ -62,21 +63,26 @@ class HomeProduct extends StatelessWidget {
                     color: const Color(0xFF393F42),
                     fontWeight: FontWeight.w600),
               ),
-              Row(
-                children: [
-                  Text(
-                    "Filters",
-                    style: AppTextStyles.smallText.copyWith(
-                      color: const Color(0xFF393F42),
+              GestureDetector(
+                onTap: () {
+                  context.push('/filtersScreen');
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      "Filters",
+                      style: AppTextStyles.smallText.copyWith(
+                        color: const Color(0xFF393F42),
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10.w),
-                  SvgPicture.asset(
-                    AssetsData.filter,
-                    width: 12.w,
-                    height: 12.h,
-                  )
-                ],
+                    SizedBox(width: 10.w),
+                    SvgPicture.asset(
+                      AssetsData.filter,
+                      width: 12.w,
+                      height: 12.h,
+                    )
+                  ],
+                ),
               )
             ],
           ),

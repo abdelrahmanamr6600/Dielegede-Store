@@ -1,12 +1,11 @@
-import 'package:dielegende_store/core/utils/app_router.dart';
-import 'package:dielegende_store/core/utils/app_text_styles.dart';
+
 import 'package:dielegende_store/core/utils/assets.dart';
-import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/core/utils/const.dart';
 import 'package:dielegende_store/features/on_boarding/data/OnBoardingModel.dart';
+import 'package:dielegende_store/features/on_boarding/ui/widgets/NavigationButtonWidget.dart';
 import 'package:dielegende_store/features/on_boarding/ui/widgets/OnBoardingPage.dart';
+import 'package:dielegende_store/features/on_boarding/ui/widgets/SkipButtonWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -58,72 +57,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   totalPages: onboardingData.length,
                 );
               }),
-          Positioned(
-            top: 50.h,
-            right: 16.w,
-            child: GestureDetector(
-              onTap: onSkip,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: darkColor),
-                  borderRadius: BorderRadius.circular(20.r),
-                ),
-                child: Text(
-                  "Skip",
-                  style: TextStyle(
-                    color: darkColor,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 30.h,
-            left: 16.w,
-            right: 16.w,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (currentPage > 0)
-                  ElevatedButton(
-                    onPressed: onPrevious,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: mainColor,
-                      backgroundColor: Colors.white,
-                      elevation: 0,
-                      side: const BorderSide(color: mainColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.r),
-                      ),
-                    ),
-                    child: Text("Back",
-                        style: AppTextStyles.mainText.copyWith(
-                            color: mainColor, fontWeight: FontWeight.w400)),
-                  )
-                else
-                  SizedBox(width: 60.w),
-                ElevatedButton(
-                  onPressed: onNext,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.r),
-                    ),
-                  ),
-                  child: Text(
-                      currentPage == onboardingData.length - 1
-                          ? "Get Started"
-                          : "Next",
-                      style: AppTextStyles.mainText.copyWith(
-                        fontWeight: FontWeight.w600,
-                        
-                      )),
-                )
-              ],
-            ),
+          SkipButtonWidget(onSkip: onSkip),
+          NavigationButtonsWidget(
+            currentPage: currentPage,
+            totalPages: onboardingData.length,
+            onNext: onNext,
+            onPrevious: onPrevious,
           ),
         ],
       ),
