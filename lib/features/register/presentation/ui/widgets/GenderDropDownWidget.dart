@@ -28,7 +28,7 @@ Widget buildGenderDropdown( String selectedGender ) {
           value: gender,
           child: Text(
             gender,
-            style: AppTextStyles.mainText.copyWith(color: darkColor),
+            style: AppTextStyles.mainText().copyWith(color: darkColor),
           ),
         );
       }).toList(),

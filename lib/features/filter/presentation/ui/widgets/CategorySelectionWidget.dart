@@ -29,7 +29,7 @@ class CategorySelectionWidget extends StatelessWidget {
           child: Text(
             "Category",
             style: AppTextStyles.largeText
-                .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+                ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
           ),
         ),
         SizedBox(height: 20.h),
@@ -53,7 +53,7 @@ class CategorySelectionWidget extends StatelessWidget {
                   ),
                   child: Text(
                     category,
-                    style: AppTextStyles.mainText.copyWith(
+                    style: AppTextStyles.mainText().copyWith(
                       fontWeight: FontWeight.w600,
                       color: isSelected ? Colors.white : Colors.black,
                     ),

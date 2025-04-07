@@ -50,9 +50,9 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(height: 20.h),
                         Text("Hello!",
                             style: AppTextStyles.largeText
-                                .copyWith(fontSize: 24.sp, color: darkColor)),
+                               () .copyWith(fontSize: 24.sp, color: darkColor)),
                         Text("Register to get started",
-                            style: AppTextStyles.smallText.copyWith(
+                            style: AppTextStyles.smallText().copyWith(
                                 color: greyColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 18.sp)),

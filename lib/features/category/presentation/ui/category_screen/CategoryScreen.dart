@@ -40,7 +40,7 @@ class CategoryScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: Text(
                             'Summer sale',
-                            style: AppTextStyles.largeText.copyWith(
+                            style: AppTextStyles.largeText().copyWith(
                                 fontSize: 34.sp,
                                 fontWeight: FontWeight.w700,
                                 color: mainColor),

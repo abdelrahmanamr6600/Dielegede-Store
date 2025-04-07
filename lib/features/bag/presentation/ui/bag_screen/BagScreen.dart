@@ -55,9 +55,9 @@ class _BagScreenState extends State<BagScreen>
               indicatorSize: TabBarIndicatorSize.tab,
               labelColor: Colors.white,
               unselectedLabelColor: mainColor,
-              unselectedLabelStyle: AppTextStyles.mainText
+              unselectedLabelStyle: AppTextStyles.mainText()
                   .copyWith(fontSize: 16.sp, color: mainColor),
-              labelStyle: AppTextStyles.mainText.copyWith(
+              labelStyle: AppTextStyles.mainText().copyWith(
                 fontSize: 16.sp,
               ),
               splashFactory: NoSplash.splashFactory,

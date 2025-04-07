@@ -50,7 +50,7 @@ class BagProductItem extends StatelessWidget {
                     children: [
                       Text(
                         "LIME",
-                        style: AppTextStyles.mainText.copyWith(
+                        style: AppTextStyles.mainText().copyWith(
                           fontSize: 12.sp,
                           color: greyColor.withOpacity(timeEnded ? 0.5 : 1),
                         ),
@@ -58,7 +58,7 @@ class BagProductItem extends StatelessWidget {
                       SizedBox(height: 4.h),
                       Text(
                         "Shirt",
-                        style: AppTextStyles.mainText.copyWith(
+                        style: AppTextStyles.mainText().copyWith(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: const Color(0XFF222222)
@@ -70,14 +70,14 @@ class BagProductItem extends StatelessWidget {
                         children: [
                           Text(
                             "Color: ",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
                               color: greyColor.withOpacity(timeEnded ? 0.5 : 1),
                             ),
                           ),
                           Text(
                             "Blue",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF222222)
@@ -87,14 +87,14 @@ class BagProductItem extends StatelessWidget {
                           SizedBox(width: 18.w),
                           Text(
                             "Size: ",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
                               color: greyColor.withOpacity(timeEnded ? 0.5 : 1),
                             ),
                           ),
                           Text(
                             "L",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
                               color: const Color(0xFF222222)
@@ -109,7 +109,7 @@ class BagProductItem extends StatelessWidget {
                         children: [
                           Text(
                             "32\$",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
                               color:
@@ -174,7 +174,7 @@ class BagProductItem extends StatelessWidget {
                           SvgPicture.asset(AssetsData.timer),
                           Text(
                             "24h",
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontSize: 10.sp,
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

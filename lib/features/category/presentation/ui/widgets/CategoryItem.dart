@@ -23,7 +23,7 @@ Widget CategoryItem({
           padding: EdgeInsets.all(10.0.w),
           child: Text(
             text ?? "",
-            style: AppTextStyles.largeText.copyWith(
+            style: AppTextStyles.largeText().copyWith(
                 fontSize: 34.sp, fontWeight: FontWeight.w700, color: textColor),
           ),
         ),

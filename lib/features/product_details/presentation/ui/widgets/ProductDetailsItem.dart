@@ -82,7 +82,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                   children: [
                     Text(
                       "H&m",
-                      style: AppTextStyles.largeText.copyWith(
+                      style: AppTextStyles.largeText().copyWith(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w600,
                           color: const Color(0xFF222222)),
@@ -90,7 +90,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     const Spacer(),
                     Text(
                       "19.99\$",
-                      style: AppTextStyles.largeText.copyWith(
+                      style: AppTextStyles.largeText().copyWith(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w600,
                           color: const Color(0xFF222222)),
@@ -99,7 +99,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 ),
                 Text("Short black dress",
                     style: AppTextStyles.smallText
-                        .copyWith(fontSize: 11.sp, color: greyColor)),
+                        ().copyWith(fontSize: 11.sp, color: greyColor)),
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.orange, size: 14.w),
@@ -110,7 +110,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     SizedBox(width: 4.w),
                     Text("(100)",
                         style: AppTextStyles.smallText
-                            .copyWith(fontSize: 10.sp, color: greyColor)),
+                           () .copyWith(fontSize: 10.sp, color: greyColor)),
                   ],
                 ),
                 SizedBox(height: 14.h),
@@ -122,12 +122,12 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     children: [
                       Text(
                         "Jawa Timur",
-                        style: AppTextStyles.smallText.copyWith(
+                        style: AppTextStyles.smallText().copyWith(
                             fontSize: 12.sp, color: const Color(0xFF000007)),
                       ),
                       Text(
                         "Indonesia Jawa Timur, Indonesia",
-                        style: AppTextStyles.smallText.copyWith(
+                        style: AppTextStyles.smallText().copyWith(
                             fontSize: 12.sp,
                             color: const Color(0xFF61646B).withOpacity(0.8)),
                       )
@@ -136,21 +136,21 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 ]),
                 SizedBox(height: 14.h),
                 Text("Product Details",
-                    style: AppTextStyles.largeText.copyWith(
+                    style: AppTextStyles.largeText().copyWith(
                       fontFamily: GoogleFonts.poppins().fontFamily,
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     )),
                 Text(
                     "Short dress in soft cotton jersey with decorative buttons down the front and a wide,/ frill-trimmed square neckline with concealed elastication. Elasticated seam under the bust and short puff sleeves with a small frill trim.",
-                    style: AppTextStyles.mainText.copyWith(
+                    style: AppTextStyles.mainText().copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 12.sp,
                       color: darkGreyColor,
                     )),
                 SizedBox(height: 14.h),
                 Text("Select Size",
-                    style: AppTextStyles.largeText.copyWith(
+                    style: AppTextStyles.largeText().copyWith(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                     )),
@@ -176,7 +176,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                           ),
                           child: Text(
                             size,
-                            style: AppTextStyles.mainText.copyWith(
+                            style: AppTextStyles.mainText().copyWith(
                               fontWeight: FontWeight.w600,
                               color: isSelected ? Colors.white : Colors.black,
                             ),
@@ -186,7 +186,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 ),
                 SizedBox(height: 14.h),
                 Text("Select Color",
-                    style: AppTextStyles.largeText.copyWith(
+                    style: AppTextStyles.largeText().copyWith(
                       fontWeight: FontWeight.w400,
                       color: Colors.black,
                     )),

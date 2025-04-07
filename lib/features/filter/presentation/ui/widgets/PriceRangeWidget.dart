@@ -29,7 +29,7 @@ class PriceRangeWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Text(
             "Price Range",
-             style: AppTextStyles.largeText.copyWith(
+             style: AppTextStyles.largeText().copyWith(
                         color: darkColor, fontWeight: FontWeight.w600),
                   ),
         ),
@@ -41,10 +41,10 @@ class PriceRangeWidget extends StatelessWidget {
             children: [
               Text("\$${minPrice.toInt()}",
                             style: AppTextStyles.mainText
-                                .copyWith(color: darkColor)),
+                                ().copyWith(color: darkColor)),
                         Text("\$${maxPrice.toInt()}",
                             style: AppTextStyles.mainText
-                                .copyWith(color: darkColor)),
+                                ().copyWith(color: darkColor)),
             ],
           ),
         ),

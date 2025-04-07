@@ -59,7 +59,7 @@ class HomeProduct extends StatelessWidget {
             children: [
               Text(
                 "Recent Products",
-                style: AppTextStyles.mainText.copyWith(
+                style: AppTextStyles.mainText().copyWith(
                     color: const Color(0xFF393F42),
                     fontWeight: FontWeight.w600),
               ),
@@ -71,7 +71,7 @@ class HomeProduct extends StatelessWidget {
                   children: [
                     Text(
                       "Filters",
-                      style: AppTextStyles.smallText.copyWith(
+                      style: AppTextStyles.smallText().copyWith(
                         color: const Color(0xFF393F42),
                       ),
                     ),

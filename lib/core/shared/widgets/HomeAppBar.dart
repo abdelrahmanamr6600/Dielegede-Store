@@ -31,7 +31,7 @@ class HomeAppBar extends StatelessWidget {
                       children: [
                         Text(
                           "Delivery address",
-                          style: AppTextStyles.smallText.copyWith(
+                          style: AppTextStyles.smallText().copyWith(
                             fontSize: 10.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xFFC8C8CB),
@@ -41,7 +41,7 @@ class HomeAppBar extends StatelessWidget {
                           children: [
                             Text(
                               "Salatiga City, Central Java",
-                              style: AppTextStyles.smallText.copyWith(
+                              style: AppTextStyles.smallText().copyWith(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w600,
                                 color: const Color(0xFF393F42),

@@ -23,7 +23,7 @@ class CategorySection extends StatelessWidget {
         children: [
           Text(
             "Category",
-            style: AppTextStyles.mainText.copyWith(
+            style: AppTextStyles.mainText().copyWith(
               fontWeight: FontWeight.w600,
               color: const Color(0xFF393F42),
             ),
@@ -69,7 +69,7 @@ class CategorySection extends StatelessWidget {
                         SizedBox(height: 5.h),
                         Text(
                           category["title"],
-                          style: AppTextStyles.smallText.copyWith(
+                          style: AppTextStyles.smallText().copyWith(
                             color: const Color(0xFF939393),
                           ),
                         ),
@@ -113,7 +113,7 @@ class CategorySection extends StatelessWidget {
                         SizedBox(height: 5.h),
                         Text(
                           "All",
-                          style: AppTextStyles.smallText.copyWith(
+                          style: AppTextStyles.smallText().copyWith(
                             color: const Color(0xFF939393),
                           ),
                         ),

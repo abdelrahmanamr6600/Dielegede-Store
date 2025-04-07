@@ -99,7 +99,7 @@ class ProductItem extends StatelessWidget {
                     children: [
                       Text(
                         product["title"],
-                        style: AppTextStyles.smallText.copyWith(
+                        style: AppTextStyles.smallText().copyWith(
                             color: const Color(0xFF393F42), fontSize: 14.sp),
                       ),
                       Row(
@@ -109,7 +109,7 @@ class ProductItem extends StatelessWidget {
                           SizedBox(width: 5.w),
                           Text(
                             product["rating"].toString(),
-                            style: AppTextStyles.smallText.copyWith(
+                            style: AppTextStyles.smallText().copyWith(
                                 color: Colors.black,
                                 fontSize: 8.sp,
                                 fontWeight: FontWeight.w700),
@@ -121,7 +121,7 @@ class ProductItem extends StatelessWidget {
                   SizedBox(height: 5.h),
                   Text(
                     product["desc"],
-                    style: AppTextStyles.smallText
+                    style: AppTextStyles.smallText()
                         .copyWith(fontSize: 8.sp, color: greyColor),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,

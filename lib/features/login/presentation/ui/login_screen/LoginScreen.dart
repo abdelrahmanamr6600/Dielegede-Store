@@ -38,10 +38,10 @@ class LoginScreen extends StatelessWidget {
                             Image.asset('assets/images/logo.png'),
                             SizedBox(height: 20.h),
                             Text("Welcome Back!",
-                                style: AppTextStyles.largeText.copyWith(
+                                style: AppTextStyles.largeText().copyWith(
                                     fontSize: 24.sp, color: darkColor)),
                             Text("Glade to see you, again!",
-                                style: AppTextStyles.smallText.copyWith(
+                                style: AppTextStyles.smallText().copyWith(
                                     color: greyColor,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 18.sp)),

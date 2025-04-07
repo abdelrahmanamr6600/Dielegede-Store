@@ -29,7 +29,7 @@ class RatingSelectionWidget extends StatelessWidget {
           child: Text(
             "Rating",
             style: AppTextStyles.largeText
-                .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+                ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
           ),
         ),
         SizedBox(height: 20.h),

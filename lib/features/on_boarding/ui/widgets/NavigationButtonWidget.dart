@@ -42,7 +42,7 @@ class NavigationButtonsWidget extends StatelessWidget {
               ),
               child: Text(
                 "Back",
-                style: AppTextStyles.mainText.copyWith(
+                style: AppTextStyles.mainText().copyWith(
                     color: mainColor, fontWeight: FontWeight.w400),
               ),
             )
@@ -58,7 +58,7 @@ class NavigationButtonsWidget extends StatelessWidget {
             ),
             child: Text(
               currentPage == totalPages - 1 ? "Get Started" : "Next",
-              style: AppTextStyles.mainText.copyWith(
+              style: AppTextStyles.mainText().copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),

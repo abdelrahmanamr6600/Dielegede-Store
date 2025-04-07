@@ -14,6 +14,6 @@ class LabeledTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
         style: style ?? AppTextStyles.smallText
-            .copyWith(color: greyColor, fontWeight: FontWeight.w600));
+           ().copyWith(color: greyColor, fontWeight: FontWeight.w600));
   }
 }

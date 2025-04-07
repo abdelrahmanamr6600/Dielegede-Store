@@ -67,7 +67,7 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
                           return CheckboxListTile(
                             title: Text(
                               brand,
-                              style: AppTextStyles.largeText.copyWith(
+                              style: AppTextStyles.largeText().copyWith(
                                 color: isSelected ? mainColor : blackColor,
                                 fontWeight: FontWeight.w400,
                               ),

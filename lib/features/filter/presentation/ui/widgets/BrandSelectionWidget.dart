@@ -37,12 +37,12 @@ class BrandSelectionWidget extends StatelessWidget {
                 Text(
                   "Brand",
                   style: AppTextStyles.largeText
-                      .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+                      ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
                 ),
                 Text(
                   "adidas Originals, Jack & Jones, s.Oliver",
                   style: AppTextStyles.smallText
-                      .copyWith(color: greyColor, fontSize: 11.sp),
+                      ().copyWith(color: greyColor, fontSize: 11.sp),
                 ),
               ],
             ),

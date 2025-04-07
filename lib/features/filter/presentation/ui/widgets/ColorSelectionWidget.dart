@@ -29,7 +29,7 @@ class ColorSelectionWidget extends StatelessWidget {
           child: Text(
             "Colors",
               style: AppTextStyles.largeText
-                      .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+                      ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
                 ),
         ),
         SizedBox(height: 20.h),
