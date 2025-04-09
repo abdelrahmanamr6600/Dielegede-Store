@@ -23,7 +23,7 @@ Widget buildGenderDropdown( String selectedGender ) {
       ),
       dropdownColor: Colors.white,
       value: selectedGender,
-      items: ["Male", "Female"].map((String gender) {
+      items: ["male", "female"].map((String gender) {
         return DropdownMenuItem<String>(
           value: gender,
           child: Text(

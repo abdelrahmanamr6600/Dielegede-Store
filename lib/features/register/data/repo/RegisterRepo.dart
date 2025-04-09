@@ -2,18 +2,18 @@ import 'package:dartz/dartz.dart';
 import 'package:dielegende_store/core/errors/Failures.dart';
 import 'package:dielegende_store/core/utils/api_service.dart';
 import 'package:dielegende_store/core/utils/end_points.dart';
-import 'package:dielegende_store/features/login/data/model/LoginResponse.dart';
+import 'package:dielegende_store/features/register/data/model/RegisterModel.dart';
 import 'package:dio/dio.dart';
 
-class LoginRepo {
+class RegisterRepo {
   final ApisService _apisService;
 
-  LoginRepo(this._apisService);
+  RegisterRepo(this._apisService);
 
- Future<Either<Failure, LoginResponseModel>> userLogin(Map<String, dynamic> data) async {
+ Future<Either<Failure, RegisterResponseModel>> registerUser(Map<String, dynamic> data) async {
     try {
-      final response = await _apisService.post( login , data);
-      final model = LoginResponseModel.fromJson(response);
+      final response = await _apisService.post( register , data);
+      final model = RegisterResponseModel.fromJson(response);
       return Right(model);
     }  on DioException catch (e) {
       return Left(ServicesFailure.fromDioError(e));

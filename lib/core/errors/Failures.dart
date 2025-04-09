@@ -22,8 +22,24 @@ class ServicesFailure extends Failure {
         return ServicesFailure("Bad Certificate ");
 
       case DioExceptionType.badResponse:
-        return ServicesFailure.FromBadResponse(
-            dioError.response?.statusCode ?? 0, dioError.response?.data ?? "");
+        final response = dioError.response;
+        final data = response?.data;
+
+        if (response != null && data is Map<String, dynamic>) {
+          if (data.containsKey('errors')) {
+            final errors = data['errors'] as Map<String, dynamic>;
+            final allMessages = errors.entries
+                .map((e) => e.value is List
+                    ? (e.value as List).join('\n')
+                    : e.value.toString())
+                .join('\n');
+            return ServicesFailure(allMessages);
+          }
+          return ServicesFailure(data['message'] ?? "Unexpected error");
+        }
+
+        return ServicesFailure("Unexpected error");
+
       case DioExceptionType.cancel:
         return ServicesFailure("Request To Api Was Canceled");
 
@@ -42,18 +58,28 @@ class ServicesFailure extends Failure {
 
   factory ServicesFailure.FromBadResponse(int statusCode, dynamic response) {
     if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
-      if (response != null &&
-          response is Map<String, dynamic> &&
-          response['message'] == 'login first') {
-        return ServicesFailure('login_first');
+      if (response is Map<String, dynamic>) {
+        if (response['message'] == 'login first') {
+          return ServicesFailure('login_first');
+        }
+
+        if (response.containsKey('errors')) {
+          final errors = response['errors'] as Map<String, dynamic>;
+          final allMessages = errors.entries
+              .map((e) => e.value is List
+                  ? (e.value as List).join('\n')
+                  : e.value.toString())
+              .join('\n');
+          return ServicesFailure(allMessages);
+        }
+        return ServicesFailure(response['message'] ?? 'Something went wrong');
       }
-      return ServicesFailure(response['error']['message']);
     } else if (statusCode == 404) {
-      return ServicesFailure("Server Not Found 404");
+      return ServicesFailure("Server Not Found (404)");
     } else if (statusCode == 405) {
-      return ServicesFailure("Internal Server Error, Please Try Later");
-    } else {
-      return ServicesFailure("Oops There Is An Error, Please Try Again");
+      return ServicesFailure("Method Not Allowed (405)");
     }
+
+    return ServicesFailure("Oops, there was an error. Please try again.");
   }
 }

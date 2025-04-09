@@ -1,9 +1,24 @@
-import 'package:bloc/bloc.dart';
+import 'package:dielegende_store/features/register/data/repo/RegisterRepo.dart';
 import 'package:dielegende_store/features/register/presentation/cubit/RegisterState.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(RegisterInitialState());
+  RegisterCubit(this._registerRepo) : super(RegisterInitialState());
+  final RegisterRepo _registerRepo;
+
+  Future<void> registerUser(Map<String, dynamic> data) async {
+    emit(RegisterLoading());
+    final result = await _registerRepo.registerUser(data);
+    result.fold(
+      (failure) {
+        emit(RegisterFailure(failure.errorMessage));
+      },
+      (response) {
+        emit(RegisterSuccess(response));
+      },
+    );
+  }
 
 
   IconData? suffix = Icons.visibility_outlined;
@@ -14,7 +29,8 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   void changePasswordVisibility() {
     isPassword = !isPassword;
-    suffix = isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    suffix =
+        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ChangePasswordVisibilityState());
   }
 
@@ -25,4 +41,5 @@ class RegisterCubit extends Cubit<RegisterState> {
         : Icons.visibility_off_outlined;
     emit(ChangeVerifyPasswordVisibilityState());
   }
+
 }

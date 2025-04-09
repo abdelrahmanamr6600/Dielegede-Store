@@ -64,7 +64,6 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 5.h),
                     CustomTextFormField(
-                      suffixSvg: "assets/images/iconEye.svg",
                       hintText: "must be 8 characters",
                       controller: passwordController,
                       inputType: TextInputType.emailAddress,
@@ -87,7 +86,6 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 5.h),
                     CustomTextFormField(
-                      suffixSvg: "assets/images/iconEye.svg",
                       hintText: "repeat password",
                       controller: passwordController,
                       inputType: TextInputType.emailAddress,
