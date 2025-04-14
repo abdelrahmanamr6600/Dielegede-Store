@@ -4,6 +4,7 @@ import 'package:dielegende_store/core/shared/widgets/CustomFormTextField.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomSnackbar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
 import 'package:dielegende_store/core/utils/service_locator.dart';
 import 'package:dielegende_store/features/login/presentation/cubit/LoginCubit.dart';
 import 'package:dielegende_store/features/login/presentation/cubit/LoginState.dart';
@@ -27,10 +28,11 @@ class LoginScreen extends StatelessWidget {
         child: BlocConsumer<LoginCubit, LoginState>(
             listener: (BuildContext context, state) {
           if (state is LoginSuccess) {
+            SecureStorageHelper.saveToken(state.response.token);
             context.push('/navigationScreen');
           } else if (state is LoginFailure) {
             showCustomSnackBar(context, state.message);
-          }
+          }          
         }, builder: (BuildContext context, state) {
           return Scaffold(
               appBar: const CustomAppBar(),

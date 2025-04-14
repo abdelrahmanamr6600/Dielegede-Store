@@ -6,7 +6,8 @@ class ApisService {
 
   ApisService(this._dio);
 
-  Future<Map<String, dynamic>> post(String endPoint, Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> post(
+      String endPoint, Map<String, dynamic> data) async {
     try {
       final response = await _dio.post(endPoint, data: data);
       return response.data;
@@ -25,5 +26,24 @@ class ApisService {
       );
     }
   }
-}
 
+  Future<Map<String, dynamic>> get(String endPoint,{Map<String, dynamic>? query}) async {
+    try {
+      final response = await _dio.get(endPoint , queryParameters: query);
+      return response.data;
+    } on DioException catch (e) {
+      throw DioException(
+        requestOptions: e.requestOptions,
+        response: e.response,
+        type: DioExceptionType.badResponse,
+        error: e.response?.data ?? 'Unknown Error',
+      );
+    } catch (e) {
+      throw DioException(
+        requestOptions: RequestOptions(path: endPoint, queryParameters: query),
+        type: DioExceptionType.unknown,
+        error: e.toString(),
+      );
+    }
+  }
+}

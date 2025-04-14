@@ -2,6 +2,7 @@ import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductGridView.dart';
 import 'package:dielegende_store/core/shared/widgets/SearchWidget.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
+import 'package:dielegende_store/features/search/presentation/ui/widgets/ProductItemSearch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -61,41 +62,26 @@ class SearchScreen extends StatelessWidget {
       appBar: const CustomAppBar(
         title: "Search",
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5.0.w),
-              child: Row(
-                children: [
-                  const Expanded(child: SearchWidget()),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: const Color(0XFFF0F2F1),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(5.r),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: SvgPicture.asset(
-                          AssetsData.filter,
-                          width: 20.w,
-                          height: 20.h,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+            const SearchWidget(),
+            SizedBox(height: 12.h),
+            Expanded(
+              child: GridView.builder(
+                itemCount: products.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.65,
+                ),
+                itemBuilder: (context, index) {
+                  return ProductItemSearch(product: products[index]);
+                },
               ),
             ),
-            ProductGridView(products: products),
           ],
         ),
       ),

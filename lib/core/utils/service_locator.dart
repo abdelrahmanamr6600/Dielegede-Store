@@ -1,5 +1,7 @@
 import 'package:dielegende_store/core/utils/api_service.dart';
 import 'package:dielegende_store/core/utils/const.dart';
+import 'package:dielegende_store/features/home/data/repo/HomeRepo.dart';
+import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/login/data/repo/LoginRepo.dart';
 import 'package:dielegende_store/features/login/presentation/cubit/LoginCubit.dart';
 import 'package:dielegende_store/features/register/data/repo/RegisterRepo.dart';
@@ -13,9 +15,13 @@ void setupServiceLocator() {
   sl.registerLazySingleton(() => ApisService(sl<Dio>()));
   sl.registerLazySingleton(() => RegisterRepo(sl<ApisService>()));
   sl.registerLazySingleton(() => LoginRepo(sl<ApisService>()));
+  sl.registerLazySingleton(() => HomeRepo(sl<ApisService>()));
 
   // sl.registerFactory(() => RegisterCubit(sl<RegisterRepo>())); 
   sl.registerLazySingleton<RegisterCubit>(() => RegisterCubit(sl<RegisterRepo>()));
   sl.registerLazySingleton<LoginCubit>(() => LoginCubit(sl<LoginRepo>()));
+
+    sl.registerLazySingleton<HomeCubit>(() => HomeCubit(sl<HomeRepo>()));
+
 
 }

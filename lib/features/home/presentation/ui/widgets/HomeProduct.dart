@@ -1,53 +1,25 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductItem.dart';
+import 'package:dielegende_store/core/shared/widgets/ProductItemSkeleton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeProduct extends StatelessWidget {
   const HomeProduct({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> products = [
-      {
-        "image": "assets/images/hoody.png",
-        "title": "Cream Hoodie",
-        "price": "199.99",
-        "desc":
-            "It is a long established fact that a reader will be distracted...",
-        "rating": 4.9,
-      },
-      {
-        "image": "assets/images/t-shirt.png",
-        "title": "Black T-shirt",
-        "price": "109.99",
-        "desc":
-            "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-        "rating": 4.7,
-      },
-      {
-        "image": "assets/images/hoody.png",
-        "title": "Cream Hoodie",
-        "price": "199.99",
-        "desc":
-            "It is a long established fact that a reader will be distracted...",
-        "rating": 4.9,
-      },
-      {
-        "image": "assets/images/t-shirt.png",
-        "title": "Black T-shirt",
-        "price": "109.99",
-        "desc":
-            "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-        "rating": 4.7,
-      },
-    ];
+    final pagingController = context.read<HomeCubit>().pagingController;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -89,21 +61,46 @@ class HomeProduct extends StatelessWidget {
           SizedBox(height: 10.h),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0.h),
-            child: GridView.builder(
+            child: PagedGridView<int, ProductModel>(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: products.length,
+              pagingController: pagingController,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.w,
                 mainAxisSpacing: 10.h,
                 childAspectRatio: 0.7,
               ),
-              itemBuilder: (context, index) {
-                final product = products[index];
-
-                return ProductItem(product: product);
-              },
+              builderDelegate: PagedChildBuilderDelegate<ProductModel>(
+                itemBuilder: (context, product, index) => ProductItem(
+                  product: product,
+                ),
+                firstPageErrorIndicatorBuilder: (context) => const Center(
+                  child: Text("Error loading products"),
+                ),
+                noItemsFoundIndicatorBuilder: (context) => const Center(
+                  child: Text("No products found"),
+                ),
+                firstPageProgressIndicatorBuilder: (context) =>
+                    GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: 6,   
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.w,
+                    mainAxisSpacing: 10.h,
+                    childAspectRatio: 0.7,
+                  ),
+                  itemBuilder: (context, index) => const ProductItemSkeleton(),
+                ),
+                newPageProgressIndicatorBuilder: (context) => const Center(
+                  child: CircularProgressIndicator(
+                    color: mainColor,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
