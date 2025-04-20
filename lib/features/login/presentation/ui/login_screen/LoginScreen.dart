@@ -29,10 +29,11 @@ class LoginScreen extends StatelessWidget {
             listener: (BuildContext context, state) {
           if (state is LoginSuccess) {
             SecureStorageHelper.saveToken(state.response.token);
+            print(state.response.token);
             context.push('/navigationScreen');
           } else if (state is LoginFailure) {
             showCustomSnackBar(context, state.message);
-          }          
+          }
         }, builder: (BuildContext context, state) {
           return Scaffold(
               appBar: const CustomAppBar(),

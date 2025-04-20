@@ -1,6 +1,7 @@
 import 'package:dielegende_store/core/shared/widgets/HomeAppBar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/service_locator.dart';
+import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/CategorySection.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProduct.dart';
@@ -31,8 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: homeCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeCubit>.value(value: homeCubit),
+        BlocProvider<CategoryCubit>(
+          create:(_) => sl<CategoryCubit>()..getCategory(),
+        )
+      ],
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(130.h),

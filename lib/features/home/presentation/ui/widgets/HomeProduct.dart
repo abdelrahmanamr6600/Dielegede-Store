@@ -1,5 +1,3 @@
-import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
-import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductItem.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductItemSkeleton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';

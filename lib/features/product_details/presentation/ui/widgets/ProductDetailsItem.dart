@@ -1,13 +1,15 @@
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetailsItem extends StatefulWidget {
-  const ProductDetailsItem({super.key});
+  const ProductDetailsItem({super.key, required this.productModel});
+  final ProductModel productModel;
 
   @override
   State<ProductDetailsItem> createState() => _ProductDetailsItemState();
@@ -24,7 +26,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
   ];
 
   String selectedImage = "assets/images/kids.png";
-  
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -81,7 +83,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 Row(
                   children: [
                     Text(
-                      "H&m",
+                      widget.productModel.name,
                       style: AppTextStyles.largeText().copyWith(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w600,
@@ -89,7 +91,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     ),
                     const Spacer(),
                     Text(
-                      "19.99\$",
+                      "\$${widget.productModel.price}",
                       style: AppTextStyles.largeText().copyWith(
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w600,
@@ -98,8 +100,8 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                   ],
                 ),
                 Text("Short black dress",
-                    style: AppTextStyles.smallText
-                        ().copyWith(fontSize: 11.sp, color: greyColor)),
+                    style: AppTextStyles.smallText()
+                        .copyWith(fontSize: 11.sp, color: greyColor)),
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.orange, size: 14.w),
@@ -109,8 +111,8 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     Icon(Icons.star_half, color: Colors.orange, size: 14.w),
                     SizedBox(width: 4.w),
                     Text("(100)",
-                        style: AppTextStyles.smallText
-                           () .copyWith(fontSize: 10.sp, color: greyColor)),
+                        style: AppTextStyles.smallText()
+                            .copyWith(fontSize: 10.sp, color: greyColor)),
                   ],
                 ),
                 SizedBox(height: 14.h),

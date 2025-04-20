@@ -19,7 +19,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/productDetailsScreen');
+        context.push('/productDetailsScreen' , extra: product);
       },
       child: Container(
         decoration: BoxDecoration(
