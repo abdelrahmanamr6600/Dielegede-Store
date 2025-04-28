@@ -8,7 +8,7 @@ class StoreModel {
   final double latitude;
   final double longitude;
   final String logo;
-  final int isActive;
+  final String status;
 
   StoreModel({
     required this.id,
@@ -20,7 +20,7 @@ class StoreModel {
     required this.latitude,
     required this.longitude,
     required this.logo,
-    required this.isActive,
+    required this.status,
   });
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
@@ -34,7 +34,7 @@ class StoreModel {
       latitude: (json['latitude'] as num).toDouble(),
       longitude: (json['longitude'] as num).toDouble(),
       logo: json['logo'],
-      isActive: json['is_active'],
+      status: json['status'],
     );
   }
 }
@@ -42,19 +42,19 @@ class StoreModel {
 class CategoryModel {
   final int id;
   final String name;
-  final int isActive;
+  final String status;
 
   CategoryModel({
     required this.id,
     required this.name,
-    required this.isActive,
+    required this.status,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['id'],
       name: json['name'],
-      isActive: json['is_active'],
+      status: json['status'],
     );
   }
 }

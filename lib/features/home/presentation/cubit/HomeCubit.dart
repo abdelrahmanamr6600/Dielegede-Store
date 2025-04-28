@@ -25,13 +25,14 @@ class HomeCubit extends Cubit<HometState> {
 
       result.fold(
         (failure) {
+          print('Error fetching page: $pageKey, Error: $failure');
           pagingController.error = failure;
         },
         (newItems) {
           print('Received ${newItems.length} items for page: $pageKey');
           final isLastPage = newItems.length < _pageSize;
           if (isLastPage) {
-            print('Last page reached.'); 
+            print('Last page reached.');
             pagingController.appendLastPage(newItems);
           } else {
             final nextPageKey = pageKey + 1;
@@ -41,6 +42,7 @@ class HomeCubit extends Cubit<HometState> {
         },
       );
     } catch (error) {
+      print(error);
       pagingController.error = error;
     }
   }

@@ -27,7 +27,7 @@ class HomeProduct extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              Text( 
                 "Recent Products",
                 style: AppTextStyles.mainText().copyWith(
                     color: const Color(0xFF393F42),
@@ -73,12 +73,12 @@ class HomeProduct extends StatelessWidget {
                 itemBuilder: (context, product, index) => ProductItem(
                   product: product,
                 ),
-                firstPageErrorIndicatorBuilder: (context) => const Center(
-                  child: Text("Error loading products"),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => const Center(
-                  child: Text("No products found"),
-                ),
+                // firstPageErrorIndicatorBuilder: (context) => const Center(
+                //   child: Text("Error loading products"),
+                // ),
+                // noItemsFoundIndicatorBuilder: (context) => const Center(
+                //   child: Text("No products found"),
+                // ),
                 firstPageProgressIndicatorBuilder: (context) =>
                     GridView.builder(
                   shrinkWrap: true,

@@ -1,5 +1,4 @@
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
-import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeCategoryItemSkeleton.dart';

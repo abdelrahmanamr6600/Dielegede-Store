@@ -6,6 +6,7 @@ import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart
 import 'package:dielegende_store/features/home/presentation/ui/widgets/CategorySection.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProduct.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/SliderBanner.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,15 +20,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late HomeCubit homeCubit;
+  late CategoryCubit categoryCubit;
 
   @override
   void initState() {
     super.initState();
     homeCubit = sl<HomeCubit>();
-    if (homeCubit.pagingController.itemList == null ||
-        homeCubit.pagingController.itemList!.isEmpty) {
-      homeCubit.fetchPage(1);
-    }
+    print("INIT STATE");
+
+    categoryCubit = sl<CategoryCubit>();
+    categoryCubit.getCategory();
+    context.read<WishListCubit>().loadFavorites();
   }
 
   @override
@@ -35,9 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>.value(value: homeCubit),
-        BlocProvider<CategoryCubit>(
-          create:(_) => sl<CategoryCubit>()..getCategory(),
-        )
+        BlocProvider<CategoryCubit>.value(value: categoryCubit),
+        
       ],
       child: Scaffold(
         appBar: PreferredSize(

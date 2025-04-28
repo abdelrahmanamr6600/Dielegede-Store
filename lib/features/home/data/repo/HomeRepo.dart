@@ -11,16 +11,19 @@ class HomeRepo {
       {int page = 1}) async {
     try {
       final response = await _apisService
-          .get('/api/v1/products', query: {'page': page, 'per_page': 10});
+          .get('/products', query: {'page': page, 'per_page': 10});
       List<ProductModel> products = (response['data']['data'] as List)
           .map((e) => ProductModel.fromJson(e))
           .toList();
-      Println('error: ${response.toString()}');
+      print('Result: $response');
+      print('products: $products');
+
+      // Println('error: ${response.toString()}');
 
       return Right(products);
     } on DioException catch (e) {
-      Println('error: ${e.response?.data}');
-      Println('error: ${e}');
+      print('error: ${e.response?.data}');
+      print('error: ${e}');
 
       return Left(ServicesFailure.fromDioError(e));
     }
