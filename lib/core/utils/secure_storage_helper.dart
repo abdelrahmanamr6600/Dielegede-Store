@@ -7,8 +7,8 @@ class SecureStorageHelper {
     await secureStorageHelper.write(key: 'token', value: token);
   }
 
-  static Future<void> getToken() async {
-    await secureStorageHelper.read(key: 'token');
+  static Future<String?> getToken() async {
+   return await secureStorageHelper.read(key: 'token');
   }
 
   static Future<void> deleteToken() async {

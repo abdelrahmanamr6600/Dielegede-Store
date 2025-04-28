@@ -11,18 +11,38 @@ class WishListRepo {
   WishListRepo(this._apisService);
 
   Future<void> addToWishList(int productId) async {
-    await _apisService.post("${EndPoints.addToWishList}$productId", {});
+    try {
+      await _apisService.post("${EndPoints.addToWishList}$productId", {});
+    } on DioException catch (e) {
+      print(e.error.toString());
+      throw ServicesFailure.fromDioError(e);
+    }
   }
 
   Future<void> removeFromWishList(int productId) async {
-    await _apisService
-        .post("${EndPoints.removeFromWishList}$productId", {});
+    try {
+      await _apisService.post("${EndPoints.removeFromWishList}$productId", {});
+    } on DioException catch (e) {
+      print(e.error.toString());
+      throw ServicesFailure.fromDioError(e);
+    }
   }
 
-  Future<Either<Failure, WishListmodel>> getWishList() async {
+ Future<List<int>> getFavoriteProductIds() async {
+  try {
+    final response = await _apisService.get(EndPoints.getWishList); // دا هو endpoint المفضلة
+    final data = response["data"]["data"] as List;
+    return data.map<int>((item) => item["product_id"] as int).toList();
+  } on DioException catch (e) {
+    print(e.error.toString());
+    throw ServicesFailure.fromDioError(e);
+  }
+}
+
+  Future<Either<Failure, FavoriteProductsResponse>> getWishList() async {
     try {
       final response = await _apisService.get(EndPoints.getWishList);
-      return Right(WishListmodel.fromJson(response));
+      return Right(FavoriteProductsResponse.fromJson(response));
     } on DioException catch (e) {
       return Left(ServicesFailure.fromDioError(e));
     }

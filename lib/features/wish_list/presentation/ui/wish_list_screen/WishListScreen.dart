@@ -1,79 +1,30 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductGridView.dart';
+import 'package:dielegende_store/core/shared/widgets/ProductItemSkeleton.dart';
 import 'package:dielegende_store/core/shared/widgets/SearchWidget.dart';
+import 'package:dielegende_store/core/utils/service_locator.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
 import 'package:dielegende_store/features/wish_list/presentation/ui/widgets/ProductItemFav.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class WishListScreen extends StatelessWidget {
-  WishListScreen({super.key});
+class WishListScreen extends StatefulWidget {
+  const WishListScreen({super.key});
+  @override
+  State<WishListScreen> createState() => _WishListScreenState();
+}
 
-  final List<Map<String, dynamic>> products = [
-    {
-      "image": "assets/images/hoody.png",
-      "title": "Cream Hoodie",
-      "price": "199.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted...",
-      "rating": 4.9,
-    },
-    {
-      "image": "assets/images/t-shirt.png",
-      "title": "Black T-shirt",
-      "price": "109.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-      "rating": 4.7,
-    },
-    {
-      "image": "assets/images/t-shirt.png",
-      "title": "Black T-shirt",
-      "price": "109.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-      "rating": 4.7,
-    },
-    {
-      "image": "assets/images/hoody.png",
-      "title": "Cream Hoodie",
-      "price": "199.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted...",
-      "rating": 4.9,
-    },
-    {
-      "image": "assets/images/hoody.png",
-      "title": "Cream Hoodie",
-      "price": "199.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted...",
-      "rating": 4.9,
-    },
-    {
-      "image": "assets/images/t-shirt.png",
-      "title": "Black T-shirt",
-      "price": "109.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-      "rating": 4.7,
-    },
-    {
-      "image": "assets/images/t-shirt.png",
-      "title": "Black T-shirt",
-      "price": "109.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted by the readable content of a page w...",
-      "rating": 4.7,
-    },
-    {
-      "image": "assets/images/hoody.png",
-      "title": "Cream Hoodie",
-      "price": "199.99",
-      "desc":
-          "It is a long established fact that a reader will be distracted...",
-      "rating": 4.9,
-    },
-  ];
+class _WishListScreenState extends State<WishListScreen> {
+  late final WishListCubit wishListCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    wishListCubit = context.read<WishListCubit>();
+    wishListCubit.getWishList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,16 +40,42 @@ class WishListScreen extends StatelessWidget {
             const SearchWidget(),
             SizedBox(height: 12.h),
             Expanded(
-              child: GridView.builder(
-                itemCount: products.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 12,
-                  crossAxisSpacing: 12,
-                  childAspectRatio: 0.65,
-                ),
-                itemBuilder: (context, index) {
-                  return ProductItemFav(product: products[index]);
+              child: BlocBuilder<WishListCubit, WishListState>(
+                builder: (context, state) {
+                  if (state is WishListLoading) {
+                    return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          childAspectRatio: 0.65,
+                        ),
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return const ProductItemSkeleton();
+                        });
+                  } else if (state is WishListFailure) {
+                    return Center(child: Text(state.message));
+                  } else if (state is WishListSuccess) {
+                    return GridView.builder(
+                      itemCount: state.items.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        childAspectRatio: 0.65,
+                      ),
+                      itemBuilder: (context, index) {
+                        final wishListItem = state.items[index];
+                        return ProductItemFav(product: wishListItem);
+                      },
+                    );
+                  }
+                  return const Center(
+                    child: Text("No items found"),
+                  );
                 },
               ),
             ),

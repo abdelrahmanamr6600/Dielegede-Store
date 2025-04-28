@@ -1,8 +1,10 @@
 import 'package:dielegende_store/core/utils/app_router.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/core/utils/service_locator.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -22,15 +24,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 800),
-      child: MaterialApp.router(
-        locale: const Locale(
-          'en',
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<WishListCubit>(
+            create: (context) => sl<WishListCubit>()),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(375, 800),
+        child: MaterialApp.router(
+          locale: const Locale(
+            'en',
+          ),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(useMaterial3: true),
+          routerConfig: appRouter,
         ),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(useMaterial3: true),
-        routerConfig: appRouter,
       ),
     );
   }

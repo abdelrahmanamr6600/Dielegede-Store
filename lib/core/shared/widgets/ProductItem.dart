@@ -1,16 +1,18 @@
-import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
-import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductItem extends StatelessWidget {
   final ProductModel product;
+
   final bool showButton;
 
   const ProductItem({super.key, required this.product, this.showButton = true});
@@ -19,7 +21,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/productDetailsScreen' , extra: product);
+        context.push('/productDetailsScreen', extra: product);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -73,14 +75,46 @@ class ProductItem extends StatelessWidget {
                           top: 10.h,
                           right: 10.w,
                           child: Container(
-                            width: 20.w,
-                            height: 20.h,
+                            width: 25.w,
+                            height: 25.h,
                             decoration: BoxDecoration(
                               color: mainColor,
                               borderRadius: BorderRadius.circular(8.r),
                             ),
-                            child: Center(
-                              child: SvgPicture.asset(AssetsData.inactiveHeart),
+                            child: BlocBuilder<WishListCubit, WishListState>(
+                              builder: (context, state) {
+                                final isFavorite = context
+                                    .watch<WishListCubit>()
+                                    .state
+                                    .favoriteIds
+                                    .contains(product.id);
+
+                                final isLoading = context
+                                    .watch<WishListCubit>()
+                                    .state
+                                    .loadingIds
+                                    .contains(product.id);
+                                return Center(
+                                    child: InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<WishListCubit>()
+                                        .toggleFavorite(product.id);
+                                  },
+                                  child: isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 1,
+                                        )
+                                      : SvgPicture.asset(
+                                          width: 15.w,
+                                          height: 15.h,
+                                          isFavorite
+                                              ? "assets/icons/activatedHeart.svg"
+                                              : "assets/icons/inactiveHeart.svg",
+                                        ),
+                                ));
+                              },
                             ),
                           ),
                         ),

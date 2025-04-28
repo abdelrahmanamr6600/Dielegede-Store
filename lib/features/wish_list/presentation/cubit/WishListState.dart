@@ -1,48 +1,35 @@
-import 'package:equatable/equatable.dart';
+import 'package:dielegende_store/features/wish_list/data/model/WishListModel.dart';
 
+class WishListState {
+  final Set<int> favoriteIds;
+  final Set<int> loadingIds;
 
-abstract class WishlistState extends Equatable {
-  const WishlistState();
+  WishListState({required this.favoriteIds, required this.loadingIds});
 
-  @override
-  List<Object?> get props => [];
+  WishListState copyWith({
+    Set<int>? favoriteIds,
+    Set<int>? loadingIds,
+  }) {
+    return WishListState(
+      favoriteIds: favoriteIds ?? this.favoriteIds,
+      loadingIds: loadingIds ?? this.loadingIds,
+    );
+  }
 }
 
-class WishlistInitial extends WishlistState {}
 
-class WishlistLoading extends WishlistState {
-  final int productId;
-
-  const WishlistLoading({required this.productId});
-
-  @override
-  List<Object?> get props => [productId];
+class WishListLoading extends WishListState {
+  WishListLoading() : super(favoriteIds: {}, loadingIds: {});
 }
 
-class WishlistAdded extends WishlistState {
-  final int productId;
+class WishListSuccess extends WishListState {
+  final List<FavoriteProduct> items;
 
-  const WishlistAdded({required this.productId});
-
-  @override
-  List<Object?> get props => [productId];
+  WishListSuccess(this.items) : super(favoriteIds: {}, loadingIds: {});
 }
 
-class WishlistRemoved extends WishlistState {
-  final int productId;
-
-  const WishlistRemoved({required this.productId});
-
-  @override
-  List<Object?> get props => [productId];
-}
-
-class WishlistError extends WishlistState {
+class WishListFailure extends WishListState {
   final String message;
-  final int productId;
 
-  const WishlistError({required this.message, required this.productId});
-
-  @override
-  List<Object?> get props => [message, productId];
+  WishListFailure(this.message) : super(favoriteIds: {}, loadingIds: {});
 }
