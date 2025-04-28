@@ -1,15 +1,18 @@
-import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
-import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductItem extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final ProductModel product;
+
   final bool showButton;
 
   const ProductItem({super.key, required this.product, this.showButton = true});
@@ -18,7 +21,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/productDetailsScreen');
+        context.push('/productDetailsScreen', extra: product);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -45,7 +48,7 @@ class ProductItem extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10.r),
                           child: Image.asset(
-                            product["image"],
+                            'assets/images/category_w.png',
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height * 0.25,
                             fit: BoxFit.cover,
@@ -62,9 +65,9 @@ class ProductItem extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5.r),
                             ),
                             child: Text(
-                              "\$${product["price"]}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12.sp),
+                              "\$${product.price}",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 12.sp),
                             ),
                           ),
                         ),
@@ -72,14 +75,46 @@ class ProductItem extends StatelessWidget {
                           top: 10.h,
                           right: 10.w,
                           child: Container(
-                            width: 20.w,
-                            height: 20.h,
+                            width: 25.w,
+                            height: 25.h,
                             decoration: BoxDecoration(
                               color: mainColor,
                               borderRadius: BorderRadius.circular(8.r),
                             ),
-                            child: Center(
-                              child: SvgPicture.asset(AssetsData.inactiveHeart),
+                            child: BlocBuilder<WishListCubit, WishListState>(
+                              builder: (context, state) {
+                                final isFavorite = context
+                                    .watch<WishListCubit>()
+                                    .state
+                                    .favoriteIds
+                                    .contains(product.id);
+
+                                final isLoading = context
+                                    .watch<WishListCubit>()
+                                    .state
+                                    .loadingIds
+                                    .contains(product.id);
+                                return Center(
+                                    child: InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<WishListCubit>()
+                                        .toggleFavorite(product.id);
+                                  },
+                                  child: isLoading
+                                      ? const CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 1,
+                                        )
+                                      : SvgPicture.asset(
+                                          width: 15.w,
+                                          height: 15.h,
+                                          isFavorite
+                                              ? "assets/icons/activatedHeart.svg"
+                                              : "assets/icons/inactiveHeart.svg",
+                                        ),
+                                ));
+                              },
                             ),
                           ),
                         ),
@@ -97,43 +132,47 @@ class ProductItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        product["title"],
-                        style: AppTextStyles.smallText().copyWith(
-                            color: const Color(0xFF393F42), fontSize: 14.sp),
+                      Expanded(
+                        child: Text(
+                          product.name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: AppTextStyles.smallText().copyWith(
+                              color: const Color(0xFF393F42), fontSize: 14.sp),
+                        ),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(AssetsData.rate,
-                              width: 10.w, height: 8.h),
-                          SizedBox(width: 5.w),
-                          Text(
-                            product["rating"].toString(),
-                            style: AppTextStyles.smallText().copyWith(
-                                color: Colors.black,
-                                fontSize: 8.sp,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     SvgPicture.asset(AssetsData.rate,
+                      //         width: 10.w, height: 8.h),
+                      //     SizedBox(width: 5.w),
+                      //     Text(
+                      //       product.category.,
+                      //       style: AppTextStyles.smallText().copyWith(
+                      //           color: Colors.black,
+                      //           fontSize: 8.sp,
+                      //           fontWeight: FontWeight.w700),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    product["desc"],
+                    product.category.name,
                     style: AppTextStyles.smallText()
                         .copyWith(fontSize: 8.sp, color: greyColor),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 5.h),
-                  if(showButton)...[
-                  CustomButton(
-                    onPressed: () {},
-                    text: "Book in bag",
-                    height: 30.h,
-                    color: mainColor,
-                  ),
+                  if (showButton) ...[
+                    CustomButton(
+                      onPressed: () {},
+                      text: "Book in bag",
+                      height: 30.h,
+                      color: mainColor,
+                    ),
                   ]
                 ],
               ),

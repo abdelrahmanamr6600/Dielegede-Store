@@ -12,7 +12,7 @@ class LoginRepo {
 
  Future<Either<Failure, LoginResponseModel>> userLogin(Map<String, dynamic> data) async {
     try {
-      final response = await _apisService.post( login , data);
+      final response = await _apisService.post( EndPoints.login , data);
       final model = LoginResponseModel.fromJson(response);
       return Right(model);
     }  on DioException catch (e) {

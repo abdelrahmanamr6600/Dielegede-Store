@@ -9,4 +9,4 @@ const onBoardingDesc2 =
 const onBoardingDesc3 =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor.";
 
-const baseUrl = "https://store.dlegende.net";
+const baseUrl = "https://store.dlegende.net/api/v1";

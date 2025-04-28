@@ -12,7 +12,7 @@ class RegisterRepo {
 
  Future<Either<Failure, RegisterResponseModel>> registerUser(Map<String, dynamic> data) async {
     try {
-      final response = await _apisService.post( register , data);
+      final response = await _apisService.post( EndPoints.register , data);
       final model = RegisterResponseModel.fromJson(response);
       return Right(model);
     }  on DioException catch (e) {

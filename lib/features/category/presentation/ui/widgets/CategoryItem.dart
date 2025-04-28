@@ -11,7 +11,7 @@ Widget CategoryItem({
 }) {
   return Container(
     decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+        image: DecorationImage(image: AssetImage(image), fit: BoxFit.fill)),
     child: Stack(children: [
       if (backgroundColor != null)
         Container(
@@ -20,11 +20,11 @@ Widget CategoryItem({
       Align(
         alignment: alignment,
         child: Padding(
-          padding: EdgeInsets.all(10.0.w),
+          padding: EdgeInsets.all(12.0.w),
           child: Text(
             text ?? "",
             style: AppTextStyles.largeText().copyWith(
-                fontSize: 34.sp, fontWeight: FontWeight.w700, color: textColor),
+                fontSize: 25.sp, fontWeight: FontWeight.w700, color: textColor),
           ),
         ),
       )

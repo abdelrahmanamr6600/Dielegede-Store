@@ -1,4 +1,5 @@
 import 'package:dielegende_store/core/shared/widgets/ProductItem.dart';
+import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +9,7 @@ class ProductGridView extends StatelessWidget {
     required this.products,
   });
 
-  final List<Map<String, dynamic>> products;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
