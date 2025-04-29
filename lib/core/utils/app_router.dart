@@ -9,6 +9,8 @@ import 'package:dielegende_store/features/login/presentation/ui/login_screen/Log
 import 'package:dielegende_store/features/navigation/presentation/ui/navigation_screen/NavigationScreen.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
 import 'package:dielegende_store/features/product_details/presentation/ui/product_details_screen/ProductDetailsScreen.dart';
+import 'package:dielegende_store/features/profile/presentation/ui/edit_profile_screen/EditProfileScreen.dart';
+import 'package:dielegende_store/features/profile/presentation/ui/profile_screen/ProfileScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/otp_screen/OtpScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/register_screen/RegisterScreen.dart';
 import 'package:dielegende_store/features/welcome/ui/WelcomeScreen.dart';
@@ -68,5 +70,9 @@ final GoRouter appRouter = GoRouter(
         builder: (context, state) => const BrandSelectionScreen()),
     GoRoute(
         path: '/categoryScreen', builder: (context, state) => CategoryScreen()),
+    GoRoute(
+        path: '/editProfileScreen', builder: (context, state) => EditProfileScreen()),
+        GoRoute(
+        path: '/profileScreen', builder: (context, state) => ProfileScreen()),
   ],
 );

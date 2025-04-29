@@ -1,7 +1,9 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/features/profile/presentation/ui/widgets/ProfileLisTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -60,13 +62,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )
                 ],
               ),
-              const Column(
+              Column(
                 children: [
-                  CustomListTile(title: "Your Profile"),
-                  CustomListTile(title: "Language"),
-                  CustomListTile(title: "Privacy policy"),
-                  CustomListTile(title: "Invites Firends"),
-                  CustomListTile(title: "Log out"),
+                  ProfileLisTile(
+                      title: "Your Profile",
+                      onTap: () {
+                        context.push('/editProfileScreen');
+                      }),
+                  ProfileLisTile(title: "Language", onTap: () {}),
+                  ProfileLisTile(title: "Privacy policy", onTap: () {}),
+                  ProfileLisTile(title: "Invites Firends", onTap: () {}),
+                  ProfileLisTile(title: "Log out", onTap: () {}),
                 ],
               )
             ],
@@ -77,41 +83,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-class CustomListTile extends StatelessWidget {
-  const CustomListTile({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: Text(
-            title,
-            style: AppTextStyles.getTextStyle().copyWith(color: Colors.black),
-          ),
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 5.sp, vertical: 10.sp),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            size: MediaQuery.textScalerOf(context).scale(16),
-            color: const Color(0xFF9B9B9B),
-          ),
-          onTap: () {},
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Divider(
-            height: 1.sp,
-            thickness: 0.8,
-            color: Colors.grey.shade300,
-          ),
-        )
-      ],
-    );
-  }
-}

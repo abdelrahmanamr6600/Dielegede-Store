@@ -6,6 +6,8 @@ import 'package:dielegende_store/features/home/data/repo/HomeRepo.dart';
 import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/login/data/repo/LoginRepo.dart';
 import 'package:dielegende_store/features/login/presentation/cubit/LoginCubit.dart';
+import 'package:dielegende_store/features/profile/data/repo/ProfileRepo.dart';
+import 'package:dielegende_store/features/profile/presentation/cubit/ProfileCubit.dart';
 import 'package:dielegende_store/features/register/data/repo/RegisterRepo.dart';
 import 'package:dielegende_store/features/register/presentation/cubit/RegisterCubit.dart';
 import 'package:dielegende_store/features/wish_list/data/repo/WishListRepo.dart';
@@ -22,11 +24,16 @@ void setupServiceLocator() {
   sl.registerLazySingleton(() => HomeRepo(sl<ApisService>()));
   sl.registerLazySingleton(() => CategoryRepo(sl<ApisService>()));
   sl.registerLazySingleton(() => WishListRepo(sl<ApisService>()));
+  sl.registerLazySingleton(() => Profilerepo(sl<ApisService>()));
 
-  // sl.registerFactory(() => RegisterCubit(sl<RegisterRepo>())); 
-  sl.registerLazySingleton<RegisterCubit>(() => RegisterCubit(sl<RegisterRepo>()));
+  // sl.registerFactory(() => RegisterCubit(sl<RegisterRepo>()));
+  sl.registerLazySingleton<RegisterCubit>(
+      () => RegisterCubit(sl<RegisterRepo>()));
   sl.registerLazySingleton<LoginCubit>(() => LoginCubit(sl<LoginRepo>()));
   sl.registerLazySingleton<HomeCubit>(() => HomeCubit(sl<HomeRepo>()));
-  sl.registerLazySingleton<CategoryCubit>(() => CategoryCubit(sl<CategoryRepo>()));
-  sl.registerLazySingleton<WishListCubit>(() => WishListCubit(sl<WishListRepo>()));
+  sl.registerLazySingleton<CategoryCubit>(
+      () => CategoryCubit(sl<CategoryRepo>()));
+  sl.registerLazySingleton<WishListCubit>(
+      () => WishListCubit(sl<WishListRepo>()));
+  sl.registerLazySingleton<ProfileCubit>(() => ProfileCubit(sl<Profilerepo>()));
 }
