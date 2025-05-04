@@ -70,7 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         context.push('/editProfileScreen');
                       }),
                   ProfileLisTile(title: "Language", onTap: () {}),
-                  ProfileLisTile(title: "Privacy policy", onTap: () {}),
+                  ProfileLisTile(title: "Privacy policy", onTap: () {
+                    context.push('/privacyPolicyScreen');
+                  }),
                   ProfileLisTile(title: "Invites Firends", onTap: () {}),
                   ProfileLisTile(title: "Log out", onTap: () {}),
                 ],

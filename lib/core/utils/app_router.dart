@@ -8,17 +8,19 @@ import 'package:dielegende_store/features/home/presentation/ui/home_screen/HomeS
 import 'package:dielegende_store/features/login/presentation/ui/login_screen/LoginScreen.dart';
 import 'package:dielegende_store/features/navigation/presentation/ui/navigation_screen/NavigationScreen.dart';
 import 'package:dielegende_store/features/on_boarding/ui/OnBoardingScreen.dart';
+import 'package:dielegende_store/features/privacy_policy/presentation/ui/PrivacyPolicyScreen.dart';
 import 'package:dielegende_store/features/product_details/presentation/ui/product_details_screen/ProductDetailsScreen.dart';
 import 'package:dielegende_store/features/profile/presentation/ui/edit_profile_screen/EditProfileScreen.dart';
 import 'package:dielegende_store/features/profile/presentation/ui/profile_screen/ProfileScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/otp_screen/OtpScreen.dart';
 import 'package:dielegende_store/features/register/presentation/ui/register_screen/RegisterScreen.dart';
+import 'package:dielegende_store/features/store/presentation/ui/store_screen/StroreScreen.dart';
 import 'package:dielegende_store/features/welcome/ui/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/onboarding',
+  initialLocation: '/homeScreen',
   routes: [
     GoRoute(
       path: '/onboarding',
@@ -69,10 +71,19 @@ final GoRouter appRouter = GoRouter(
         path: '/brandScreen',
         builder: (context, state) => const BrandSelectionScreen()),
     GoRoute(
-        path: '/categoryScreen', builder: (context, state) => CategoryScreen()),
+        path: '/categoryScreen',
+        builder: (context, state) => const CategoryScreen()),
     GoRoute(
-        path: '/editProfileScreen', builder: (context, state) => EditProfileScreen()),
-        GoRoute(
-        path: '/profileScreen', builder: (context, state) => ProfileScreen()),
+        path: '/editProfileScreen',
+        builder: (context, state) => EditProfileScreen()),
+    GoRoute(
+        path: '/profileScreen',
+        builder: (context, state) => const ProfileScreen()),
+    GoRoute(
+        path: '/privacyPolicyScreen',
+        builder: (context, state) => const PrivacyPolicyScreen()),
+    GoRoute(
+        path: '/storeDetailsScreen',
+        builder: (context, state) => StoreDetailsScreen()),
   ],
 );

@@ -5,6 +5,7 @@ import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetailsItem extends StatefulWidget {
@@ -224,11 +225,33 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 SizedBox(
                   height: 25.h,
                 ),
-                CustomButton(
-                  onPressed: () {},
-                  text: "Book in bag",
-                  color: mainColor,
-                  redius: 25.r,
+                Row(
+                  children: [
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: () {},
+                        text: "Book in bag",
+                        color: mainColor,
+                        redius: 25.r,
+                        height: 45.h, 
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        onPressed: () {
+                          context.push('/storeDetailsScreen',
+                              extra: widget.productModel);
+                        },
+                        text: "View Store",
+                        color: greyColor.withOpacity(0.02),
+                        redius: 25.r,
+                        height: 45.h,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 15.h,

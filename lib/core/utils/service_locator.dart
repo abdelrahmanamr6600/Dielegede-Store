@@ -10,6 +10,8 @@ import 'package:dielegende_store/features/profile/data/repo/ProfileRepo.dart';
 import 'package:dielegende_store/features/profile/presentation/cubit/ProfileCubit.dart';
 import 'package:dielegende_store/features/register/data/repo/RegisterRepo.dart';
 import 'package:dielegende_store/features/register/presentation/cubit/RegisterCubit.dart';
+import 'package:dielegende_store/features/store/data/repo/StroreRepo.dart';
+import 'package:dielegende_store/features/store/presentation/cubit/StoreCubit.dart';
 import 'package:dielegende_store/features/wish_list/data/repo/WishListRepo.dart';
 import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
 import 'package:dio/dio.dart';
@@ -25,6 +27,7 @@ void setupServiceLocator() {
   sl.registerLazySingleton(() => CategoryRepo(sl<ApisService>()));
   sl.registerLazySingleton(() => WishListRepo(sl<ApisService>()));
   sl.registerLazySingleton(() => Profilerepo(sl<ApisService>()));
+  sl.registerLazySingleton(() => StoreProductsRepo(sl<ApisService>()));
 
   // sl.registerFactory(() => RegisterCubit(sl<RegisterRepo>()));
   sl.registerLazySingleton<RegisterCubit>(
@@ -36,4 +39,6 @@ void setupServiceLocator() {
   sl.registerLazySingleton<WishListCubit>(
       () => WishListCubit(sl<WishListRepo>()));
   sl.registerLazySingleton<ProfileCubit>(() => ProfileCubit(sl<Profilerepo>()));
+    sl.registerLazySingleton<StoreProductsCubit>(() => StoreProductsCubit(sl<StoreProductsRepo>()));
+
 }
