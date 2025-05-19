@@ -1,16 +1,18 @@
-import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class ProductItemSearch extends StatelessWidget {
-  final Map<String, dynamic> product;
+  final ProductModel product;
   final bool showButton;
 
   const ProductItemSearch(
@@ -20,7 +22,7 @@ class ProductItemSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push('/productDetailsScreen');
+        context.push('/productDetailsScreen', extra: product);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -43,7 +45,7 @@ class ProductItemSearch extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.r),
                     child: Image.asset(
-                      product["image"],
+                      'assets/images/kids.png',
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.25,
                       fit: BoxFit.cover,
@@ -60,7 +62,7 @@ class ProductItemSearch extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.r),
                       ),
                       child: Text(
-                        "\$${product["price"]}",
+                        "\$${product.price}",
                         style: TextStyle(color: Colors.white, fontSize: 12.sp),
                       ),
                     ),
@@ -69,14 +71,47 @@ class ProductItemSearch extends StatelessWidget {
                     top: 10.h,
                     right: 10.w,
                     child: Container(
-                      width: 20.w,
-                      height: 20.h,
+                      width: 25.w,
+                      height: 25.h,
                       decoration: BoxDecoration(
                         color: mainColor,
                         borderRadius: BorderRadius.circular(8.r),
                       ),
-                      child: Center(
-                        child: SvgPicture.asset(AssetsData.inactiveHeart),
+                      child: BlocBuilder<WishListCubit, WishListState>(
+                        builder: (context, state) {
+                          final isFavorite = context
+                              .watch<WishListCubit>()
+                              .state
+                              .favoriteIds
+                              .contains(product.id);
+
+                          final isLoading = context
+                              .watch<WishListCubit>()
+                              .state
+                              .loadingIds
+                              .contains(product.id);
+                          return Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                context
+                                    .read<WishListCubit>()
+                                    .toggleFavorite(product.id);
+                              },
+                              child: isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 1,
+                                    )
+                                  : SvgPicture.asset(
+                                      isFavorite
+                                          ? "assets/icons/activatedHeart.svg"
+                                          : "assets/icons/inactiveHeart.svg",
+                                      width: 15.w,
+                                      height: 15.h,
+                                    ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -89,7 +124,7 @@ class ProductItemSearch extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product["title"],
+                    product.name,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: AppTextStyles.smallText().copyWith(
@@ -99,7 +134,7 @@ class ProductItemSearch extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    product["desc"],
+                    product.description,
                     style: AppTextStyles.smallText().copyWith(
                       fontSize: 8.sp,
                       color: greyColor,
