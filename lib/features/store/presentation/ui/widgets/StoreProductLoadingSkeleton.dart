@@ -4,7 +4,6 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class StoreProductsLoadingSkeleton extends StatelessWidget {
   const StoreProductsLoadingSkeleton({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
