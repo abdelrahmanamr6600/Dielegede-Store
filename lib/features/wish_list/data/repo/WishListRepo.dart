@@ -30,7 +30,7 @@ class WishListRepo {
 
  Future<List<int>> getFavoriteProductIds() async {
   try {
-    final response = await _apisService.get(EndPoints.getWishList); // دا هو endpoint المفضلة
+    final response = await _apisService.get(EndPoints.getWishList);
     final data = response["data"]["data"] as List;
     return data.map<int>((item) => item["product_id"] as int).toList();
   } on DioException catch (e) {
@@ -39,10 +39,10 @@ class WishListRepo {
   }
 }
 
-  Future<Either<Failure, FavoriteProductsResponse>> getWishList() async {
+  Future<Either<Failure, WishlistResponse>> getWishList() async {
     try {
       final response = await _apisService.get(EndPoints.getWishList);
-      return Right(FavoriteProductsResponse.fromJson(response));
+      return Right(WishlistResponse.fromJson(response));
     } on DioException catch (e) {
       return Left(ServicesFailure.fromDioError(e));
     }

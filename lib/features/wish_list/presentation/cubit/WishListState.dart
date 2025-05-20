@@ -17,13 +17,12 @@ class WishListState {
   }
 }
 
-
 class WishListLoading extends WishListState {
   WishListLoading() : super(favoriteIds: {}, loadingIds: {});
 }
 
 class WishListSuccess extends WishListState {
-  final List<FavoriteProduct> items;
+  final List<WishlistItem> items;
 
   WishListSuccess(this.items) : super(favoriteIds: {}, loadingIds: {});
 }

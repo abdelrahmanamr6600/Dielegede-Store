@@ -1,9 +1,6 @@
-import 'package:dartz/dartz.dart';
-import 'package:dielegende_store/core/errors/Failures.dart';
 import 'package:dielegende_store/features/wish_list/data/model/WishListModel.dart';
 import 'package:dielegende_store/features/wish_list/data/repo/WishListRepo.dart';
 import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WishListCubit extends Cubit<WishListState> {
@@ -44,7 +41,7 @@ class WishListCubit extends Cubit<WishListState> {
     ));
   }
 
-  void loadFavorites() async {
+  Future<void> loadFavorites() async {
     try {
       final favoriteIds = await wishListRepo.getFavoriteProductIds();
       emit(state.copyWith(favoriteIds: favoriteIds.toSet()));
@@ -58,11 +55,13 @@ class WishListCubit extends Cubit<WishListState> {
     final response = await wishListRepo.getWishList();
     return response.fold(
       (failure) {
-        print("Error: ${failure.errorMessage}");
         emit(WishListFailure(failure.errorMessage));
       },
       (response) {
-        emit(WishListSuccess(response.data.products));
+        final productList =
+            response.data.items.map((wishlistItem) => wishlistItem).toList();
+
+        emit(WishListSuccess(productList));
       },
     );
   }
@@ -73,19 +72,17 @@ class WishListCubit extends Cubit<WishListState> {
 
       if (state is WishListSuccess) {
         final currentState = state as WishListSuccess;
-        final updatedList = List<FavoriteProduct>.from(currentState.items)
-          ..removeWhere((item) => item.product?.id == productId);
+        final updatedList = List<WishlistItem>.from(currentState.items)
+          ..removeWhere((item) => item.product.id == productId);
 
         emit(WishListSuccess(updatedList));
       }
     } catch (e) {
-      print("Error removing item: $e");
       emit(WishListFailure("Failed to remove item from wish list."));
     }
   }
-}
-  
+
   // void setFavorites(List<int> favIds) {
   //   emit(state.copyWith(favoriteIds: favIds));
   // }
-
+}

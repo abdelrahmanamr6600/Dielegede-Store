@@ -1,117 +1,147 @@
-import 'dart:convert';
 
-class FavoriteProductsResponse {
+import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+
+class WishlistResponse {
   final bool success;
-  final FavoriteProductsData data;
   final bool isAuthenticated;
+  final WishlistDataPagination data;
 
-  FavoriteProductsResponse({
+  WishlistResponse({
     required this.success,
-    required this.data,
     required this.isAuthenticated,
+    required this.data,
   });
 
-  factory FavoriteProductsResponse.fromJson(Map<String, dynamic> json) {
-    return FavoriteProductsResponse(
+  factory WishlistResponse.fromJson(Map<String, dynamic> json) {
+    return WishlistResponse(
       success: json['success'],
-      data: FavoriteProductsData.fromJson(json['data']),
       isAuthenticated: json['is_authenticated'],
+      data: WishlistDataPagination.fromJson(json['data']),
     );
   }
 }
-class FavoriteProductsData {
-  final int currentPage;
-  final List<FavoriteProduct> products;
-  final int total;
 
-  FavoriteProductsData({
+class WishlistDataPagination {
+  final int currentPage;
+  final List<WishlistItem> items;
+  final int lastPage;
+  final int total;
+  final String firstPageUrl;
+  final String lastPageUrl;
+  // final List<Link> links;
+
+  WishlistDataPagination({
     required this.currentPage,
-    required this.products,
+    required this.items,
+    required this.lastPage,
     required this.total,
+    required this.firstPageUrl,
+    required this.lastPageUrl,
+    // required this.links,
   });
 
-  factory FavoriteProductsData.fromJson(Map<String, dynamic> json) {
-    return FavoriteProductsData(
+  factory WishlistDataPagination.fromJson(Map<String, dynamic> json) {
+    return WishlistDataPagination(
       currentPage: json['current_page'],
-      products: List<FavoriteProduct>.from(
-        (json['data'] as List<dynamic>).map(
-          (e) => FavoriteProduct.fromJson(e),
-        ),
+      items: List<WishlistItem>.from(
+        json['data'].map((item) => WishlistItem.fromJson(item)),
       ),
+      lastPage: json['last_page'],
       total: json['total'],
+      firstPageUrl: json['first_page_url'],
+      lastPageUrl: json['last_page_url'],
+      // links: List<Link>.from(json['links'].map((item) => Link.fromJson(item))),
     );
   }
 }
 
-class FavoriteProduct {
+class WishlistItem {
   final int id;
   final int userId;
   final int productId;
-  final Product? product;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final ProductModel product;
 
-  FavoriteProduct({
+  WishlistItem({
     required this.id,
     required this.userId,
     required this.productId,
-    this.product,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.product,
   });
 
-  factory FavoriteProduct.fromJson(Map<String, dynamic> json) {
-    return FavoriteProduct(
+  factory WishlistItem.fromJson(Map<String, dynamic> json) {
+    return WishlistItem(
       id: json['id'],
       userId: json['user_id'],
       productId: json['product_id'],
-      product: json['product'] != null ? Product.fromJson(json['product']) : null,
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
+      product: ProductModel.fromJson(json['product']),
     );
   }
 }
 
-class Product {
+class WishListProductModel {
   final int id;
   final String name;
   final String description;
+  final int storeId;
+  final int categoryId;
+  final double price;
+  final double? discountPrice;
   final List<String> sizes;
   final List<String> colors;
   final List<String> images;
-  final int storeId; // تم إضافة هذا الحقل
-  final int categoryId; // تم إضافة هذا الحقل
-  final double price; // تم إضافة هذا الحقل
-  final double? discountPrice; // تم إضافة هذا الحقل (بـ null safety)
-  final String status; // تم إضافة هذا الحقل
-  final bool isFeatured; // تم إضافة هذا الحقل
-  final int stockQuantity; // تم إضافة هذا الحقل
+  final String status;
+  final bool isFeatured;
+  final int stockQuantity;
+  final double rating;
+  final int totalReviews;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  Product({
+  WishListProductModel({
     required this.id,
     required this.name,
     required this.description,
-    required this.sizes,
-    required this.colors,
-    required this.images,
     required this.storeId,
     required this.categoryId,
     required this.price,
-    this.discountPrice,
+    required this.discountPrice,
+    required this.sizes,
+    required this.colors,
+    required this.images,
     required this.status,
     required this.isFeatured,
     required this.stockQuantity,
+    required this.rating,
+    required this.totalReviews,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
+  factory WishListProductModel.fromJson(Map<String, dynamic> json) {
+    return WishListProductModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      sizes: List<String>.from(jsonDecode(json['sizes'] ?? '[]')),
-      colors: List<String>.from(jsonDecode(json['colors'] ?? '[]')),
-      images: List<String>.from(jsonDecode(json['images'] ?? '[]')),
-      storeId: json['store_id'], // إضافة
-      categoryId: json['category_id'], // إضافة
-      price: json['price'].toDouble(), // إضافة
-      discountPrice: json['discount_price'] != null ? json['discount_price'].toDouble() : null, // إضافة
-      status: json['status'], // إضافة
-      isFeatured: json['is_featured'], // إضافة
-      stockQuantity: json['stock_quantity'], // إضافة
+      storeId: json['store_id'],
+      categoryId: json['category_id'],
+      price: (json['price'] as num).toDouble(),
+      discountPrice: json['discount_price'] != null ? (json['discount_price'] as num).toDouble() : null,
+      sizes: List<String>.from(json['sizes']),
+      colors: List<String>.from(json['colors']),
+      images: List<String>.from(json['images']),
+      status: json['status'],
+      isFeatured: json['is_featured'],
+      stockQuantity: json['stock_quantity'],
+      rating: (json['rating'] as num).toDouble(),
+      totalReviews: json['total_reviews'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 }

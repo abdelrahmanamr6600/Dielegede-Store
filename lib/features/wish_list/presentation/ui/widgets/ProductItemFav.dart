@@ -12,7 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductItemFav extends StatelessWidget {
-  final FavoriteProduct? product;
+  final WishlistItem? product;
   final bool showButton;
 
   const ProductItemFav(
@@ -22,7 +22,7 @@ class ProductItemFav extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // context.push('/productDetailsScreen');
+        context.push('/productDetailsScreen', extra: product?.product);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -62,7 +62,7 @@ class ProductItemFav extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5.r),
                       ),
                       child: Text(
-                        "\$${product?.product?.price ?? 0}",
+                        "\$${product?.product.price ?? 0}",
                         style: TextStyle(color: Colors.white, fontSize: 12.sp),
                       ),
                     ),
@@ -72,16 +72,17 @@ class ProductItemFav extends StatelessWidget {
                     right: 10.w,
                     child: BlocBuilder<WishListCubit, WishListState>(
                       builder: (context, state) {
-                        final isLoading = context
-                            .watch<WishListCubit>()
-                            .state
-                            .loadingIds
-                            .contains(product?.product?.id);
+                        // final isLoading = context
+                        //     .watch<WishListCubit>()
+                        //     .state
+                        //     .loadingIds
+                        //     .contains(product?.product?.id);
                         return GestureDetector(
-                          onTap: () {
-                            context
+                          onTap: () async {
+                            await context
                                 .read<WishListCubit>()
-                                .removeFromWishList(product?.product?.id ?? 0);
+                                .removeFromWishList(product?.product.id ?? 0);
+                            print(product?.id);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Row(
@@ -111,18 +112,12 @@ class ProductItemFav extends StatelessWidget {
                               color: mainColor,
                               borderRadius: BorderRadius.circular(8.r),
                             ),
-                            child: isLoading
-                                ? Center(
-                                    child: const CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 1,
-                                  ))
-                                : Center(
-                                    child: SvgPicture.asset(
-                                        width: 15.w,
-                                        height: 15.h,
-                                        "assets/icons/activatedHeart.svg"),
-                                  ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                  width: 15.w,
+                                  height: 15.h,
+                                  "assets/icons/activatedHeart.svg"),
+                            ),
                           ),
                         );
                       },
@@ -137,7 +132,7 @@ class ProductItemFav extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product?.product?.name ?? "",
+                    product?.product.name ?? "",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: AppTextStyles.smallText().copyWith(
@@ -147,7 +142,7 @@ class ProductItemFav extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    product?.product?.description ?? "",
+                    product?.product.description ?? "",
                     style: AppTextStyles.smallText().copyWith(
                       fontSize: 8.sp,
                       color: greyColor,
