@@ -1,4 +1,6 @@
+import 'package:dielegende_store/core/shared/widgets/FailedErrorWidget.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeCategoryItemSkeleton.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class CategorySection extends StatelessWidget {
   final List<Map<String, dynamic>> categories = [
@@ -37,9 +40,18 @@ class CategorySection extends StatelessWidget {
             builder: (context, state) {
               if (state is CategoryLoading) {
                 return const HomeCategoryItemSkeleton();
+              } else if (state is CategoryFailure) {
+                return FailedLoadingData(
+                  text: 'failed loading categories',
+                  fun: () {
+                    context.read<CategoryCubit>().getCategory();
+                  },
+                );
               } else if (state is CategorySuccess) {
                 final categoryList = state.response.data.categories;
-                final homeCategories = categoryList.length > 3 ? categoryList.sublist(0, 3) : categoryList;
+                final homeCategories = categoryList.length > 3
+                    ? categoryList.sublist(0, 3)
+                    : categoryList;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -142,7 +154,7 @@ class CategorySection extends StatelessWidget {
                 );
               }
               return const Center(
-                child: Text("Error loading categories"),
+                child: Text("categories not loaded"),
               );
             },
           ),

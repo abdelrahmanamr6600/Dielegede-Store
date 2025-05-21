@@ -1,6 +1,7 @@
 class StoreModel {
   final int id;
   final String name;
+  final int ownerId;
   final String description;
   final String address;
   final String phone;
@@ -9,10 +10,13 @@ class StoreModel {
   final double longitude;
   final String logo;
   final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   StoreModel({
     required this.id,
     required this.name,
+    required this.ownerId,
     required this.description,
     required this.address,
     required this.phone,
@@ -21,12 +25,15 @@ class StoreModel {
     required this.longitude,
     required this.logo,
     required this.status,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
     return StoreModel(
       id: json['id'],
       name: json['name'],
+      ownerId: json['owner_id'],
       description: json['description'],
       address: json['address'],
       phone: json['phone'],
@@ -35,26 +42,8 @@ class StoreModel {
       longitude: (json['longitude'] as num).toDouble(),
       logo: json['logo'],
       status: json['status'],
-    );
-  }
-}
-
-class CategoryModel {
-  final int id;
-  final String name;
-  final String status;
-
-  CategoryModel({
-    required this.id,
-    required this.name,
-    required this.status,
-  });
-
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
-      id: json['id'],
-      name: json['name'],
-      status: json['status'],
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 }

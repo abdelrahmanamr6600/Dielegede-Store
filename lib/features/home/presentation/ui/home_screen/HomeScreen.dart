@@ -1,11 +1,17 @@
 import 'package:dielegende_store/core/shared/widgets/HomeAppBar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
+import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
 import 'package:dielegende_store/core/utils/service_locator.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
+import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
 import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/CategorySection.dart';
-import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProduct.dart';
+import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProductHeader.dart';
+import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProductGrid.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/SliderBanner.dart';
+import 'package:dielegende_store/features/home/presentation/ui/widgets/StoreSection.dart';
+import 'package:dielegende_store/features/store/presentation/cubit/StoreCubit.dart';
+import 'package:dielegende_store/features/store/presentation/cubit/StoreState.dart';
 import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,27 +27,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late HomeCubit homeCubit;
   late CategoryCubit categoryCubit;
+  late StoreProductsCubit storeProductsCubit;
 
   @override
   void initState() {
     super.initState();
-    homeCubit = sl<HomeCubit>();
-    print("INIT STATE");
+    homeCubit = context.read<HomeCubit>();
+    categoryCubit = context.read<CategoryCubit>();
+    storeProductsCubit = context.read<StoreProductsCubit>();
 
-    categoryCubit = sl<CategoryCubit>();
-    categoryCubit.getCategory();
-    context.read<WishListCubit>().loadFavorites();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!storeProductsCubit.isClosed &&
+          storeProductsCubit.state is! AllStoreSuccessState) {
+        storeProductsCubit.getAllStores();
+      }
+
+      if (!categoryCubit.isClosed && categoryCubit.state is! CategorySuccess) {
+        categoryCubit.getCategory();
+      }
+
+      final token = SecureStorageHelper.getToken();
+      if (token != null && token.toString().isNotEmpty) {
+        context.read<WishListCubit>().loadFavorites();
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<HomeCubit>.value(value: homeCubit),
-        BlocProvider<CategoryCubit>.value(value: categoryCubit),
-        
-      ],
-      child: Scaffold(
+    return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(130.h),
           child: const SafeArea(child: HomeAppBar()),
@@ -51,11 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: [
             SliverToBoxAdapter(child: SliderBanner()),
             SliverToBoxAdapter(child: SizedBox(height: 10.h)),
+            const SliverToBoxAdapter(child: StoreSection()),
+            SliverToBoxAdapter(child: SizedBox(height: 10.h)),
             SliverToBoxAdapter(child: CategorySection()),
-            const SliverToBoxAdapter(child: HomeProduct()),
+            const HomeProductHeader(),
+            const HomeProductGrid(),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -11,17 +11,23 @@ class HomeCubit extends Cubit<HometState> {
       fetchPage(pageKey);
     });
   }
+  String searchQuery = "";
+  void searchProducts(String query) {
+    searchQuery = query;
+    pagingController.refresh();
+  }
 
   final HomeRepo homeRepo;
-  static const _pageSize = 10;
+  static const _pageSize = 20;
 
   final PagingController<int, ProductModel> pagingController =
       PagingController(firstPageKey: 1);
 
   Future<void> fetchPage(int pageKey) async {
     try {
-      print('Fetching data for page: $pageKey');
-      final result = await homeRepo.fetchProduct(page: pageKey);
+     print('Fetching data for page: $pageKey with query: $searchQuery');
+      final result = await homeRepo.fetchProduct(page: pageKey, query: searchQuery);
+
 
       result.fold(
         (failure) {
@@ -47,9 +53,9 @@ class HomeCubit extends Cubit<HometState> {
     }
   }
 
-  // @override
-  // Future<void> close() {
-  //   pagingController.dispose();
-  //   return super.close();
-  // }
+  @override
+  Future<void> close() {
+    pagingController.dispose();
+    return super.close();
+  }
 }
