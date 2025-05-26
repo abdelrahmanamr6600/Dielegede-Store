@@ -1,33 +1,21 @@
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
-import 'package:dielegende_store/features/bag/data/model/BagModel.dart';
 import 'package:dielegende_store/features/bag/data/model/ExpiredProductsModel.dart';
-import 'package:dielegende_store/features/bag/presentation/cubit/BagCubit.dart';
 import 'package:dielegende_store/features/bag/presentation/ui/widgets/RemoveProductDialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-class BagProductItem extends StatelessWidget {
-  final BagItem bagItem;
+class ExpiredBagProductItem extends StatelessWidget {
+  final ExpiredItem bagItem;
   final VoidCallback onDelete;
 
-  const BagProductItem(
+  const ExpiredBagProductItem(
       {super.key, required this.bagItem, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
-    final now = DateTime.now();
-    final expiryTime = bagItem.expiresAt;
-    final remaining = expiryTime.difference(now);
-
-    final hours = remaining.inHours;
-    final minutes = remaining.inMinutes % 60;
-    final seconds = remaining.inSeconds % 60;
-
-    final isExpired = remaining.isNegative;
     return Stack(
       children: [
         Container(
@@ -56,6 +44,7 @@ class BagProductItem extends StatelessWidget {
                     width: 105.w,
                     height: 105.h,
                     fit: BoxFit.fitHeight,
+                    color: Colors.white.withOpacity(0.5),
                     colorBlendMode: BlendMode.modulate,
                   ),
                 ),
@@ -68,63 +57,97 @@ class BagProductItem extends StatelessWidget {
                         bagItem.product.name,
                         style: AppTextStyles.mainText().copyWith(
                           fontSize: 12.sp,
-                          color: greyColor.withOpacity(1),
+                          color: greyColor.withOpacity(0.5),
                         ),
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 4.h),
+                      Text(
+                        "Shirt",
+                        style: AppTextStyles.mainText().copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0XFF222222).withOpacity(0.5),
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
                       Row(
                         children: [
                           Text(
                             "Color: ",
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
-                              color: greyColor.withOpacity(1),
+                              color: greyColor.withOpacity(0.5),
                             ),
                           ),
-                          Flexible(
-                            child: Text(
-                              bagItem.selectedOptions.color,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.mainText().copyWith(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF222222).withOpacity(1),
-                              ),
+                          Text(
+                            bagItem.selectedOptions.color,
+                            style: AppTextStyles.mainText().copyWith(
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xFF222222).withOpacity(0.5),
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 10.h),
-                      Row(
-                        children: [
+                          SizedBox(width: 18.w),
                           Text(
                             "Size: ",
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
-                              color: greyColor.withOpacity(1),
+                              color: greyColor.withOpacity(0.5),
                             ),
                           ),
                           Text(
                             bagItem.selectedOptions.size,
-                            overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w500,
-                              color: const Color(0xFF222222).withOpacity(1),
+                              color: const Color(0xFF222222).withOpacity(0.5),
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 10.h),
+                      SizedBox(height: 8.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "${bagItem.product.price} SAR ",
+                            bagItem.product.price.toString(),
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black.withOpacity(1),
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          ),
+                          SizedBox(width: 40.w),
+                          Expanded(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star,
+                                    color: Colors.amber.withOpacity(0.5),
+                                    size: 14.w),
+                                Icon(Icons.star,
+                                    color: Colors.amber.withOpacity(0.5),
+                                    size: 14.sp),
+                                Icon(Icons.star,
+                                    color: Colors.amber.withOpacity(0.5),
+                                    size: 14.sp),
+                                Icon(Icons.star,
+                                    color: Colors.amber.withOpacity(0.5),
+                                    size: 14.sp),
+                                Icon(Icons.star,
+                                    color: Colors.amber.withOpacity(0.5),
+                                    size: 14.sp),
+                                SizedBox(width: 4.w),
+                                Expanded(
+                                  child: Text(
+                                    '(10)',
+                                    style: TextStyle(
+                                      fontSize: 10.sp,
+                                      color: Colors.grey.withOpacity(0.5),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -132,47 +155,18 @@ class BagProductItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: 50.w),
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.close,
-                              color: greyColor.withOpacity(0.6), size: 20.sp),
-                          onPressed: () {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return RemoveProductDialog(onDelete: onDelete);
-                              },
-                            );
-                          }),
-                      const Spacer(),
-                      SizedBox(height: 10.h),
-                      Container(
-                        padding: EdgeInsets.all(15.r),
-                        decoration: const BoxDecoration(
-                          color: mainColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(AssetsData.timer),
-                            Text(
-                              isExpired ? "Expired" : "$hours h : $minutes m",
-                              style: AppTextStyles.mainText().copyWith(
-                                fontSize: 10.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )
+                IconButton(
+                    icon: Icon(Icons.close, color: darkGreyColor, size: 20.sp),
+                    onPressed: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return RemoveProductDialog(onDelete: onDelete);
+                        },
+                      );
+                    }),
+                SizedBox(width: 10.w),
               ],
             ),
           ),
