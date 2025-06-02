@@ -1,155 +1,114 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
-import 'package:dielegende_store/core/utils/service_locator.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
+import 'package:dielegende_store/features/category/presentation/ui/widgets/CategoryItemSkeleton.dart';
+import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CategoryCubit>()..getCategory(),
-      child: Scaffold(
-        body: BlocBuilder<CategoryCubit, CategoryState>(
-          builder: (context, state) {
-            if (state is CategoryLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: mainColor),
-              );
-            } else if (state is CategorySuccess) {
-              final categories = state.response.data.categories;
-
-              return Padding(
-                padding: EdgeInsets.only(top: 30.h),
-                child: SingleChildScrollView(
-                  child: StaggeredGrid.count(
-                    crossAxisCount: 4,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    children: _buildPatternItems(categories),
-                  ),
-                ),
-              );
-            } else {
-              return const Center(child: Text("فشل في تحميل الفئات"));
-            }
-          },
-        ),
-      ),
-    );
-  }
-
-  List<StaggeredGridTile> _buildPatternItems(List<dynamic> categories) {
-    List<StaggeredGridTile> tiles = [];
-
-    if (categories.isEmpty) return tiles;
-
-    // أول عنصر كبير
-    tiles.add(
-      StaggeredGridTile.count(
-        crossAxisCellCount: 4,
-        mainAxisCellCount: 2,
-        child: CategoryItem(
-          imageUrl: "assets/images/popular.png",
-          name: categories[0].name,
-          textColor: Colors.white,
-          alignment: Alignment.bottomLeft,
-        ),
-      ),
-    );
-
-    // نبدأ من العنصر رقم 1
-    for (int i = 1; i < categories.length; i += 3) {
-      // الاتنين الصغيرين فوق بعض (على اليمين)
-      tiles.add(
-        StaggeredGridTile.count(
-          crossAxisCellCount: 2,
-          mainAxisCellCount: 4,
-          child: Column(
-            children: [
-              if (i + 1 < categories.length)
-                Expanded(
-                  child: CategoryItem(
-                    imageUrl: "assets/images/women.png",
-                    name: categories[i + 1].name,
-                    textColor: mainColor,
-                    alignment: Alignment.center,
-                  ),
-                ),
-              if (i + 2 < categories.length)
-                Expanded(
-                  child: CategoryItem(
-                    imageUrl: "assets/images/kids.png",
-                    name: categories[i + 2].name,
-                    textColor: Colors.white,
-                    alignment: Alignment.center,
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
-
-      // العنصر الكبير (على اليسار)
-      if (i < categories.length) {
-        tiles.add(
-          StaggeredGridTile.count(
-            crossAxisCellCount: 2,
-            mainAxisCellCount: 4,
-            child: CategoryItem(
-              imageUrl: "assets/images/men.png",
-              name: categories[i].name,
-              textColor: Colors.white,
-              alignment: Alignment.bottomLeft,
-            ),
-          ),
-        );
-      }
-    }
-
-    return tiles;
-  }
+  State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
-class CategoryItem extends StatelessWidget {
-  final String imageUrl;
-  final String name;
-  final Color textColor;
-  final Alignment alignment;
-
-  const CategoryItem({super.key, 
-    required this.imageUrl,
-    required this.name,
-    required this.textColor,
-    required this.alignment,
-  });
+class _CategoryScreenState extends State<CategoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<CategoryCubit>().getCategory();
+    WishListCubit wishListCubit = context.read<WishListCubit>();
+    wishListCubit.loadFavorites();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
-        // borderRadius: BorderRadius.circular(12),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const CustomAppBar(
+        title: "All Categories",
       ),
-      alignment: alignment,
-      padding: const EdgeInsets.all(12),
-      child: Text(
-        name,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
+      body: BlocBuilder<CategoryCubit, CategoryState>(
+        builder: (context, state) {
+          if (state is CategoryLoading) {
+            return Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.85,
+                ),
+                itemCount: 8,
+                itemBuilder: (context, index) {
+                  return const CategorySkeletonItem();
+                },
+              ),
+            );
+          } else if (state is CategoryFailure) {
+            return const Center(child: Text("Failed to load categories"));
+          } else if (state is CategorySuccess) {
+            final categories = state.response.data.categories;
+
+            return Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.85,
+                ),
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  final bgColor = index % 4 == 0 || index % 4 == 3
+                      ? const Color(0xFF47BCE5).withOpacity(0.6)
+                      : const Color(0xFFE6FBF8);
+                  return GestureDetector(
+                    onTap: () {
+                      context.push('/categoryProductScreen', extra: {
+                        'id': categories[index].id,
+                        'name': categories[index].name,
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(categories[index].name,
+                                style: AppTextStyles.largeText().copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w800,
+                                    color: darkGreyColor.withOpacity(0.8))),
+                          ),
+                          SizedBox(height: 8.h),
+                          Image.asset(
+                            "assets/images/categ_shoes.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            );
+          }
+          return const SizedBox();
+        },
       ),
     );
   }
