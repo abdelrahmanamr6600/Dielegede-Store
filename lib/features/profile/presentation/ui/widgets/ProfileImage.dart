@@ -1,6 +1,5 @@
+import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProfileImage extends StatelessWidget {
   const ProfileImage({super.key});
@@ -8,7 +7,7 @@ class ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final imageSize = size.width * 0.4;
+    final imageSize = size.width * 0.3;
 
     return Center(
       child: Stack(
@@ -17,28 +16,29 @@ class ProfileImage extends StatelessWidget {
           Container(
             width: imageSize,
             height: imageSize,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
+              color: greyColor.withOpacity(0.4),
               shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/images/men.png'),
-                fit: BoxFit.cover,
+              image: const DecorationImage(
+                image: AssetImage('assets/images/user.png'),
+                fit: BoxFit.contain,
               ),
             ),
           ),
-          Positioned(
-            bottom: 8,
-            right: 8,
-            // child: Container(
-            //   padding: const EdgeInsets.all(6),
-            //   decoration: BoxDecoration(
-            //     shape: BoxShape.circle,
-            //     color: Colors.grey.shade200,
-            //   ),
-            child: SvgPicture.asset(
-              "assets/icons/edit.svg",
-              width: 20.w,
-            ),
-          ),
+          // Positioned(
+          //   bottom: 8,
+          //   right: 8,
+          //   // child: Container(
+          //   //   padding: const EdgeInsets.all(6),
+          //   //   decoration: BoxDecoration(
+          //   //     shape: BoxShape.circle,
+          //   //     color: Colors.grey.shade200,
+          //   //   ),
+          //   child: SvgPicture.asset(
+          //     "",
+          //     width: 20.w,
+          //   ),
+          // ),
         ],
       ),
     );

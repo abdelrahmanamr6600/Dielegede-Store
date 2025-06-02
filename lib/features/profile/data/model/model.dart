@@ -20,29 +20,31 @@ class UpdateProfileModel {
 
 class UserData {
   final int id;
-  final String name;
-  final String email;
-  final String phone;
-  final DateTime birthDate;
-  final String gender;
+  final String? name;
+  final String? email;
+  final String? phone;
+  final DateTime? birthDate;
+  final String? gender;
 
   UserData({
     required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.birthDate,
-    required this.gender,
+    this.name,
+    this.email,
+    this.phone,
+    this.birthDate,
+    this.gender,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
       id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      birthDate: DateTime.parse(json['birth_date']),
-      gender: json['gender'],
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      birthDate: json['birth_date'] != null
+          ? DateTime.tryParse(json['birth_date'])
+          : null,
+      gender: json['gender'] as String?,
     );
   }
 }
