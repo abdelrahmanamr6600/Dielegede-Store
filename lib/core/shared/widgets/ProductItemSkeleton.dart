@@ -10,7 +10,7 @@ class ProductItemSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Skeletonizer(
       child: SizedBox(
-        width: double.infinity,  // هذا مهم جدًا لضمان ملء العرض
+        width: double.infinity,  
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,

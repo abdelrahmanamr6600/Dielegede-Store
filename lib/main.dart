@@ -49,7 +49,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<BagCubit>(create: (context) => sl<BagCubit>()),
         BlocProvider<ProfileCubit>(
           create: (context) => sl<ProfileCubit>()..getProfile(),
-          // lazy: false,
         ),
       ],
       child: ScreenUtilInit(

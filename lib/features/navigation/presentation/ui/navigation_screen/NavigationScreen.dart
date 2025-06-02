@@ -17,7 +17,7 @@ class NavigationScreen extends StatelessWidget {
   NavigationScreen({super.key});
 
   final List<Widget> pages = [
-     HomeScreen(),
+     const HomeScreen(),
     const SearchScreen(),
     const BagScreen(),
     const WishListScreen(),

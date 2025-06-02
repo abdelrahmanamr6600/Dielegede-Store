@@ -35,12 +35,12 @@ class _FilterScreenState extends State<FilterScreen> {
 
   List<String> getSelectedColorStrings() {
     Map<Color, String> colorNameMap = {
-      Color(0xFFF5E3DF): 'beige',
-      Color(0xFF000000): 'black',
-      Color(0xFFE4F2DF): 'lightgreen',
-      Color(0xFFD5E0ED): 'lightblue',
-      Color(0xFFECECEC): 'lightgray',
-      Color(0xFF151867): 'darkblue',
+      const Color(0xFFF5E3DF): 'beige',
+      const Color(0xFF000000): 'black',
+      const Color(0xFFE4F2DF): 'lightgreen',
+      const Color(0xFFD5E0ED): 'lightblue',
+      const Color(0xFFECECEC): 'lightgray',
+      const Color(0xFF151867): 'darkblue',
     };
 
     return selectedColors

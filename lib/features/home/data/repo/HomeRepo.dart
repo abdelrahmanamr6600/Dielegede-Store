@@ -42,9 +42,6 @@ class HomeRepo {
 
       return Right(products);
     } on DioException catch (e) {
-      print('error: ${e.response?.data}');
-      print('error: ${e}');
-
       return Left(ServicesFailure.fromDioError(e));
     }
   }

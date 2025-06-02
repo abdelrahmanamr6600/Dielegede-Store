@@ -14,7 +14,6 @@ class FollowStoreRepo {
     try {
       await _apisService.post("${EndPoints.followStores}$storeId", {});
     } on DioException catch (e) {
-      print(e.error.toString());
       throw ServicesFailure.fromDioError(e);
     }
   }
@@ -23,12 +22,9 @@ class FollowStoreRepo {
     try {
       await _apisService.post("${EndPoints.unFollowStores}$storeId", {});
     } on DioException catch (e) {
-      print(e.error.toString());
       throw ServicesFailure.fromDioError(e);
     }
   }
-
-  // هنبدل المودل بتاع ال wish list ب store model
 
   Future<Either<Failure, FollowedStoresResponse>> getFollowedStores() async {
     try {
@@ -42,7 +38,6 @@ class FollowStoreRepo {
   Future<List<int>> getFollowedStoresIds() async {
     try {
       final response = await _apisService.get(EndPoints.allFollowedStores);
-      print("Response: $response"); // ⬅️ اطبع البيانات وشوفها
       final data = response["data"]["data"] as List;
 
       return data
@@ -51,10 +46,8 @@ class FollowStoreRepo {
           .cast<int>()
           .toList();
     } on DioException catch (e) {
-      print("Dio error: ${e.message}");
       throw ServicesFailure.fromDioError(e);
     } catch (e) {
-      print("Unexpected error: $e"); // ⬅️ أطبع أي خطأ تاني هنا
       rethrow;
     }
   }

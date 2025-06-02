@@ -2,14 +2,12 @@ import 'package:dielegende_store/core/shared/fun/handleAuthActionRequired.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
-import 'package:dielegende_store/core/utils/service_locator.dart';
 import 'package:dielegende_store/features/follow_store/presentation/cubit/FollowStoreCubit.dart';
 import 'package:dielegende_store/features/follow_store/presentation/cubit/FollowStoreState.dart';
 import 'package:dielegende_store/features/store/data/model/AllStoresModel.dart';
 import 'package:dielegende_store/features/store/presentation/cubit/StoreCubit.dart';
 import 'package:dielegende_store/features/store/presentation/cubit/StoreState.dart';
 import 'package:dielegende_store/features/store/presentation/ui/widgets/AllStoreLoading.dart';
-import 'package:dielegende_store/features/store/presentation/ui/widgets/StoreProductLoadingSkeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +25,6 @@ class _AllStoresScreenState extends State<AllStoresScreen> {
   @override
   void initState() {
     super.initState();
-    // context.read<FollowStoreCubit>().loadFollwedIds();
   }
 
   @override

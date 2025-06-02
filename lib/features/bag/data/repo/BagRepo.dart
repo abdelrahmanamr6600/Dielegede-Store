@@ -24,7 +24,6 @@ class BagRepo {
     } on DioException catch (e) {
       throw ServicesFailure.fromDioError(e);
     } catch (e) {
-      print('Unexpected error in addToBag: $e');
 
       throw ServicesFailure("An error occurred while adding to bag: $e");
     }
@@ -34,16 +33,11 @@ class BagRepo {
     try {
       final response = await apisService.get(EndPoints.bag);
 
-      print('Bag response: ${response}');
-      print('Response runtimeType: ${response.runtimeType}');
-
       final bagResponse = BagResponse.fromJson(response);
       return Right(bagResponse);
     } on DioException catch (e) {
-      print('Error in getProductsBag: ${e.message}');
       return Left(ServicesFailure.fromDioError(e));
     } catch (e) {
-      print('Unexpected error in getProductsBag: $e');
       return Left(
         ServicesFailure("Unexpected error: $e"),
       );
@@ -54,16 +48,11 @@ class BagRepo {
     try {
       final response = await apisService.get(EndPoints.expiredBag);
 
-      print('Bag response: ${response}');
-      print('Response runtimeType: ${response.runtimeType}');
-
       final bagResponse = ExpiredBagResponse.fromJson(response);
       return Right(bagResponse);
     } on DioException catch (e) {
-      print('Error in getProductsBag: ${e.message}');
       return Left(ServicesFailure.fromDioError(e));
     } catch (e) {
-      print('Unexpected error in getProductsBag: $e');
       return Left(
         ServicesFailure("Unexpected error: $e"),
       );

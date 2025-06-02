@@ -16,8 +16,6 @@ class SearchProductRepo {
           await apiService.get(EndPoints.advancedProductSearch, query: {
         'search_query': query,
       });
-      print(response); // اطبع الرد هنا
-
       final searchResponse = SearchProductsResponse.fromJson(response);
       return Right(searchResponse.data.products);
     } catch (e) {

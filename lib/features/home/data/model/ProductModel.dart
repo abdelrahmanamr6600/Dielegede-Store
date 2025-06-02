@@ -74,7 +74,7 @@ class ProductModel {
       sizes: List<String>.from(json['sizes']),
       colors: List<String>.from(json['colors']),
       images: List<String>.from(json['images']),
-      status: json['status'], // or json['status'] ?? 'inactive'
+      status: json['status'],
       isFeatured: json['is_featured'],
       stockQuantity: json['stock_quantity'],
       rating: (json['rating'] as num).toDouble(),

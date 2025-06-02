@@ -14,7 +14,6 @@ class WishListRepo {
     try {
       await _apisService.post("${EndPoints.addToWishList}$productId", {});
     } on DioException catch (e) {
-      print(e.error.toString());
       throw ServicesFailure.fromDioError(e);
     }
   }
@@ -23,7 +22,6 @@ class WishListRepo {
     try {
       await _apisService.post("${EndPoints.removeFromWishList}$productId", {});
     } on DioException catch (e) {
-      print(e.error.toString());
       throw ServicesFailure.fromDioError(e);
     }
   }
@@ -34,7 +32,6 @@ class WishListRepo {
     final data = response["data"]["data"] as List;
     return data.map<int>((item) => item["product_id"] as int).toList();
   } on DioException catch (e) {
-    print(e.error.toString());
     throw ServicesFailure.fromDioError(e);
   }
 }

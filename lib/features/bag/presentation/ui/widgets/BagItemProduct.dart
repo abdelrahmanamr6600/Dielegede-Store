@@ -72,7 +72,6 @@ class BagProductItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10.h),
-                      // Color
                       Row(
                         children: [
                           Text(
@@ -86,7 +85,7 @@ class BagProductItem extends StatelessWidget {
                             child: Text(
                               bagItem.selectedOptions.color.isNotEmpty
                                   ? bagItem.selectedOptions.color
-                                  : "Black", // الديفولت
+                                  : "Black", 
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.mainText().copyWith(
                                 fontSize: 12.sp,
@@ -100,7 +99,6 @@ class BagProductItem extends StatelessWidget {
 
                       SizedBox(height: 10.h),
 
-// Size
                       Row(
                         children: [
                           Text(
@@ -113,7 +111,7 @@ class BagProductItem extends StatelessWidget {
                           Text(
                             bagItem.selectedOptions.size.isNotEmpty
                                 ? bagItem.selectedOptions.size
-                                : "M", // الديفولت
+                                : "M", 
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,

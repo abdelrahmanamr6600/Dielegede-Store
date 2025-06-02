@@ -6,7 +6,6 @@ class FollowStoreCubit extends Cubit<FollowStoreState> {
   final FollowStoreRepo followStoreRepo;
   FollowStoreCubit(this.followStoreRepo)
       : super(FollowStoreState(followedIds: <int>{})) {
-    print("FollowStoreCubit Created");
   }
 
   void toggleFollowing(int productId) async {
@@ -56,7 +55,6 @@ class FollowStoreCubit extends Cubit<FollowStoreState> {
       final followedIds = await followStoreRepo.getFollowedStoresIds();
       emit(state.copyWith(followedIds: followedIds.toSet()));
     } catch (e) {
-      print("Error loading favorites: $e");
     }
   }
 }
