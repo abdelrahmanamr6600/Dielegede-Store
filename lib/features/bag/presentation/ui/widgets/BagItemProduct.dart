@@ -4,7 +4,7 @@ import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/bag/data/model/BagModel.dart';
 import 'package:dielegende_store/features/bag/data/model/ExpiredProductsModel.dart';
 import 'package:dielegende_store/features/bag/presentation/cubit/BagCubit.dart';
-import 'package:dielegende_store/features/bag/presentation/ui/widgets/RemoveProductDialog.dart';
+import 'package:dielegende_store/features/bag/presentation/ui/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,6 +72,7 @@ class BagProductItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 10.h),
+                      // Color
                       Row(
                         children: [
                           Text(
@@ -83,7 +84,9 @@ class BagProductItem extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              bagItem.selectedOptions.color,
+                              bagItem.selectedOptions.color.isNotEmpty
+                                  ? bagItem.selectedOptions.color
+                                  : "Black", // الديفولت
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.mainText().copyWith(
                                 fontSize: 12.sp,
@@ -94,7 +97,10 @@ class BagProductItem extends StatelessWidget {
                           ),
                         ],
                       ),
+
                       SizedBox(height: 10.h),
+
+// Size
                       Row(
                         children: [
                           Text(
@@ -105,7 +111,9 @@ class BagProductItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            bagItem.selectedOptions.size,
+                            bagItem.selectedOptions.size.isNotEmpty
+                                ? bagItem.selectedOptions.size
+                                : "M", // الديفولت
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles.mainText().copyWith(
                               fontSize: 12.sp,
@@ -115,6 +123,7 @@ class BagProductItem extends StatelessWidget {
                           ),
                         ],
                       ),
+
                       SizedBox(height: 10.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,45 +142,49 @@ class BagProductItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 50.w),
-                Expanded(
-                  child: Column(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.close,
-                              color: greyColor.withOpacity(0.6), size: 20.sp),
-                          onPressed: () {
-                            showDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              builder: (context) {
-                                return RemoveProductDialog(onDelete: onDelete);
-                              },
-                            );
-                          }),
-                      const Spacer(),
-                      SizedBox(height: 10.h),
-                      Container(
-                        padding: EdgeInsets.all(15.r),
-                        decoration: const BoxDecoration(
-                          color: mainColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(AssetsData.timer),
-                            Text(
-                              isExpired ? "Expired" : "$hours h : $minutes m",
-                              style: AppTextStyles.mainText().copyWith(
-                                fontSize: 10.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
+                Column(
+                  children: [
+                    IconButton(
+                        icon: Icon(Icons.close,
+                            color: greyColor.withOpacity(0.6), size: 20.sp),
+                        onPressed: () {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return CustomDialog(
+                                action: onDelete,
+                                headerMessage: "Remove Product?",
+                                bodyMessage:
+                                    "Are you sure you want to remove this product from your bag?",
+                                buttonText: "Remove",
+                              );
+                            },
+                          );
+                        }),
+                    const Spacer(),
+                    SizedBox(height: 10.h),
+                    Container(
+                      padding: EdgeInsets.all(15.r),
+                      decoration: const BoxDecoration(
+                        color: mainColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(AssetsData.timer),
+                          Text(
+                            isExpired ? "Expired" : "$hours h : $minutes m",
+                            style: AppTextStyles.mainText().copyWith(
+                              fontSize: 10.sp,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 )
               ],
             ),

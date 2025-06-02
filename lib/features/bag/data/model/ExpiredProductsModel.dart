@@ -34,7 +34,6 @@ class ExpiredBagData {
   }
 }
 
-
 class ExpiredItem {
   final int id;
   final int userId;
@@ -76,7 +75,6 @@ class ExpiredItem {
   }
 }
 
-
 class SelectedOptions {
   final String color;
   final String size;
@@ -93,7 +91,6 @@ class SelectedOptions {
     );
   }
 }
-
 
 class ExpiredProduct {
   final int id;
@@ -158,4 +155,3 @@ class ExpiredProduct {
     );
   }
 }
-

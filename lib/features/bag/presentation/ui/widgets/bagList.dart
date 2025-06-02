@@ -15,9 +15,10 @@ Widget buildBagList(List<BagItem> bagItem) {
     padding: EdgeInsets.symmetric(horizontal: 5.w),
     itemBuilder: (context, index) {
       return BagProductItem(
-        onDelete: () {
-          context.read<BagCubit>().deleteItemFromBag(bagItem[index].id);
+        onDelete: () async {
+         await context.read<BagCubit>().deleteItemFromBag(bagItem[index].id);
         },
+        
         bagItem: bagItem[index],
       );
     },

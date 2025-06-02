@@ -63,12 +63,16 @@ class BagItem {
   });
 
   factory BagItem.fromJson(Map<String, dynamic> json) {
+    final selectedOptionsData = json['selected_options'];
+
     return BagItem(
       id: json['id'],
       userId: json['user_id'],
       productId: json['product_id'],
       quantity: json['quantity'],
-      selectedOptions: SelectedOptions.fromJson(json['selected_options']),
+      selectedOptions: selectedOptionsData is Map<String, dynamic>
+          ? SelectedOptions.fromJson(selectedOptionsData)
+          : SelectedOptions(color: '', size: ''), 
       status: json['status'],
       expiresAt: DateTime.parse(json['expires_at']),
       createdAt: DateTime.parse(json['created_at']),
@@ -77,7 +81,6 @@ class BagItem {
     );
   }
 }
-
 
 class SelectedOptions {
   final String color;

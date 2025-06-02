@@ -14,8 +14,11 @@ class BagRepo {
   Future<void> addToBag(
       {required int productId,
       int? quantity,
-      required Map<String, dynamic> selectedOptions}) async {
-    final body = {'product_id': productId, 'selected_options': selectedOptions};
+      Map<String, dynamic>? selectedOptions}) async {
+    final body = {
+      'product_id': productId,
+      'selected_options': selectedOptions ?? {}
+    };
     try {
       await apisService.post(EndPoints.bag, body);
     } on DioException catch (e) {
@@ -47,7 +50,7 @@ class BagRepo {
     }
   }
 
-   Future<Either<Failure, ExpiredBagResponse>> getExpiredProducts() async {
+  Future<Either<Failure, ExpiredBagResponse>> getExpiredProducts() async {
     try {
       final response = await apisService.get(EndPoints.expiredBag);
 
@@ -67,15 +70,14 @@ class BagRepo {
     }
   }
 
-Future<Either<Failure, Unit>> deleteBagItem(int id) async {
-  try {
-    await apisService.delete('${EndPoints.bag}/$id');
-    return const Right(unit);
-  } on DioException catch (e) {
-    return Left(ServicesFailure.fromDioError(e));
-  } catch (e) {
-    return Left(ServicesFailure("Unexpected error: $e"));
+  Future<Either<Failure, Unit>> deleteBagItem(int id) async {
+    try {
+      await apisService.delete('${EndPoints.bag}/$id');
+      return const Right(unit);
+    } on DioException catch (e) {
+      return Left(ServicesFailure.fromDioError(e));
+    } catch (e) {
+      return Left(ServicesFailure("Unexpected error: $e"));
+    }
   }
-}
-
 }

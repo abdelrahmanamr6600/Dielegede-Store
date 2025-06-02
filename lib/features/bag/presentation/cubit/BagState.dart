@@ -24,10 +24,12 @@ class BagErrorState extends Bagstate {
 }
 
 class BagEmptyState extends Bagstate {}
+
 class BagExpiredEmptyState extends Bagstate {}
 
 class BagItemAddedSuccessState extends Bagstate {
-  BagItemAddedSuccessState();
+  final int productId;
+  BagItemAddedSuccessState(this.productId);
 }
 
 class BagItemRemovedState extends Bagstate {
@@ -36,7 +38,12 @@ class BagItemRemovedState extends Bagstate {
   BagItemRemovedState({required this.message});
 }
 
-class BagItemAddedLoadingState extends Bagstate {}
+class BagItemAddedLoadingState extends Bagstate {
+    final int productId;
+
+  BagItemAddedLoadingState(this.productId);
+
+}
 
 class BagItemAddedErrorState extends Bagstate {
   final String error;

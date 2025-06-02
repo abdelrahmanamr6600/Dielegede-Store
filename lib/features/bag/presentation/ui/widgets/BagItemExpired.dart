@@ -2,7 +2,7 @@ import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:dielegende_store/features/bag/data/model/ExpiredProductsModel.dart';
-import 'package:dielegende_store/features/bag/presentation/ui/widgets/RemoveProductDialog.dart';
+import 'package:dielegende_store/features/bag/presentation/ui/widgets/CustomDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -162,9 +162,16 @@ class ExpiredBagProductItem extends StatelessWidget {
                         barrierDismissible: false,
                         context: context,
                         builder: (context) {
-                          return RemoveProductDialog(onDelete: onDelete);
+                          return CustomDialog(
+                            action: onDelete,
+                            headerMessage: "Remove Product?",
+                            bodyMessage:
+                                "Are you sure you want to remove this product from your bag?",
+                            buttonText: "Remove",
+                          );
                         },
                       );
+                      
                     }),
                 SizedBox(width: 10.w),
               ],

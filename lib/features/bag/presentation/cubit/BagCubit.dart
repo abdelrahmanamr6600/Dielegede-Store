@@ -55,14 +55,14 @@ class BagCubit extends Cubit<Bagstate> {
   Future<void> addToBag({
     required int productId,
     int? quantity,
-    required Map<String, dynamic> selectedOptions,
+    Map<String, dynamic>? selectedOptions,
   }) async {
-    emit(BagItemAddedLoadingState());
+    emit(BagItemAddedLoadingState(productId));
     try {
       await bagRepo.addToBag(
-          productId: productId, selectedOptions: selectedOptions);
+          productId: productId, selectedOptions: selectedOptions ?? {});
 
-      emit(BagItemAddedSuccessState());
+      emit(BagItemAddedSuccessState(productId));
     } catch (e) {
       if (e is Failure) {
         emit(BagItemAddedErrorState(error: e.toString()));
@@ -92,8 +92,7 @@ class BagCubit extends Cubit<Bagstate> {
         emit(BagActiveSuccessState(bagItems: List.from(bagItems)));
         emit(BagItemDeleteErrorState(error: failure.errorMessage));
       },
-      (_) {
-      },
+      (_) {},
     );
   }
 
@@ -116,8 +115,7 @@ class BagCubit extends Cubit<Bagstate> {
         emit(BagExpiredSuccessState(expiredItems: List.from(expiredItems)));
         emit(BagExpiredItemDeleteErrorState(error: failure.errorMessage));
       },
-      (_) {
-      },
+      (_) {},
     );
   }
 }

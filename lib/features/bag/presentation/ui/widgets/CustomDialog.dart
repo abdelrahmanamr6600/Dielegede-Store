@@ -2,10 +2,19 @@ import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class RemoveProductDialog extends StatelessWidget {
-  final VoidCallback onDelete;
+class CustomDialog extends StatelessWidget {
+  final VoidCallback action;
+  final String headerMessage;
+  final String bodyMessage;
+  final String buttonText;
 
-  const RemoveProductDialog({super.key, required this.onDelete});
+  const CustomDialog({
+    super.key,
+    required this.action,
+    required this.headerMessage,
+    required this.bodyMessage,
+    required this.buttonText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +31,13 @@ class RemoveProductDialog extends StatelessWidget {
             Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 50.sp),
             SizedBox(height: 15.h),
             Text(
-              "Remove Product?",
+              headerMessage,
               style: AppTextStyles.largeText().copyWith(color: Colors.black),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.h),
             Text(
-              "Are you sure you want to remove this product from your bag?",
+              bodyMessage,
               style: AppTextStyles.smallText().copyWith(
                 color: Colors.grey.shade600,
                 fontSize: 12.sp,
@@ -40,13 +49,13 @@ class RemoveProductDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: OutlinedButton(
+                    onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: Colors.grey.shade400),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
-                    onPressed: () => Navigator.pop(context),
                     child: Text(
                       "Cancel",
                       style: AppTextStyles.mainText().copyWith(
@@ -59,20 +68,17 @@ class RemoveProductDialog extends StatelessWidget {
                 SizedBox(width: 10.w),
                 Expanded(
                   child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      action();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.redAccent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onDelete();
-                    },
-                    child: Text(
-                      "Remove",
-                      style: AppTextStyles.mainText(),
-                    ),
+                    child: Text(buttonText, style: AppTextStyles.mainText()),
                   ),
                 ),
               ],
