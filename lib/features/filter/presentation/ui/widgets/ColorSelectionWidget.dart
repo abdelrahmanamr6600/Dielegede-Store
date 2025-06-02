@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ColorSelectionWidget extends StatelessWidget {
   final List<Color> colors;
-  final Color selectedColor;
+  final List<Color> selectedColors;
   final ValueChanged<Color> onColorSelected;
 
   const ColorSelectionWidget({
     Key? key,
     required this.colors,
-    required this.selectedColor,
+    required this.selectedColors,
     required this.onColorSelected,
   }) : super(key: key);
 
@@ -28,16 +28,16 @@ class ColorSelectionWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Text(
             "Colors",
-              style: AppTextStyles.largeText
-                      ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
-                ),
+            style: AppTextStyles.largeText()
+                .copyWith(color: darkColor, fontWeight: FontWeight.w600),
+          ),
         ),
         SizedBox(height: 20.h),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
             children: colors.map((color) {
-              bool isSelected = selectedColor == color;
+              bool isSelected = selectedColors.contains(color);
               return GestureDetector(
                 onTap: () => onColorSelected(color),
                 child: Container(

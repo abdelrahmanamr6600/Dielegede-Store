@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SizeSelectionWidget extends StatelessWidget {
   final List<String> sizes;
-  final String selectedSize;
+  final List<String> selectedSizes;
   final ValueChanged<String> onSizeSelected;
 
   const SizeSelectionWidget({
     Key? key,
     required this.sizes,
-    required this.selectedSize,
+    required this.selectedSizes,
     required this.onSizeSelected,
   }) : super(key: key);
 
@@ -28,8 +28,8 @@ class SizeSelectionWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Text(
             "Sizes",
-            style: AppTextStyles.largeText
-                ().copyWith(color: darkColor, fontWeight: FontWeight.w600),
+            style: AppTextStyles.largeText()
+                .copyWith(color: darkColor, fontWeight: FontWeight.w600),
           ),
         ),
         SizedBox(height: 20.h),
@@ -39,7 +39,7 @@ class SizeSelectionWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Row(
               children: sizes.map((size) {
-                bool isSelected = selectedSize == size;
+                bool isSelected = selectedSizes.contains(size);
                 return GestureDetector(
                   onTap: () => onSizeSelected(size),
                   child: Container(

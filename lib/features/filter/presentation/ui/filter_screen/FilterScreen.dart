@@ -3,6 +3,7 @@ import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/features/filter/presentation/cubit/FilterProductCubit.dart';
 import 'package:dielegende_store/features/filter/presentation/ui/widgets/ActionButtonWidget.dart';
 import 'package:dielegende_store/features/filter/presentation/ui/widgets/BrandSelectionWidget.dart';
 import 'package:dielegende_store/features/filter/presentation/ui/widgets/CategorySelectionWidget.dart';
@@ -11,6 +12,7 @@ import 'package:dielegende_store/features/filter/presentation/ui/widgets/PriceRa
 import 'package:dielegende_store/features/filter/presentation/ui/widgets/RatingSelectionWidget.dart';
 import 'package:dielegende_store/features/filter/presentation/ui/widgets/SizeSelectionWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -25,11 +27,26 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   double minPrice = 75;
   double maxPrice = 150;
-  Color selectedColor = const Color(0xFFF5E3DF);
-  String selectedSize = "S";
+  List<Color> selectedColors = [];
+  List<String> selectedSizes = [];
   String selectedCategory = "All";
   int selectedRating = 5;
   int startIndex = 0;
+
+  List<String> getSelectedColorStrings() {
+    Map<Color, String> colorNameMap = {
+      Color(0xFFF5E3DF): 'beige',
+      Color(0xFF000000): 'black',
+      Color(0xFFE4F2DF): 'lightgreen',
+      Color(0xFFD5E0ED): 'lightblue',
+      Color(0xFFECECEC): 'lightgray',
+      Color(0xFF151867): 'darkblue',
+    };
+
+    return selectedColors
+        .map((color) => colorNameMap[color] ?? 'unknown')
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,20 +78,28 @@ class _FilterScreenState extends State<FilterScreen> {
                   Color(0xFFECECEC),
                   Color(0xFF151867),
                 ],
-                selectedColor: selectedColor,
+                selectedColors: selectedColors,
                 onColorSelected: (color) {
                   setState(() {
-                    selectedColor = color;
+                    if (selectedColors.contains(color)) {
+                      selectedColors.remove(color);
+                    } else {
+                      selectedColors.add(color);
+                    }
                   });
                 },
               ),
               SizedBox(height: 20.h),
               SizeSelectionWidget(
-                sizes: const ["Xs", "S", "M", "L", "XL"],
-                selectedSize: selectedSize,
+                sizes: const ["XS", "S", "M", "L", "XL"],
+                selectedSizes: selectedSizes,
                 onSizeSelected: (size) {
                   setState(() {
-                    selectedSize = size;
+                    if (selectedSizes.contains(size)) {
+                      selectedSizes.remove(size);
+                    } else {
+                      selectedSizes.add(size);
+                    }
                   });
                 },
               ),
@@ -102,17 +127,31 @@ class _FilterScreenState extends State<FilterScreen> {
                 },
               ),
               SizedBox(height: 20.h),
-              BrandSelectionWidget(
-                title: "Brand",
-                brands: "adidas Originals, Jack & Jones, s.Oliver",
-                onTap: () {
-                  context.push('/brandScreen');
-                },
-              ),
-              SizedBox(height: 20.h),
+              // BrandSelectionWidget(
+              //   title: "Brand",
+              //   brands: "adidas Originals, Jack & Jones, s.Oliver",
+              //   onTap: () {
+              //     context.push('/brandScreen');
+              //   },
+              // ),
+              // SizedBox(height: 20.h),
               ActionButtonsWidget(
-                onDiscard: () {},
-                onApply: () {},
+                onDiscard: () {
+                  // reset filters logic if needed
+                },
+                onApply: () {
+                  context.read<FilterCubit>().getFilteredProducts(
+                        minPrice: minPrice,
+                        maxPrice: maxPrice,
+                        selectedColors: selectedColors
+                            .map((color) =>
+                                '#${color.value.toRadixString(16).padLeft(8, '0')}')
+                            .toList(),
+                        selectedSizes: selectedSizes,
+                      );
+
+                  context.push('/filteredProductsScreen');
+                },
               ),
               SizedBox(height: 10.h),
             ],
