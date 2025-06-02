@@ -3,11 +3,11 @@ import 'package:dielegende_store/features/follow_store/presentation/cubit/Follow
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FollowStoreCubit extends Cubit<FollowStoreState> {
-
   final FollowStoreRepo followStoreRepo;
-  FollowStoreCubit(this.followStoreRepo): super(FollowStoreState(
-          followedIds: <int>{},
-        ));
+  FollowStoreCubit(this.followStoreRepo)
+      : super(FollowStoreState(followedIds: <int>{})) {
+    print("FollowStoreCubit Created");
+  }
 
   void toggleFollowing(int productId) async {
     final isFollow = state.followedIds.contains(productId);
@@ -37,7 +37,6 @@ class FollowStoreCubit extends Cubit<FollowStoreState> {
     // ));
   }
 
-  
   Future<void> getFollowers() async {
     emit(FollowedStoreLoading());
     final response = await followStoreRepo.getFollowedStores();
@@ -52,7 +51,7 @@ class FollowStoreCubit extends Cubit<FollowStoreState> {
     );
   }
 
-   void loadFollwedIds() async {
+  void loadFollwedIds() async {
     try {
       final followedIds = await followStoreRepo.getFollowedStoresIds();
       emit(state.copyWith(followedIds: followedIds.toSet()));
@@ -60,7 +59,4 @@ class FollowStoreCubit extends Cubit<FollowStoreState> {
       print("Error loading favorites: $e");
     }
   }
-
-
-
 }

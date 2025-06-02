@@ -6,18 +6,20 @@ import 'package:flutter_svg/svg.dart';
 BottomNavigationBarItem bottomNavigationBarItem(
     String selectedIcon, String unSelectedIcon ,  String label, bool isActive) {
   return BottomNavigationBarItem(
-      icon: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        transform: (isActive
-            ? (Matrix4.identity()..scale(1.05)) 
-            : (Matrix4.identity()..scale(1.0))),
-        child: SvgPicture.asset(
-          isActive ? selectedIcon : unSelectedIcon,
-          width: 28.w,
-          height: 28.h,
-          colorFilter: ColorFilter.mode(
-              isActive ? mainColor : greyColor, BlendMode.srcIn),
+      icon: GestureDetector(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          transform: (isActive
+              ? (Matrix4.identity()..scale(1.05)) 
+              : (Matrix4.identity()..scale(1.0))),
+          child: SvgPicture.asset(
+            isActive ? selectedIcon : unSelectedIcon,
+            width: 28.w,
+            height: 28.h,
+            colorFilter: ColorFilter.mode(
+                isActive ? mainColor : greyColor, BlendMode.srcIn),
+          ),
         ),
       ),
       label: label

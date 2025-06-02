@@ -85,11 +85,7 @@ class ProductItemSearch extends StatelessWidget {
                               .favoriteIds
                               .contains(product.id);
 
-                          final isLoading = context
-                              .watch<WishListCubit>()
-                              .state
-                              .loadingIds
-                              .contains(product.id);
+                        
                           return Center(
                             child: GestureDetector(
                               onTap: () {
@@ -97,12 +93,7 @@ class ProductItemSearch extends StatelessWidget {
                                     .read<WishListCubit>()
                                     .toggleFavorite(product.id);
                               },
-                              child: isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 1,
-                                    )
-                                  : SvgPicture.asset(
+                              child:  SvgPicture.asset(
                                       isFavorite
                                           ? "assets/icons/activatedHeart.svg"
                                           : "assets/icons/inactiveHeart.svg",

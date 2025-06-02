@@ -28,9 +28,9 @@ class FollowStoreRepo {
     }
   }
 
-  // هنبدل المودل بتاع ال wish list ب store model 
+  // هنبدل المودل بتاع ال wish list ب store model
 
-Future<Either<Failure, FollowedStoresResponse>> getFollowedStores() async {
+  Future<Either<Failure, FollowedStoresResponse>> getFollowedStores() async {
     try {
       final response = await _apisService.get(EndPoints.allFollowedStores);
       return Right(FollowedStoresResponse.fromJson(response));
@@ -38,16 +38,24 @@ Future<Either<Failure, FollowedStoresResponse>> getFollowedStores() async {
       return Left(ServicesFailure.fromDioError(e));
     }
   }
-  
-   Future<List<int>> getFollowedStoresIds() async {
-  try {
-    final response = await _apisService.get(EndPoints.allFollowedStores);
-    final data = response["data"]["data"] as List;
-    return data.map<int>((item) => item["id"] as int).toList();
-  } on DioException catch (e) {
-    print(e.error.toString());
-    throw ServicesFailure.fromDioError(e);
-  }
-}
 
+  Future<List<int>> getFollowedStoresIds() async {
+    try {
+      final response = await _apisService.get(EndPoints.allFollowedStores);
+      print("Response: $response"); // ⬅️ اطبع البيانات وشوفها
+      final data = response["data"]["data"] as List;
+
+      return data
+          .map((item) => item["id"])
+          .where((id) => id != null && id is int)
+          .cast<int>()
+          .toList();
+    } on DioException catch (e) {
+      print("Dio error: ${e.message}");
+      throw ServicesFailure.fromDioError(e);
+    } catch (e) {
+      print("Unexpected error: $e"); // ⬅️ أطبع أي خطأ تاني هنا
+      rethrow;
+    }
+  }
 }

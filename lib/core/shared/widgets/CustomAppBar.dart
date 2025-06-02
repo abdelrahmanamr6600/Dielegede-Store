@@ -1,7 +1,5 @@
-import 'package:dielegende_store/core/utils/app_router.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/assets.dart';
-import 'package:dielegende_store/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -25,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: GestureDetector(
         onTap: () {
           if (context.canPop()) {
-            context.pop();
+            context.pop(true);
           } else {
             print("there is no previous to pop");
           }

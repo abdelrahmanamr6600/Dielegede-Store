@@ -9,6 +9,7 @@ import 'package:dielegende_store/features/wish_list/presentation/ui/widgets/Prod
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 class WishListScreen extends StatefulWidget {
   const WishListScreen({super.key});
@@ -37,8 +38,8 @@ class _WishListScreenState extends State<WishListScreen> {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            const SearchWidget(),
-            SizedBox(height: 12.h),
+            // const SearchWidget(),
+            // SizedBox(height: 12.h),
             Expanded(
               child: BlocBuilder<WishListCubit, WishListState>(
                 builder: (context, state) {
@@ -57,6 +58,13 @@ class _WishListScreenState extends State<WishListScreen> {
                         });
                   } else if (state is WishListFailure) {
                     return Center(child: Text(state.message));
+                  } else if (state is WishListEmpty) {
+                    return Lottie.asset(
+                      "assets/images/empty_wish_list.json",
+                      height: 150.h,
+                      repeat: true,
+                      fit: BoxFit.contain,
+                    );
                   } else if (state is WishListSuccess) {
                     return GridView.builder(
                       itemCount: state.items.length,
@@ -69,7 +77,10 @@ class _WishListScreenState extends State<WishListScreen> {
                       ),
                       itemBuilder: (context, index) {
                         final wishListItem = state.items[index];
-                        return ProductItemFav(product: wishListItem);
+                        return ProductItemFav(
+                          key: ValueKey(wishListItem.product.id),
+                          product: wishListItem,
+                        );
                       },
                     );
                   }

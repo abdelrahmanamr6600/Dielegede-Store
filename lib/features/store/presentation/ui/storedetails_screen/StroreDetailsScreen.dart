@@ -21,20 +21,22 @@ import 'package:go_router/go_router.dart';
 
 class StoreDetailsScreen extends StatefulWidget {
   const StoreDetailsScreen({super.key, required this.storeId});
-  final int storeId;
+  final int? storeId;
 
   @override
   State<StoreDetailsScreen> createState() => _StoreDetailsScreenState();
 }
 
 class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
-
   @override
   void initState() {
     super.initState();
-    context.read<StoreDetailsCubit>().getStoreDetails(widget.storeId);
-    context.read<FollowStoreCubit>().loadFollwedIds();
-  }   
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print(widget.storeId);
+      context.read<StoreDetailsCubit>().getStoreDetails(widget.storeId ?? 1);
+      context.read<FollowStoreCubit>().loadFollwedIds();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +54,6 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
           return const Scaffold(
             backgroundColor: Colors.white,
             body: StoreDetailsLoadingSkeleton(),
-            
           );
         } else if (state is StoreDetailsrrorState) {
           return Scaffold(
@@ -63,9 +64,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
         } else if (state is StoreDetailsSuccessState) {
           return Scaffold(
             backgroundColor: Colors.white,
-            appBar: CustomAppBar(
-              title: state.products.name 
-            ),
+            appBar: CustomAppBar(title: state.products.name),
             body: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 8.0.h),
@@ -97,12 +96,12 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                             fit: BoxFit.cover,
                           ),
                           SizedBox(height: 8.h),
-                          Text(state.products.name ?? "",
+                          Text(state.products.name ?? '',
                               style: AppTextStyles.largeText().copyWith(
                                   color: blackColor, fontSize: 26.sp)),
                           SizedBox(height: 8.h),
                           Text(
-                            state.products.description ?? "",
+                            state.products.description ?? '',
                             style: AppTextStyles.mainText().copyWith(
                                 color: const Color(0xFF000000),
                                 fontWeight: FontWeight.w400),
@@ -115,21 +114,6 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                                       color: const Color(0xFF000000),
                                       fontSize: 20.sp)),
                               const Spacer(),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: mainColor,
-                                ),
-                                child: Center(
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.arrow_forward,
-                                        size: 30,
-                                        color: Colors.white,
-                                      )),
-                                ),
-                              ),
                             ],
                           ),
                           SizedBox(height: 16.h),
@@ -142,32 +126,43 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               separatorBuilder: (_, __) =>
                                   SizedBox(width: 10.w),
                               itemBuilder: (context, index) {
-                                final item = state.products.products[index];
+                                final item = state.products.products![index];
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      child: item.images.isNotEmpty
-                                          ? Image.asset(
-                                              images[index],
-                                              width: 100.w,
-                                              height: 100.h,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Container(
-                                              width: 100.w,
-                                              height: 100.h,
-                                              color: Colors.grey[300],
-                                              child: const Icon(
-                                                  Icons.image_not_supported),
-                                            ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        context.push(
+                                          '/ProductDetailsScreen',
+                                          extra:
+                                              state.products.products![index] ??
+                                                  [],
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        child: item.images?.isNotEmpty ?? false
+                                            ? Image.asset(
+                                                images[index],
+                                                width: 100.w,
+                                                height: 100.h,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(
+                                                width: 100.w,
+                                                height: 100.h,
+                                                color: Colors.grey[300],
+                                                child: const Icon(
+                                                    Icons.image_not_supported),
+                                              ),
+                                      ),
                                     ),
                                     SizedBox(height: 4.h),
                                     SizedBox(
                                       width: 100.w,
                                       child: Text(
-                                        item.name,
+                                        item.name ?? '',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style:
@@ -197,10 +192,11 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                   Expanded(
                     child: CustomButton(
                       onPressed: () {
-                        context.push(
-                          "/StoreLocationScreen",
-                          extra: state.products.address,
-                        );
+                        context.push("/StoreLocationScreen", extra: {
+                          'lat': state.products.latitude,
+                          'lon': state.products.longitude,
+                          'storeName': state.products.name
+                        });
                       },
                       redius: 25.r,
                       height: 45.h,
@@ -221,7 +217,7 @@ class _StoreDetailsScreenState extends State<StoreDetailsScreen> {
                               () async {
                             context
                                 .read<FollowStoreCubit>()
-                                .toggleFollowing(widget.storeId);
+                                .toggleFollowing(widget.storeId ?? 0);
                           });
                         },
                         child: isFollow

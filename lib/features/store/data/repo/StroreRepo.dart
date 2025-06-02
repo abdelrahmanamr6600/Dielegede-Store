@@ -11,19 +11,19 @@ class StoreRepo {
   final ApisService _apiService;
   StoreRepo(this._apiService);
 
-  Future<Either<Failure, StoreProductsResponse>> getStoreProducts(
-      int storeId) async {
-    try {
-      final response = await _apiService.get('/stores/$storeId/products');
-      final products = StoreProductsResponse.fromJson(response);
+  // Future<Either<Failure, StoreProductsResponse>> getStoreProducts(
+  //     int storeId) async {
+  //   try {
+  //     final response = await _apiService.get('/stores/$storeId/products');
+  //     final products = StoreProductsResponse.fromJson(response);
 
-      return Right(products);
-    } on DioException catch (e) {
-      return Left(ServicesFailure.fromDioError(e));
-    } catch (e) {
-      return Left(ServicesFailure(e.toString()));
-    }
-  }
+  //     return Right(products);
+  //   } on DioException catch (e) {
+  //     return Left(ServicesFailure.fromDioError(e));
+  //   } catch (e) {
+  //     return Left(ServicesFailure(e.toString()));
+  //   }
+  // }
 
   Future<Either<Failure, AllStoresModel>> getAllStores() async {
     try {

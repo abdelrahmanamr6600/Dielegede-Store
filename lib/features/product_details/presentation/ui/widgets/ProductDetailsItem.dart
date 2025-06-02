@@ -1,8 +1,12 @@
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
+import 'package:dielegende_store/core/shared/widgets/CustomSnackbar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/features/bag/presentation/cubit/BagCubit.dart';
+import 'package:dielegende_store/features/bag/presentation/cubit/BagState.dart';
 import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
@@ -81,7 +85,9 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                Wrap(
+                  spacing: 8.w,
+                  runSpacing: 4.h,
                   children: [
                     Text(
                       widget.productModel.name,
@@ -90,7 +96,6 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                           fontWeight: FontWeight.w600,
                           color: const Color(0xFF222222)),
                     ),
-                    const Spacer(),
                     Text(
                       "\$${widget.productModel.price}",
                       style: AppTextStyles.largeText().copyWith(
@@ -111,7 +116,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                     Icon(Icons.star, color: Colors.orange, size: 14.w),
                     Icon(Icons.star_half, color: Colors.orange, size: 14.w),
                     SizedBox(width: 4.w),
-                    Text("(100)",
+                    Text("(${widget.productModel.totalReviews.toString()})",
                         style: AppTextStyles.smallText()
                             .copyWith(fontSize: 10.sp, color: greyColor)),
                   ],
@@ -228,12 +233,50 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                 Row(
                   children: [
                     Expanded(
-                      child: CustomButton(
-                        onPressed: () {},
-                        text: "Book in bag",
-                        color: mainColor,
-                        redius: 25.r,
-                        height: 45.h, 
+                      child: BlocConsumer<BagCubit, Bagstate>(
+                        listener: (context, state) {
+                          if (state is BagItemAddedSuccessState) {
+                            showCustomSnackBar(context, "Product added to bag",
+                                icon: Icons.check_circle,
+                                backgroundColor: mainColor,
+                                fontSize: 14.sp);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is BagItemAddedLoadingState) {
+                            return const Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: mainColor,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            );
+                          }
+
+                          return CustomButton(
+                            onPressed: () async {
+                              print("Selected Size: $selectedSize");
+                              print(
+                                  "Selected Color: $getColorName${(selectedColor)}");
+                              print("product is"
+                                  "${widget.productModel.id}");
+                              await context.read<BagCubit>().addToBag(
+                                productId: widget.productModel.id,
+                                selectedOptions: {
+                                  "size": selectedSize,
+                                  "color": getColorName(selectedColor),
+                                },
+                              );
+                            },
+                            text: "Book in bag",
+                            color: mainColor,
+                            redius: 25.r,
+                            height: 45.h,
+                          );
+                        },
                       ),
                     ),
                     SizedBox(
@@ -243,7 +286,7 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
                       child: CustomButton(
                         onPressed: () {
                           context.push('/storeDetailsScreen',
-                              extra: widget.productModel);
+                              extra: widget.productModel.storeId);
                         },
                         text: "View Store",
                         color: greyColor.withOpacity(0.02),
@@ -262,5 +305,21 @@ class _ProductDetailsItemState extends State<ProductDetailsItem> {
         ],
       ),
     );
+  }
+
+  String colorToHex(Color color) {
+    return '#${color.value.toRadixString(16).padLeft(8, '0').substring(2)}';
+  }
+
+  Map<Color, String> colorNameMap = {
+    const Color(0xFF000000): "black",
+    const Color(0xFFF5E3DF): "peach",
+    const Color(0xFFE4F2DF): "greenish",
+    const Color(0xFFD5E0ED): "blueish",
+    const Color(0xFFECECEC): "gray",
+  };
+
+  String getColorName(Color color) {
+    return colorNameMap[color] ?? colorToHex(color);
   }
 }

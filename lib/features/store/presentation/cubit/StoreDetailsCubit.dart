@@ -11,8 +11,14 @@ class StoreDetailsCubit extends Cubit<StoreDetailsState> {
     emit(StoreDetailsLoadingState());
     final result = await storeRepository.getStoreDtetails(storeId);
     result.fold(
-      (failure) => emit(StoreDetailsrrorState(failure.errorMessage)),
-      (store) => emit(StoreDetailsSuccessState(store)),
+      (failure) {
+        print(failure.errorMessage);
+        emit(StoreDetailsrrorState(failure.errorMessage));
+      },
+      (store) {
+        print('Store Details: ${store.toString()}');
+        emit(StoreDetailsSuccessState(store));
+      },
     );
   }
 }

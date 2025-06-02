@@ -11,6 +11,14 @@ class HomeCubit extends Cubit<HometState> {
       fetchPage(pageKey);
     });
   }
+
+   @override
+  Future<void> close() {
+    pagingController.dispose();
+    return super.close();
+  }
+
+  
   String searchQuery = "";
   void searchProducts(String query) {
     searchQuery = query;
@@ -53,9 +61,7 @@ class HomeCubit extends Cubit<HometState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    pagingController.dispose();
-    return super.close();
-  }
+ 
+  
+  
 }

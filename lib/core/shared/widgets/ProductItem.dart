@@ -1,6 +1,12 @@
+import 'package:dielegende_store/core/shared/fun/LoginRequiredBottomSheet.dart';
+import 'package:dielegende_store/core/shared/fun/handleAuthActionRequired.dart';
 import 'package:dielegende_store/core/shared/widgets/CustomButton.dart';
+import 'package:dielegende_store/core/shared/widgets/CustomSnackbar.dart';
 import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/colors.dart';
+import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
+import 'package:dielegende_store/features/bag/presentation/cubit/BagCubit.dart';
+import 'package:dielegende_store/features/bag/presentation/cubit/BagState.dart';
 import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
 import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListCubit.dart';
 import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListState.dart';
@@ -89,30 +95,32 @@ class ProductItem extends StatelessWidget {
                                     .favoriteIds
                                     .contains(product.id);
 
-                                final isLoading = context
-                                    .watch<WishListCubit>()
-                                    .state
-                                    .loadingIds
-                                    .contains(product.id);
                                 return Center(
                                     child: InkWell(
-                                  onTap: () {
-                                    context
-                                        .read<WishListCubit>()
-                                        .toggleFavorite(product.id);
+                                  onTap: () async {
+                                    await handleAuthRequiredAsyncAction(context,
+                                        () async {
+                                      context
+                                          .read<WishListCubit>()
+                                          .toggleFavorite(product.id);
+                                    });
                                   },
-                                  child: isLoading
-                                      ? const CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 1,
-                                        )
-                                      : SvgPicture.asset(
-                                          width: 15.w,
-                                          height: 15.h,
-                                          isFavorite
-                                              ? "assets/icons/activatedHeart.svg"
-                                              : "assets/icons/inactiveHeart.svg",
-                                        ),
+                                  child: AnimatedSwitcher(
+                                    duration: const Duration(milliseconds: 300),
+                                    transitionBuilder: (Widget child,
+                                        Animation<double> animation) {
+                                      return ScaleTransition(
+                                          scale: animation, child: child);
+                                    },
+                                    child: SvgPicture.asset(
+                                      width: 15.w,
+                                      height: 15.h,
+                                      key: ValueKey(isFavorite),
+                                      isFavorite
+                                          ? "assets/icons/activatedHeart.svg"
+                                          : "assets/icons/inactiveHeart.svg",
+                                    ),
+                                  ),
                                 ));
                               },
                             ),
@@ -159,21 +167,57 @@ class ProductItem extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    product.category.name,
+                    product.category?.name ?? "",
                     style: AppTextStyles.smallText()
                         .copyWith(fontSize: 8.sp, color: greyColor),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 5.h),
-                  if (showButton) ...[
-                    CustomButton(
-                      onPressed: () {},
-                      text: "Book in bag",
-                      height: 30.h,
-                      color: mainColor,
-                    ),
-                  ]
+                  BlocConsumer<BagCubit, Bagstate>(
+                    listener: (context, state) {
+                      if (state is BagItemAddedSuccessState &&
+                          state.productId == product.id) {
+                        showCustomSnackBar(context, "Product added to bag",
+                            icon: Icons.check_circle,
+                            backgroundColor: mainColor,
+                            fontSize: 14.sp);
+                      }
+                    },
+                    builder: (context, state) {
+                      final isLoading = state is BagItemAddedLoadingState &&
+                          state.productId == product.id;
+
+                      return isLoading
+                          ? Center(
+                              child: SizedBox(
+                                width: 24.w,
+                                height: 24.h,
+                                child: const CircularProgressIndicator(
+                                  color: mainColor,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                          : CustomButton(
+                              onPressed: () async {
+                                await handleAuthRequiredAsyncAction(context,
+                                    () async {
+                                  await context.read<BagCubit>().addToBag(
+                                        productId: product.id,
+                                      );
+                                });
+                              },
+                              text: "Book in bag",
+                              color: mainColor,
+                              redius: 25.r,
+                              height: 30.h,
+                            );
+                    },
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
                 ],
               ),
             ),

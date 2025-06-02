@@ -1,13 +1,18 @@
 class FollowedStoresResponse {
   final bool success;
-  final FollowedStoresData data;
+  final FollowedStoresData? data;
 
-  FollowedStoresResponse({required this.success, required this.data});
+  FollowedStoresResponse({
+    required this.success,
+    this.data,
+  });
 
   factory FollowedStoresResponse.fromJson(Map<String, dynamic> json) {
     return FollowedStoresResponse(
       success: json['success'],
-      data: FollowedStoresData.fromJson(json['data']),
+      data: json['data'] != null
+          ? FollowedStoresData.fromJson(json['data'])
+          : null,
     );
   }
 }
@@ -16,45 +21,48 @@ class FollowedStoresData {
   final int currentPage;
   final List<Store> data;
   final String? firstPageUrl;
-  final int from;
+  final int? from;
   final int lastPage;
   final String? lastPageUrl;
   final String? nextPageUrl;
   final String path;
   final int perPage;
   final String? prevPageUrl;
-  final int to;
+  final int? to;
   final int total;
 
   FollowedStoresData({
     required this.currentPage,
     required this.data,
     required this.firstPageUrl,
-    required this.from,
+    this.from,
     required this.lastPage,
     required this.lastPageUrl,
     required this.nextPageUrl,
     required this.path,
     required this.perPage,
     required this.prevPageUrl,
-    required this.to,
+    this.to,
     required this.total,
   });
 
   factory FollowedStoresData.fromJson(Map<String, dynamic> json) {
     return FollowedStoresData(
-      currentPage: json['current_page'],
-      data: (json['data'] as List).map((e) => Store.fromJson(e)).toList(),
+      currentPage: json['current_page'] ?? 0,
+      data: (json['data'] as List?)
+              ?.map((e) => Store.fromJson(e))
+              .toList() ??
+          [],
       firstPageUrl: json['first_page_url'],
-      from: json['from'],
-      lastPage: json['last_page'],
+      from: json['from'] ?? 0,
+      lastPage: json['last_page'] ?? 0,
       lastPageUrl: json['last_page_url'],
       nextPageUrl: json['next_page_url'],
-      path: json['path'],
-      perPage: json['per_page'],
+      path: json['path'] ?? '',
+      perPage: json['per_page'] ?? 0,
       prevPageUrl: json['prev_page_url'],
-      to: json['to'],
-      total: json['total'],
+      to: json['to'] ?? 0,
+      total: json['total'] ?? 0,
     );
   }
 }
@@ -73,7 +81,7 @@ class Store {
   final String status;
   final String createdAt;
   final String updatedAt;
-  final Pivot pivot;
+  final Pivot? pivot;
 
   Store({
     required this.id,
@@ -89,25 +97,25 @@ class Store {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
-    required this.pivot,
+    this.pivot,
   });
 
   factory Store.fromJson(Map<String, dynamic> json) {
     return Store(
-      id: json['id'],
-      name: json['name'],
-      ownerId: json['owner_id'],
-      description: json['description'],
-      address: json['address'],
-      phone: json['phone'],
-      ownerPhone: json['owner_phone'],
-      latitude: json['latitude'].toDouble(),
-      longitude: json['longitude'].toDouble(),
-      logo: json['logo'],
-      status: json['status'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      pivot: Pivot.fromJson(json['pivot']),
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      ownerId: json['owner_id'] ?? 0,
+      description: json['description'] ?? '',
+      address: json['address'] ?? '',
+      phone: json['phone'] ?? '',
+      ownerPhone: json['owner_phone'] ?? '',
+      latitude: (json['latitude'] ?? 0).toDouble(),
+      longitude: (json['longitude'] ?? 0).toDouble(),
+      logo: json['logo'] ?? '',
+      status: json['status'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
+      pivot: json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null,
     );
   }
 }
@@ -120,8 +128,8 @@ class Pivot {
 
   factory Pivot.fromJson(Map<String, dynamic> json) {
     return Pivot(
-      userId: json['user_id'],
-      storeId: json['store_id'],
+      userId: json['user_id'] ?? 0,
+      storeId: json['store_id'] ?? 0,
     );
   }
 }

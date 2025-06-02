@@ -38,7 +38,7 @@ class ServicesFailure extends Failure {
           return ServicesFailure(data['message'] ?? "Unexpected error");
         }
 
-        return ServicesFailure("Unexpected error");
+        return ServicesFailure("There is NO Internet Connection");
 
       case DioExceptionType.cancel:
         return ServicesFailure("Request To Api Was Canceled");

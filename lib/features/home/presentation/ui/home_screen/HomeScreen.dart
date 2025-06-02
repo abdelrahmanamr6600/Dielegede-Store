@@ -1,9 +1,9 @@
+import 'package:dielegende_store/core/shared/fun/getLocation.dart';
 import 'package:dielegende_store/core/shared/widgets/HomeAppBar.dart';
-import 'package:dielegende_store/core/utils/app_text_styles.dart';
 import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
-import 'package:dielegende_store/core/utils/service_locator.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
+import 'package:dielegende_store/features/follow_store/presentation/cubit/FollowStoreCubit.dart';
 import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/CategorySection.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProductHeader.dart';
@@ -16,6 +16,8 @@ import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListC
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,9 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
   late CategoryCubit categoryCubit;
   late StoreProductsCubit storeProductsCubit;
 
+  String? _currentAddress;
+
   @override
   void initState() {
     super.initState();
+    // _getLocation();
     homeCubit = context.read<HomeCubit>();
     categoryCubit = context.read<CategoryCubit>();
     storeProductsCubit = context.read<StoreProductsCubit>();
@@ -51,14 +56,16 @@ class _HomeScreenState extends State<HomeScreen> {
         context.read<WishListCubit>().loadFavorites();
       }
     });
+    _initData();
+    context.read<FollowStoreCubit>().loadFollwedIds();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(130.h),
-          child: const SafeArea(child: HomeAppBar()),
+          preferredSize: Size.fromHeight(150.h),
+          child: SafeArea(child: HomeAppBar(currentAddress: _currentAddress)),
         ),
         backgroundColor: Colors.white,
         body: CustomScrollView(
@@ -72,5 +79,12 @@ class _HomeScreenState extends State<HomeScreen> {
             const HomeProductGrid(),
           ],
         ));
+  }
+
+  void _initData() async {
+    final address = await LocationHelper.getCurrentAddress();
+    setState(() {
+      _currentAddress = address;
+    });
   }
 }

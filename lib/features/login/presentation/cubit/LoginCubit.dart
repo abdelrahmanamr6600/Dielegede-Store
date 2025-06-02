@@ -9,20 +9,23 @@ class LoginCubit extends Cubit<LoginState> {
   final LoginRepo _loginRepo;
 
   Future<void> userLogin(Map<String, dynamic> data) async {
+    if (isClosed) return;
+
     emit(LoginLoading());
+
     final result = await _loginRepo.userLogin(data);
+    if (isClosed) return;
+
     result.fold(
       (failure) {
-        emit(LoginFailure(failure.errorMessage));
+        if (!isClosed) emit(LoginFailure(failure.errorMessage));
       },
       (response) {
-        emit(LoginSuccess(response));
+        if (!isClosed) emit(LoginSuccess(response));
       },
     );
   }
 
-
-  
   IconData? suffix = Icons.visibility_outlined;
   bool isPassword = true;
 
@@ -31,5 +34,5 @@ class LoginCubit extends Cubit<LoginState> {
     suffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ChangePasswordVisibilityState());
-  }  
+  }
 }

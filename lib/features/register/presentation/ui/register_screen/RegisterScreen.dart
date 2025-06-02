@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
         if (state is RegisterSuccess) {
-          context.go('/otp');
+          context.go('/login');
         } else if (state is RegisterFailure) {
           showCustomSnackBar(context, state.message);
         }

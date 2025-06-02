@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class AllStoresScreen extends StatefulWidget {
   const AllStoresScreen({super.key});
@@ -26,7 +27,7 @@ class _AllStoresScreenState extends State<AllStoresScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<FollowStoreCubit>().loadFollwedIds();
+    // context.read<FollowStoreCubit>().loadFollwedIds();
   }
 
   @override
@@ -36,25 +37,23 @@ class _AllStoresScreenState extends State<AllStoresScreen> {
       "assets/images/store2.png",
       "assets/images/store3.png",
     ];
-    return BlocProvider.value(
-        value: context.read<StoreProductsCubit>()..getAllStores(),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: const CustomAppBar(title: "All Stores"),
-          body: BlocBuilder<StoreProductsCubit, StoreProductsState>(
-            builder: (context, state) {
-              if (state is AllStoreLoadingState) {
-                return const AllStoreLoadingSkeleton();
-              } else if (state is AllStoreErrorState) {
-                return Center(child: Text(state.error));
-              } else if (state is AllStoreSuccessState) {
-                final stores = state.products.data.stores;
-                return StoresItemWidget(stores: stores, images: images);
-              }
-              return const SizedBox();
-            },
-          ),
-        ));
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const CustomAppBar(title: "All Stores"),
+      body: BlocBuilder<StoreProductsCubit, StoreProductsState>(
+        builder: (context, state) {
+          if (state is AllStoreLoadingState) {
+            return const AllStoreLoadingSkeleton();
+          } else if (state is AllStoreErrorState) {
+            return Center(child: Text(state.error));
+          } else if (state is AllStoreSuccessState) {
+            final stores = state.products.data.stores;
+            return StoresItemWidget(stores: stores, images: images);
+          }
+          return const SizedBox();
+        },
+      ),
+    );
   }
 }
 
@@ -92,13 +91,23 @@ class StoresItemWidget extends StatelessWidget {
                   children: [
                     Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.r),
-                          child: Image.asset(
-                            images[index],
-                            width: double.infinity,
-                            height: 150.h,
-                            fit: BoxFit.cover,
+                        GestureDetector(
+                          onTap: () {
+                            print(item.id);
+
+                            context.push(
+                              "/StoreDetailsScreen",
+                              extra: item.id,
+                            );
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Image.asset(
+                              images[index],
+                              width: double.infinity,
+                              height: 150.h,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Positioned(
@@ -108,19 +117,32 @@ class StoresItemWidget extends StatelessWidget {
                               BlocBuilder<FollowStoreCubit, FollowStoreState>(
                             builder: (context, state) {
                               final isFollow =
-                                  state.followedIds.contains(item.id);
+                                  state.followedIds.contains(item.id ?? 0);
 
-                              return GestureDetector(
-                                  onTap: () async {
-                                    await handleAuthRequiredAsyncAction(context,
-                                        () async {
-                                      context
-                                          .read<FollowStoreCubit>()
-                                          .toggleFollowing(item.id);
-                                    });
-                                  },
-                                  child: isFollow
-                                      ? Container(
+                              return AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
+                                  return ScaleTransition(
+                                    scale: animation,
+                                    child: FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    ),
+                                  );
+                                },
+                                child: isFollow
+                                    ? GestureDetector(
+                                        key: const ValueKey('following'),
+                                        onTap: () async {
+                                          await handleAuthRequiredAsyncAction(
+                                              context, () async {
+                                            context
+                                                .read<FollowStoreCubit>()
+                                                .toggleFollowing(item.id ?? 0);
+                                          });
+                                        },
+                                        child: Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 12.w, vertical: 8.h),
                                           decoration: BoxDecoration(
@@ -135,8 +157,20 @@ class StoresItemWidget extends StatelessWidget {
                                               color: blackColor,
                                               fontWeight: FontWeight.w500,
                                             ),
-                                          ))
-                                      : Container(
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        key: const ValueKey('follow'),
+                                        onTap: () async {
+                                          await handleAuthRequiredAsyncAction(
+                                              context, () async {
+                                            context
+                                                .read<FollowStoreCubit>()
+                                                .toggleFollowing(item.id ?? 0);
+                                          });
+                                        },
+                                        child: Container(
                                           padding: EdgeInsets.all(4.w),
                                           decoration: const BoxDecoration(
                                             color: greyColor,
@@ -147,7 +181,9 @@ class StoresItemWidget extends StatelessWidget {
                                             width: 15.w,
                                             height: 15.h,
                                           ),
-                                        ));
+                                        ),
+                                      ),
+                              );
                             },
                           ),
                         ),

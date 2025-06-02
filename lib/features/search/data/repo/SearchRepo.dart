@@ -9,15 +9,17 @@ class SearchProductRepo {
 
   SearchProductRepo(this.apiService);
 
-  Future<Either<String, List<ProductModel>>> searchProducts(String query) async {
+  Future<Either<String, List<ProductModel>>> searchProducts(
+      String query) async {
     try {
-      final response = await apiService.get(EndPoints.advancedProductSearch, query: {
+      final response =
+          await apiService.get(EndPoints.advancedProductSearch, query: {
         'search_query': query,
       });
+      print(response); // اطبع الرد هنا
 
-        final searchResponse = SearchProductsResponse.fromJson(response);
-        return Right(searchResponse.data.products);
-     
+      final searchResponse = SearchProductsResponse.fromJson(response);
+      return Right(searchResponse.data.products);
     } catch (e) {
       return Left(e.toString());
     }

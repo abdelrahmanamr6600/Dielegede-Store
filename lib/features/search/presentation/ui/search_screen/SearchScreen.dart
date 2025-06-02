@@ -1,4 +1,5 @@
 import 'package:dielegende_store/core/shared/widgets/CustomAppBar.dart';
+import 'package:dielegende_store/core/shared/widgets/EmptySearchResult.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductGridView.dart';
 import 'package:dielegende_store/core/shared/widgets/ProductItemSkeleton.dart';
 import 'package:dielegende_store/core/shared/widgets/SearchWidget.dart';
@@ -33,7 +34,11 @@ class SearchScreen extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<SearchCubit, SearchState>(
                   builder: (context, state) {
-                    if (state is SearchLoadingState) {
+                    if (state is SearchInitialState) {
+                      return const EmptySearchResultWidget(
+                        message: "",
+                      );
+                    } else if (state is SearchLoadingState) {
                       return GridView.builder(
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -50,7 +55,7 @@ class SearchScreen extends StatelessWidget {
                       return Center(child: Text(state.errorMessage));
                     } else if (state is SearchSuccessState) {
                       if (state.products.isEmpty) {
-                        return const Center(child: Text("No results found."));
+                        return const EmptySearchResultWidget();
                       }
                       return ProductGridView(products: state.products);
                     }

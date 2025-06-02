@@ -19,7 +19,6 @@ class HomeProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pagingController = context.read<HomeCubit>().pagingController;
-
     return SliverPadding(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 5.h),
         sliver: PagedSliverGrid<int, ProductModel>(

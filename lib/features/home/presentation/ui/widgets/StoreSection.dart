@@ -80,12 +80,12 @@ class StoreSection extends StatelessWidget {
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
-                          ...storeCategories.map((category) {
+                          ...storeCategories.map((store) {
                             return GestureDetector(
                               onTap: () {
                                 context.push(
                                   "/StoreDetailsScreen",
-                                  extra: category.id,
+                                 extra: store.id ?? 0,
                                 );
                               },
                               child: Padding(
@@ -103,7 +103,7 @@ class StoreSection extends StatelessWidget {
                                               BorderRadius.circular(12.r),
                                           child: Image.asset(
                                             storeImages[storeCategories
-                                                .indexOf(category)],
+                                                .indexOf(store)],
                                             fit: BoxFit.cover,
                                             width: 20.w,
                                             height: 20.h,
@@ -113,7 +113,7 @@ class StoreSection extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5.h),
                                     Text(
-                                      category.name,
+                                      store.name,
                                       style: AppTextStyles.smallText().copyWith(
                                         color: const Color(0xFF939393),
                                       ),

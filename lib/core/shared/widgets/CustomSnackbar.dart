@@ -9,6 +9,8 @@ void showCustomSnackBar(
   {
   IconData icon = Icons.error_outline,
   Color backgroundColor = errorColor,
+  double? fontSize ,
+
 }) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -31,7 +33,7 @@ void showCustomSnackBar(
                 message,
                 style: AppTextStyles.smallText().copyWith(
                   color: Colors.white,
-                  fontSize: 12.sp,
+                  fontSize: fontSize ?? 12.sp,
                 ),
               ),
             ),

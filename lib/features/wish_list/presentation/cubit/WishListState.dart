@@ -2,33 +2,34 @@ import 'package:dielegende_store/features/wish_list/data/model/WishListModel.dar
 
 class WishListState {
   final Set<int> favoriteIds;
-  final Set<int> loadingIds;
 
-  WishListState({required this.favoriteIds, required this.loadingIds});
+  WishListState({required this.favoriteIds});
 
   WishListState copyWith({
     Set<int>? favoriteIds,
-    Set<int>? loadingIds,
   }) {
     return WishListState(
       favoriteIds: favoriteIds ?? this.favoriteIds,
-      loadingIds: loadingIds ?? this.loadingIds,
     );
   }
 }
 
 class WishListLoading extends WishListState {
-  WishListLoading() : super(favoriteIds: {}, loadingIds: {});
+  WishListLoading() : super(favoriteIds: {}, );
 }
 
 class WishListSuccess extends WishListState {
   final List<WishlistItem> items;
 
-  WishListSuccess(this.items) : super(favoriteIds: {}, loadingIds: {});
+  WishListSuccess(this.items) : super(favoriteIds: {},);
 }
 
 class WishListFailure extends WishListState {
   final String message;
 
-  WishListFailure(this.message) : super(favoriteIds: {}, loadingIds: {});
+  WishListFailure(this.message) : super(favoriteIds: {},);
+}
+class WishListEmpty extends WishListState {
+
+  WishListEmpty() : super(favoriteIds: {},);
 }

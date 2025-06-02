@@ -1,4 +1,3 @@
-import 'package:dielegende_store/core/utils/end_points.dart';
 import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
 import 'package:dio/dio.dart';
 
@@ -14,7 +13,7 @@ class ApisService {
 
       final response = await _dio.post(endPoint,
           data: data,
-          options: Options(headers: {
+          options: Options(headers: {  
             'Authorization': 'Bearer $token',
             'Accept': 'application/json',
           }));
@@ -90,4 +89,33 @@ class ApisService {
       );
     }
   }
+
+  Future<dynamic> delete(String endPoint) async {
+  try {
+    final token = await SecureStorageHelper.getToken();
+    final response = await _dio.delete(
+      endPoint,
+      options: Options(headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+      }),
+    );
+    return response.data;
+  } on DioException catch (e) {
+    throw DioException(
+      requestOptions: e.requestOptions,
+      response: e.response,
+      type: DioExceptionType.badResponse,
+      error: e.response?.data ?? 'Unknown Error',
+    );
+  } catch (e) {
+    throw DioException(
+      requestOptions: RequestOptions(path: endPoint),
+      type: DioExceptionType.unknown,
+      error: e.toString(),
+    );
+  }
+}
+
+
 }

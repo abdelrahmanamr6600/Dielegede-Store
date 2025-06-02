@@ -1,5 +1,6 @@
 import 'package:dielegende_store/core/shared/widgets/ProductItem.dart';
 import 'package:dielegende_store/features/home/data/model/ProductModel.dart';
+import 'package:dielegende_store/features/search/presentation/ui/widgets/SearchProductItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,7 +27,7 @@ class ProductGridView extends StatelessWidget {
           childAspectRatio: 0.85,
         ),
         itemBuilder: (context, index) {
-          return ProductItem(
+          return SearchProductItem(
             product: products[index],
             showButton: false,
           );

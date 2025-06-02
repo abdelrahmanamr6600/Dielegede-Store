@@ -15,14 +15,14 @@ class StoreProductsInitial extends StoreProductsState {}
 
 class StoreProductsLoadingState extends StoreProductsState {}
 
-class StoreProductsSuccessState extends StoreProductsState {
-  final List<StoreProductsModel> products;
+// class StoreProductsSuccessState extends StoreProductsState {
+//   final List<StoreProductsModel> products;
 
-  const StoreProductsSuccessState(this.products);
+//   const StoreProductsSuccessState(this.products);
 
-  @override
-  List<Object> get props => [products];
-}
+//   @override
+//   List<Object> get props => [products];
+// }
 
 class StoreProductsErrorState extends StoreProductsState {
   final String error;

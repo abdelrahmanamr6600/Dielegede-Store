@@ -65,29 +65,40 @@ class CategorySection extends StatelessWidget {
                               padding: EdgeInsets.only(right: 20.w, left: 5.w),
                               child: Column(
                                 children: [
-                                  Container(
-                                    width: 46.w,
-                                    height: 46.h,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFEDFAFF),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(8.r),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 5,
-                                          spreadRadius: 2,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          "assets/images/kids.png",
-                                          fit: BoxFit.cover,
-                                          width: 20.w,
-                                          height: 20.h,
+                                  GestureDetector(
+                                    onTap: () {
+                                      context.push('/categoryProductScreen',
+                                          extra: {
+                                            "id": category.id,
+                                            "name": category.name,
+                                          });
+                                    },
+                                    child: Container(
+                                      width: 46.w,
+                                      height: 46.h,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFEDFAFF),
+                                        shape: BoxShape.rectangle,
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.05),
+                                            blurRadius: 5,
+                                            spreadRadius: 2,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            "assets/images/kids.png",
+                                            fit: BoxFit.cover,
+                                            width: 20.w,
+                                            height: 20.h,
+                                          ),
                                         ),
                                       ),
                                     ),

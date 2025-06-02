@@ -9,14 +9,12 @@ class WishListCubit extends Cubit<WishListState> {
   WishListCubit(this.wishListRepo)
       : super(WishListState(
           favoriteIds: <int>{},
-          loadingIds: <int>{},
         ));
 
   void toggleFavorite(int productId) async {
     final isFav = state.favoriteIds.contains(productId);
 
     emit(state.copyWith(
-      loadingIds: {...state.loadingIds, productId},
       favoriteIds: isFav
           ? (Set.of(state.favoriteIds)..remove(productId))
           : (Set.of(state.favoriteIds)..add(productId)),
@@ -35,10 +33,6 @@ class WishListCubit extends Cubit<WishListState> {
             : (Set.of(state.favoriteIds)..remove(productId)),
       ));
     }
-
-    emit(state.copyWith(
-      loadingIds: Set.of(state.loadingIds)..remove(productId),
-    ));
   }
 
   Future<void> loadFavorites() async {
@@ -53,17 +47,17 @@ class WishListCubit extends Cubit<WishListState> {
   Future<void> getWishList() async {
     emit(WishListLoading());
     final response = await wishListRepo.getWishList();
-    return response.fold(
-      (failure) {
-        emit(WishListFailure(failure.errorMessage));
-      },
-      (response) {
-        final productList =
-            response.data.items.map((wishlistItem) => wishlistItem).toList();
-
+    return response.fold((failure) {
+      emit(WishListFailure(failure.errorMessage));
+    }, (response) {
+      final productList =
+          response.data.items.map((wishlistItem) => wishlistItem).toList();
+      if (productList.isEmpty) {
+        emit(WishListEmpty());
+      } else {
         emit(WishListSuccess(productList));
-      },
-    );
+      }
+    });
   }
 
   Future<void> removeFromWishList(int productId) async {
@@ -75,7 +69,11 @@ class WishListCubit extends Cubit<WishListState> {
         final updatedList = List<WishlistItem>.from(currentState.items)
           ..removeWhere((item) => item.product.id == productId);
 
-        emit(WishListSuccess(updatedList));
+        if (updatedList.isEmpty) {
+          emit(WishListEmpty());
+        } else {
+          emit(WishListSuccess(updatedList));
+        }
       }
     } catch (e) {
       emit(WishListFailure("Failed to remove item from wish list."));
