@@ -3,7 +3,6 @@ import 'package:dielegende_store/core/shared/widgets/HomeAppBar.dart';
 import 'package:dielegende_store/core/utils/secure_storage_helper.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryCubit.dart';
 import 'package:dielegende_store/features/category/presentation/cubit/CategoryState.dart';
-import 'package:dielegende_store/features/follow_store/presentation/cubit/FollowStoreCubit.dart';
 import 'package:dielegende_store/features/home/presentation/cubit/HomeCubit.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/CategorySection.dart';
 import 'package:dielegende_store/features/home/presentation/ui/widgets/HomeProductHeader.dart';
@@ -16,8 +15,6 @@ import 'package:dielegende_store/features/wish_list/presentation/cubit/WishListC
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     _initData();
-    context.read<FollowStoreCubit>().loadFollwedIds();
+    // context.read<FollowStoreCubit>().loadFollwedIds();
   }
 
   @override
