@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     _initData();
-    // context.read<FollowStoreCubit>().loadFollwedIds();
   }
 
   @override
